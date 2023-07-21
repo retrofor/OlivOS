@@ -23,16 +23,22 @@ def getTrans(srcWord:str, spec:list, prefix:'str|None'=None):
 
 def getTransByL10N(srcWord:str, spec:list, L10N:str, prefix:'str|None'=None):
     res = srcWord
-    dstWordKey = None
     flagL10N = OlivOS.L10NDataAPI.flagL10NSelectionDefault
     flagL10NDefault = OlivOS.L10NDataAPI.flagL10NSelectionDefault
     if L10N in OlivOS.L10NDataAPI.dictL10NSTR:
         flagL10N = L10N
-    for key in OlivOS.L10NDataAPI.dictL10NSTR[flagL10NDefault]:
-        if ((type(prefix) is str and key.startswith(prefix)) or type(prefix) is not str) \
-        and srcWord == OlivOS.L10NDataAPI.dictL10NSTR[flagL10NDefault][key]:
-            dstWordKey = key
-            break
+    dstWordKey = next(
+        (
+            key
+            for key in OlivOS.L10NDataAPI.dictL10NSTR[flagL10NDefault]
+            if (
+                (type(prefix) is str and key.startswith(prefix))
+                or type(prefix) is not str
+            )
+            and res == OlivOS.L10NDataAPI.dictL10NSTR[flagL10NDefault][key]
+        ),
+        None,
+    )
     if dstWordKey is not None \
     and flagL10N in OlivOS.L10NDataAPI.dictL10NSTR \
     and dstWordKey in OlivOS.L10NDataAPI.dictL10NSTR[flagL10N]:
@@ -59,7 +65,7 @@ def formatSTR(value:str, spec:list):
     res = value
     specRes = copy.deepcopy(spec)
     try:
-        for i in range(OlivOS.L10NDataAPI.formatOffsetLimit):
+        for _ in range(OlivOS.L10NDataAPI.formatOffsetLimit):
             try:
                 res = res.format(*specRes)
                 break

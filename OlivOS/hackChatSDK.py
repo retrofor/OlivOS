@@ -35,18 +35,16 @@ class bot_info_T(object):
 
 
 def get_SDK_bot_info_from_Plugin_bot_info(plugin_bot_info):
-    res = bot_info_T(
+    return bot_info_T(
         id=plugin_bot_info.id,
         password=plugin_bot_info.password,
         nickname=plugin_bot_info.post_info.access_token,
-        chatroom=plugin_bot_info.post_info.host
+        chatroom=plugin_bot_info.post_info.host,
     )
-    return res
 
 
 def get_SDK_bot_info_from_Event(target_event):
-    res = get_SDK_bot_info_from_Plugin_bot_info(target_event.bot_info)
-    return res
+    return get_SDK_bot_info_from_Plugin_bot_info(target_event.bot_info)
 
 
 class event(object):

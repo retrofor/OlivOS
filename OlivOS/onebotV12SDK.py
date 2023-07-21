@@ -55,8 +55,7 @@ def get_SDK_bot_info_from_Plugin_bot_info(plugin_bot_info:OlivOS.API.bot_info_T)
 
 
 def get_SDK_bot_info_from_Event(target_event:OlivOS.API.Event):
-    res = get_SDK_bot_info_from_Plugin_bot_info(target_event.bot_info)
-    return res
+    return get_SDK_bot_info_from_Plugin_bot_info(target_event.bot_info)
 
 
 class event(object):

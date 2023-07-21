@@ -189,7 +189,7 @@ class logger(OlivOS.API.Proc_templet):
         releaseDir(logfile_dir)
         self.log_output_shader_init()
         self.log(2, OlivOS.L10NAPI.getTrans('Welcome to OlivOS {0}', [OlivOS.infoAPI.OlivOS_Version_Short], modelName))
-        with open('%s/%s' % (logfile_dir, logfile_file_unity), 'w', encoding='utf-8') as logfile_f:
+        with open(f'{logfile_dir}/{logfile_file_unity}', 'w', encoding='utf-8') as logfile_f:
             pass
         self.log(2, OlivOS.L10NAPI.getTrans('OlivOS diagnose logger [{0}] is running', [self.Proc_name], modelName))
         flag_need_refresh = False
@@ -222,20 +222,21 @@ class logger(OlivOS.API.Proc_templet):
             pass
 
     def save_logfile(self):
-        if self.Proc_data['data_tmp']['logfile'] != '':
-            file_name = logfile_file % str(time.strftime('%Y-%m-%d', time.localtime()))
-            file_name_unity = logfile_file_unity
-            with open('%s/%s' % (logfile_dir, file_name), 'a+', encoding='utf-8') as logfile_f:
-                try:
-                    logfile_f.write(self.Proc_data['data_tmp']['logfile'])
-                except:
-                    pass
-            with open('%s/%s' % (logfile_dir, file_name_unity), 'a+', encoding='utf-8') as logfile_f:
-                try:
-                    logfile_f.write(self.Proc_data['data_tmp']['logfile'])
-                except:
-                    pass
-            self.Proc_data['data_tmp']['logfile'] = ''
+        if self.Proc_data['data_tmp']['logfile'] == '':
+            return
+        file_name = logfile_file % str(time.strftime('%Y-%m-%d', time.localtime()))
+        file_name_unity = logfile_file_unity
+        with open(f'{logfile_dir}/{file_name}', 'a+', encoding='utf-8') as logfile_f:
+            try:
+                logfile_f.write(self.Proc_data['data_tmp']['logfile'])
+            except:
+                pass
+        with open(f'{logfile_dir}/{file_name_unity}', 'a+', encoding='utf-8') as logfile_f:
+            try:
+                logfile_f.write(self.Proc_data['data_tmp']['logfile'])
+            except:
+                pass
+        self.Proc_data['data_tmp']['logfile'] = ''
 
     def log_output_shader_key(self, key=None):
         keylist = key
@@ -247,9 +248,9 @@ class logger(OlivOS.API.Proc_templet):
         for keylist_this in keylist:
             keylist_new_this = None
             if type(keylist_this) == list:
-                keylist_new_this = ''
-                for keylist_this_this in keylist_this:
-                    keylist_new_this += str(keylist_this_this)
+                keylist_new_this = ''.join(
+                    str(keylist_this_this) for keylist_this_this in keylist_this
+                )
             elif type(keylist_this) == int:
                 keylist_new_this = str(keylist_this)
             elif type(keylist_this) == str:
@@ -259,8 +260,7 @@ class logger(OlivOS.API.Proc_templet):
             if keylist_new_this is not None:
                 if type(keylist_new_this) == str:
                     keylist_new.append(keylist_new_this)
-        keylist_str = '\033[%sm' % (';'.join(keylist_new),)
-        return keylist_str
+        return '\033[%sm' % (';'.join(keylist_new),)
 
     def log_output_shader_init(self):
         tmp_logger_mode_list = []
@@ -284,10 +284,10 @@ class logger(OlivOS.API.Proc_templet):
                 )
 
     def log_output_shader(self, log_output_str, log_packet_this):
-        tmp_color = 'WHITE'
         tmp_color_bak = 'BLACK'
         tmp_shader = 'default'
         flag_have_color = False
+        tmp_color = 'WHITE'
         if log_packet_this['log_level'] in self.Proc_config['color_dict']['mapping']['need']:
             flag_have_color = True
             if log_packet_this['log_level'] in self.Proc_config['color_dict']['mapping']['front']:
@@ -320,19 +320,7 @@ class logger(OlivOS.API.Proc_templet):
                 ]
             )
         elif flag_have_color:
-            log_output_str = '%s%s%s' % (
-                self.log_output_shader_key([
-                    self.Proc_config['color_dict']['shader'][tmp_shader],
-                    [
-                        self.Proc_config['color_dict']['type']['front'],
-                        self.Proc_config['color_dict']['color'][tmp_color]
-                    ]
-                ]),
-                log_output_str,
-                self.log_output_shader_key([
-                    self.Proc_config['color_dict']['shader']['default']
-                ])
-            )
+            log_output_str = f"{self.log_output_shader_key([self.Proc_config['color_dict']['shader'][tmp_shader], [self.Proc_config['color_dict']['type']['front'], self.Proc_config['color_dict']['color'][tmp_color]]])}{log_output_str}{self.log_output_shader_key([self.Proc_config['color_dict']['shader']['default']])}"
             print(log_output_str)
         else:
             print(log_output_str)

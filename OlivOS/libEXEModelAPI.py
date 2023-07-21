@@ -53,39 +53,40 @@ def startGoCqhttpLibExeModel(
     basic_conf_models,
     tmp_proc_mode
 ):
-    if platform.system() == 'Windows':
-        flagActive = False
-        for bot_info_key in plugin_bot_info_dict:
-            if plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList:
-                flagActive = True
-        if flagActive:
-            releaseDir('./lib')
-            OlivOS.updateAPI.checkResouceFile(
+    if platform.system() != 'Windows':
+        return
+    flagActive = any(
+        plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList
+        for bot_info_key in plugin_bot_info_dict
+    )
+    if flagActive:
+        releaseDir('./lib')
+        OlivOS.updateAPI.checkResouceFile(
+            logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
+            resouce_api='https://api.oliva.icu/olivosver/resource/',
+            resouce_name='go-cqhttp',
+            filePath='./lib/go-cqhttp.exe',
+            filePathUpdate='./lib/go-cqhttp.exe.tmp',
+            filePathFORCESKIP='./lib/FORCESKIP'
+        )
+    for bot_info_key in plugin_bot_info_dict:
+        if plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList:
+            tmp_Proc_name = basic_conf_models_this['name'] + '=' + bot_info_key
+            tmp_queue_name = basic_conf_models_this['rx_queue'] + '=' + bot_info_key
+            multiprocessing_dict[tmp_queue_name] = multiprocessing.Queue()
+            Proc_dict[tmp_Proc_name] = OlivOS.libEXEModelAPI.server(
+                Proc_name=tmp_Proc_name,
+                scan_interval=basic_conf_models_this['interval'],
+                dead_interval=basic_conf_models_this['dead_interval'],
+                rx_queue=multiprocessing_dict[tmp_queue_name],
+                tx_queue=multiprocessing_dict[basic_conf_models_this['tx_queue']],
+                control_queue=multiprocessing_dict[basic_conf_models_this['control_queue']],
                 logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
-                resouce_api='https://api.oliva.icu/olivosver/resource/',
-                resouce_name='go-cqhttp',
-                filePath='./lib/go-cqhttp.exe',
-                filePathUpdate='./lib/go-cqhttp.exe.tmp',
-                filePathFORCESKIP='./lib/FORCESKIP'
+                bot_info_dict=plugin_bot_info_dict[bot_info_key],
+                target_proc=basic_conf_models[basic_conf_models_this['target_proc']],
+                debug_mode=False
             )
-        for bot_info_key in plugin_bot_info_dict:
-            if plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList:
-                tmp_Proc_name = basic_conf_models_this['name'] + '=' + bot_info_key
-                tmp_queue_name = basic_conf_models_this['rx_queue'] + '=' + bot_info_key
-                multiprocessing_dict[tmp_queue_name] = multiprocessing.Queue()
-                Proc_dict[tmp_Proc_name] = OlivOS.libEXEModelAPI.server(
-                    Proc_name=tmp_Proc_name,
-                    scan_interval=basic_conf_models_this['interval'],
-                    dead_interval=basic_conf_models_this['dead_interval'],
-                    rx_queue=multiprocessing_dict[tmp_queue_name],
-                    tx_queue=multiprocessing_dict[basic_conf_models_this['tx_queue']],
-                    control_queue=multiprocessing_dict[basic_conf_models_this['control_queue']],
-                    logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
-                    bot_info_dict=plugin_bot_info_dict[bot_info_key],
-                    target_proc=basic_conf_models[basic_conf_models_this['target_proc']],
-                    debug_mode=False
-                )
-                Proc_Proc_dict[tmp_Proc_name] = Proc_dict[tmp_Proc_name].start_unity(tmp_proc_mode)
+            Proc_Proc_dict[tmp_Proc_name] = Proc_dict[tmp_Proc_name].start_unity(tmp_proc_mode)
 
 
 class server(OlivOS.API.Proc_templet):
@@ -134,35 +135,14 @@ class server(OlivOS.API.Proc_templet):
                 tmp.write('{}')
             releaseDir('./conf/gocqhttp/' + self.Proc_data['bot_info_dict'].hash)
             goTypeConfig(self.Proc_data['bot_info_dict'], self.Proc_config['target_proc']).setConfig()
-            if False and (self.Proc_data['bot_info_dict'].platform['model'] in [
-                'gocqhttp',
-                'gocqhttp_hide'
-            ]):
-                model_Proc = subprocess.Popen(
-                    '..\\..\\..\\lib\\go-cqhttp.exe faststart',
-                    cwd='.\\conf\\gocqhttp\\' + self.Proc_data['bot_info_dict'].hash,
-                    shell=True,
-                    stdin=subprocess.PIPE,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE
-                )
-                self.log(2, OlivOS.L10NAPI.getTrans(
-                    'OlivOS libEXEModel server [{0}] is running',
-                    [self.Proc_name], modelName
-                ))
-                model_Proc.communicate(timeout=None)
-                self.log(2, OlivOS.L10NAPI.getTrans(
-                    'OlivOS libEXEModel server [{0}] exited',
-                    [self.Proc_name], modelName
-                ))
-            elif self.Proc_data['bot_info_dict'].platform['model'] in [
+            if self.Proc_data['bot_info_dict'].platform['model'] in [
                 'gocqhttp',
                 'gocqhttp_show',
                 'gocqhttp_show_Android_Phone',
                 'gocqhttp_show_Android_Watch',
                 'gocqhttp_show_iMac',
                 'gocqhttp_show_iPad',
-                'gocqhttp_show_Android_Pad'
+                'gocqhttp_show_Android_Pad',
             ]:
                 self.log(2, OlivOS.L10NAPI.getTrans(
                     'OlivOS libEXEModel server [{0}] will run under visiable mode',
@@ -232,10 +212,7 @@ class server(OlivOS.API.Proc_templet):
     def getBotIDStr(self):
         tmp_self_data = self.Proc_data['bot_info_dict'].platform['platform']
         if self.Proc_data['bot_info_dict'].id is not None:
-            tmp_self_data = '%s|%s' % (
-                self.Proc_data['bot_info_dict'].platform['platform'],
-                str(self.Proc_data['bot_info_dict'].id)
-            )
+            tmp_self_data = f"{self.Proc_data['bot_info_dict'].platform['platform']}|{str(self.Proc_data['bot_info_dict'].id)}"
         return tmp_self_data
 
     def check_stdin(self, model_Proc: subprocess.Popen):
@@ -248,13 +225,13 @@ class server(OlivOS.API.Proc_templet):
                 except:
                     rx_packet_data = None
                 if 'data' in rx_packet_data.key and 'action' in rx_packet_data.key['data']:
-                    if 'input' == rx_packet_data.key['data']['action']:
+                    if rx_packet_data.key['data']['action'] == 'input':
                         if 'data' in rx_packet_data.key['data']:
                             input_raw = str(rx_packet_data.key['data']['data'])
                             input_data = ('%s\r\n' % input_raw).encode('utf-8')
                             model_Proc.stdin.write(input_data)
                             model_Proc.stdin.flush()
-                            log_data = ('%s' % input_raw)
+                            log_data = f'{input_raw}'
                             self.send_log_event(log_data)
                             self.log(2, log_data, [
                                 (self.getBotIDStr(), 'default'),
@@ -432,7 +409,7 @@ class goTypeConfig(object):
 
         self.config_file_str = self.config_file_str.format(**self.config_file_format)
 
-        with open('./conf/gocqhttp/' + self.bot_info_dict.hash + '/config.yml', 'w+', encoding='utf-8') as tmp:
+        with open(f'./conf/gocqhttp/{self.bot_info_dict.hash}/config.yml', 'w+', encoding='utf-8') as tmp:
             tmp.write(self.config_file_str)
 
 def accountFix(bot_info_dict, logger_proc):
@@ -449,8 +426,8 @@ def accountFix(bot_info_dict, logger_proc):
             'gocqhttp_show_iPad',
             'gocqhttp_show_Android_Pad'
         ]:
-            releaseDir('./conf/gocqhttp/' + bot_hash)
-            file_path = './conf/gocqhttp/' + bot_hash + '/device.json'
+            releaseDir(f'./conf/gocqhttp/{bot_hash}')
+            file_path = f'./conf/gocqhttp/{bot_hash}/device.json'
             device_info = {}
 
             # 读取文件
@@ -487,15 +464,11 @@ def accountFix(bot_info_dict, logger_proc):
 def deviceInfoFix(deviceInfo:dict):
     deviceRes = copy.deepcopy(deviceInfo)
     deviceResPatch = {}
-    flagRelease = False
-
     deviceRes.setdefault('protocol', 0)
 
-    if len(list(deviceInfo.keys())) == 1:
-        flagRelease = True
-
+    flagRelease = len(list(deviceInfo.keys())) == 1
     if flagRelease:
-        deviceResPatch.update({
+        deviceResPatch |= {
             'display': 'MIRAI.123456.001',
             'product': 'mirai',
             'device': 'mirai',
@@ -511,7 +484,7 @@ def deviceInfoFix(deviceInfo:dict):
                 'incremental': '5891938',
                 'release': '10',
                 'codename': 'REL',
-                'sdk': 29
+                'sdk': 29,
             },
             'sim_info': 'T-Mobile',
             'os_type': 'android',
@@ -522,18 +495,22 @@ def deviceInfoFix(deviceInfo:dict):
             'android_id': 'MIRAI.123456.001',
             'apn': 'wifi',
             'vendor_name': 'MIUI',
-            'vendor_os_name': 'mirai'
-        })
-        deviceResPatch['android_id'] = 'MIRAI.%s.001' % getRandomStringOfInt(6)
-        deviceResPatch['finger_print'] = 'mamoe/mirai/mirai:10/MIRAI.200122.001/%s:user/release-keys' % getRandomStringOfInt(7)
+            'vendor_os_name': 'mirai',
+        }
+        deviceResPatch['android_id'] = f'MIRAI.{getRandomStringOfInt(6)}.001'
+        deviceResPatch[
+            'finger_print'
+        ] = f'mamoe/mirai/mirai:10/MIRAI.200122.001/{getRandomStringOfInt(7)}:user/release-keys'
         deviceResPatch['boot_id'] = str(uuid.uuid4())
-        deviceResPatch['proc_version'] = 'Linux version 3.0.31-%s (android-build@xxx.xxx.xxx.xxx.com)' % getRandomString(8)
+        deviceResPatch[
+            'proc_version'
+        ] = f'Linux version 3.0.31-{getRandomString(8)} (android-build@xxx.xxx.xxx.xxx.com)'
         deviceResPatch['imei'] = GenIMEI('XXXXXXXXXXXXXXX')
         deviceResPatch['imsi_md5'] = getMD5([deviceResPatch['imei']])
         deviceResPatch['display'] = deviceResPatch['android_id']
         deviceResPatch['android_id'] = getHEX(getRandomString(8))
 
-        deviceRes.update(deviceResPatch)
+        deviceRes |= deviceResPatch
 
     return deviceRes
 
@@ -572,10 +549,7 @@ def getRandomStringOfInt(length:int):
     return getRandomStringRange(length, '0123456789')
 
 def getRandomStringRange(length:int, string:str):
-    s = ''
-    for i in range(length):
-        s += random.choice(string)
-    return s
+    return ''.join(random.choice(string) for _ in range(length))
 
 def releaseDir(dir_path):
     if not os.path.exists(dir_path):

@@ -51,7 +51,7 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['platform_bot_info_dict'] = None
 
     def run(self):
-        self.log(2, 'OlivOS kaiheila link server [' + self.Proc_name + '] is running')
+        self.log(2, f'OlivOS kaiheila link server [{self.Proc_name}] is running')
         while True:
             api_obj = OlivOS.kaiheilaSDK.API.getGateway(
                 OlivOS.kaiheilaSDK.get_SDK_bot_info_from_Plugin_bot_info(
@@ -91,13 +91,22 @@ class server(OlivOS.API.Proc_templet):
             pass
 
     def on_error(self, ws, error):
-        self.log(0, 'OlivOS kaiheila link server [' + self.Proc_name + '] websocket link error')
+        self.log(
+            0,
+            f'OlivOS kaiheila link server [{self.Proc_name}] websocket link error',
+        )
 
     def on_close(self, ws, close_status_code, close_msg):
-        self.log(0, 'OlivOS kaiheila link server [' + self.Proc_name + '] websocket link close')
+        self.log(
+            0,
+            f'OlivOS kaiheila link server [{self.Proc_name}] websocket link close',
+        )
 
     def on_open(self, ws):
-        self.log(2, 'OlivOS kaiheila link server [' + self.Proc_name + '] websocket link start')
+        self.log(
+            2,
+            f'OlivOS kaiheila link server [{self.Proc_name}] websocket link start',
+        )
 
     def run_pulse(self):
         tmp_ws_item = self.Proc_data['extend_data']['ws_item']
@@ -110,17 +119,25 @@ class server(OlivOS.API.Proc_templet):
                 self.Proc_data['extend_data']['last_s']
             ).dump()
             if tmp_ws_item != self.Proc_data['extend_data']['ws_item'] or self.Proc_data['extend_data']['ws_item'] is None:
-                self.log(0, 'OlivOS kaiheila link server [' + self.Proc_name + '] websocket pulse giveup')
+                self.log(
+                    0,
+                    f'OlivOS kaiheila link server [{self.Proc_name}] websocket pulse giveup',
+                )
                 return
-            if self.Proc_data['extend_data']['ws_obj'] is not None:
-                try:
-                    self.Proc_data['extend_data']['ws_obj'].send(tmp_data)
-                    self.log(0, 'OlivOS kaiheila link server [' + self.Proc_name + '] websocket pulse send')
-                except:
-                    break
-            else:
+            if self.Proc_data['extend_data']['ws_obj'] is None:
                 break
-        self.log(0, 'OlivOS kaiheila link server [' + self.Proc_name + '] websocket pulse lost')
+            try:
+                self.Proc_data['extend_data']['ws_obj'].send(tmp_data)
+                self.log(
+                    0,
+                    f'OlivOS kaiheila link server [{self.Proc_name}] websocket pulse send',
+                )
+            except:
+                break
+        self.log(
+            0,
+            f'OlivOS kaiheila link server [{self.Proc_name}] websocket pulse lost',
+        )
         return
 
     def run_websocket_rx_connect_start(self):
@@ -138,7 +155,10 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['extend_data']['pulse_interval'] = None
         self.Proc_data['extend_data']['ws_obj'] = None
         self.Proc_data['extend_data']['ws_item'] = None
-        self.log(2, 'OlivOS kaiheila link server [' + self.Proc_name + '] websocket link lost')
+        self.log(
+            2,
+            f'OlivOS kaiheila link server [{self.Proc_name}] websocket link lost',
+        )
 
 
 def accountFix(bot_info_dict, logger_proc):
@@ -155,21 +175,43 @@ def accountFix(bot_info_dict, logger_proc):
                 if this_msg_res_obj['code'] == 0:
                     if type(this_msg_res_obj['data']['id']) == str:
                         if this_msg_res_obj['data']['id'].isdigit():
-                            logger_proc.log(2, '[kaiheila] account [' + str(
-                                bot_info_dict[bot_hash].id) + '] will be updated as [' + str(
-                                this_msg_res_obj['data']['id']) + ']')
+                            logger_proc.log(
+                                2,
+                                (
+                                    (
+                                        f'[kaiheila] account [{str(bot_info_dict[bot_hash].id)}] will be updated as ['
+                                        + str(this_msg_res_obj['data']['id'])
+                                    )
+                                    + ']'
+                                ),
+                            )
                             bot_info_dict[bot_hash].id = int(this_msg_res_obj['data']['id'])
                             bot_info_dict[bot_hash].getHash()
                         else:
-                            logger_proc.log(2, '[kaiheila] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                            logger_proc.log(
+                                2,
+                                f'[kaiheila] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                            )
                     else:
-                        logger_proc.log(2, '[kaiheila] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                        logger_proc.log(
+                            2,
+                            f'[kaiheila] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                        )
                 else:
-                    logger_proc.log(2, '[kaiheila] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                    logger_proc.log(
+                        2,
+                        f'[kaiheila] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                    )
                 res[bot_info_dict[bot_hash].hash] = bot_info_dict[bot_hash]
             except:
-                logger_proc.log(3, '[kaiheila] account [' + str(
-                    bot_info_dict[bot_hash].id) + '] not hit:\n' + traceback.format_exc())
+                logger_proc.log(
+                    3,
+                    (
+                        f'[kaiheila] account [{str(bot_info_dict[bot_hash].id)}'
+                        + '] not hit:\n'
+                    )
+                    + traceback.format_exc(),
+                )
                 continue
         else:
             res[bot_info_dict_this] = bot_info_dict[bot_info_dict_this]

@@ -81,7 +81,7 @@ class api_templet(object):
 
             # payload = urllib.parse.urlencode(tmp_payload_dict)
             payload = tmp_payload_dict
-            send_url = self.host + ':' + str(self.port) + self.route
+            send_url = f'{self.host}:{str(self.port)}{self.route}'
             headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA
@@ -91,7 +91,9 @@ class api_templet(object):
 
             if self.bot_info.debug_mode:
                 if self.bot_info.debug_logger is not None:
-                    self.bot_info.debug_logger.log(0, self.node_ext + ' - sendding succeed: ' + msg_res.text)
+                    self.bot_info.debug_logger.log(
+                        0, f'{self.node_ext} - sendding succeed: {msg_res.text}'
+                    )
 
             self.res = msg_res.text
             return msg_res.text
@@ -130,59 +132,58 @@ def get_Event_from_SDK(target_event):
     target_event.platform['platform'] = target_event.sdk_event.platform['platform']
     target_event.platform['model'] = target_event.sdk_event.platform['model']
     target_event.plugin_info['message_mode_rx'] = 'olivos_para'
-    if True:
-        message_obj = None
-        if 'content' in target_event.sdk_event.json:
-            if target_event.sdk_event.json['content'] != '':
-                message_obj = OlivOS.messageAPI.Message_templet(
-                    'dodo_string',
-                    ' '.join(str(target_event.sdk_event.json['content']).split())
-                )
-                message_obj.mode_rx = target_event.plugin_info['message_mode_rx']
-                message_obj.data_raw = message_obj.data.copy()
-        if 'resourceJson' in target_event.sdk_event.json:
-            if target_event.sdk_event.json['resourceJson'] != '':
-                resourceJson_obj = None
-                try:
-                    resourceJson_obj = json.loads(target_event.sdk_event.json['resourceJson'])
-                    message_obj = OlivOS.messageAPI.Message_templet(
-                        'olivos_para',
-                        [
-                            OlivOS.messageAPI.PARA.image(resourceJson_obj['resourceUrl'])
-                        ]
-                    )
-                except:
-                    return
-        if message_obj is not None:
-            target_event.active = True
-            target_event.plugin_info['func_type'] = 'group_message'
-            target_event.data = target_event.group_message(
-                target_event.sdk_event.json['channelId'],
-                target_event.sdk_event.json['uid'],
-                message_obj,
-                'group'
+    message_obj = None
+    if 'content' in target_event.sdk_event.json:
+        if target_event.sdk_event.json['content'] != '':
+            message_obj = OlivOS.messageAPI.Message_templet(
+                'dodo_string',
+                ' '.join(str(target_event.sdk_event.json['content']).split())
             )
-            target_event.data.message_sdk = message_obj
-            target_event.data.message_id = target_event.sdk_event.json['id']
-            target_event.data.raw_message = message_obj
-            target_event.data.raw_message_sdk = message_obj
-            target_event.data.font = None
-            target_event.data.sender['user_id'] = target_event.sdk_event.json['uid']
-            target_event.data.sender['nickname'] = target_event.sdk_event.json['nickName']
-            target_event.data.sender['id'] = target_event.sdk_event.json['uid']
-            target_event.data.sender['name'] = target_event.sdk_event.json['nickName']
-            target_event.data.sender['sex'] = 'unknown'
-            target_event.data.sender['age'] = 0
-            if target_event.sdk_event.islandId is not None:
-                target_event.data.host_id = target_event.sdk_event.islandId
-                target_event.data.extend['host_group_id'] = target_event.sdk_event.islandId
+            message_obj.mode_rx = target_event.plugin_info['message_mode_rx']
+            message_obj.data_raw = message_obj.data.copy()
+    if 'resourceJson' in target_event.sdk_event.json:
+        if target_event.sdk_event.json['resourceJson'] != '':
+            resourceJson_obj = None
+            try:
+                resourceJson_obj = json.loads(target_event.sdk_event.json['resourceJson'])
+                message_obj = OlivOS.messageAPI.Message_templet(
+                    'olivos_para',
+                    [
+                        OlivOS.messageAPI.PARA.image(resourceJson_obj['resourceUrl'])
+                    ]
+                )
+            except:
+                return
+    if message_obj is not None:
+        target_event.active = True
+        target_event.plugin_info['func_type'] = 'group_message'
+        target_event.data = target_event.group_message(
+            target_event.sdk_event.json['channelId'],
+            target_event.sdk_event.json['uid'],
+            message_obj,
+            'group'
+        )
+        target_event.data.message_sdk = message_obj
+        target_event.data.message_id = target_event.sdk_event.json['id']
+        target_event.data.raw_message = message_obj
+        target_event.data.raw_message_sdk = message_obj
+        target_event.data.font = None
+        target_event.data.sender['user_id'] = target_event.sdk_event.json['uid']
+        target_event.data.sender['nickname'] = target_event.sdk_event.json['nickName']
+        target_event.data.sender['id'] = target_event.sdk_event.json['uid']
+        target_event.data.sender['name'] = target_event.sdk_event.json['nickName']
+        target_event.data.sender['sex'] = 'unknown'
+        target_event.data.sender['age'] = 0
+        if target_event.sdk_event.islandId is not None:
+            target_event.data.host_id = target_event.sdk_event.islandId
+            target_event.data.extend['host_group_id'] = target_event.sdk_event.islandId
 
 
 # 支持OlivOS API调用的方法实现
 class event_action(object):
-    def send_msg(target_event, chat_id, message):
+    def send_msg(self, chat_id, message):
         flag_now_type = 'string'
-        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(self))
         this_msg.data.channelId = chat_id
         this_msg.data.content = ''
         for message_this in message.data:
@@ -215,8 +216,8 @@ class event_action(object):
             if this_msg.data.content != '':
                 this_msg.do_api()
 
-    def send_private_msg(target_event, host_id, chat_id, message):
-        this_msg = API.sendMessagePrivate(get_SDK_bot_info_from_Event(target_event))
+    def send_private_msg(self, host_id, chat_id, message):
+        this_msg = API.sendMessagePrivate(get_SDK_bot_info_from_Event(self))
         if host_id is not None:
             this_msg.data.islandId = host_id
         this_msg.data.toUid = chat_id

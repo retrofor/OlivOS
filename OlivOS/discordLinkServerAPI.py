@@ -54,7 +54,7 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['platform_bot_info_dict'] = None
 
     def run(self):
-        self.log(2, 'OlivOS discord link server [' + self.Proc_name + '] is running')
+        self.log(2, f'OlivOS discord link server [{self.Proc_name}] is running')
         while True:
             api_obj = OlivOS.discordSDK.API.getGateway(
                 OlivOS.discordSDK.get_SDK_bot_info_from_Plugin_bot_info(
@@ -88,7 +88,10 @@ class server(OlivOS.API.Proc_templet):
                     tx_packet_data = OlivOS.pluginAPI.shallow.rx_packet(sdk_event)
                     self.Proc_info.tx_queue.put(tx_packet_data, block=False)
                 elif tmp_data_rx_obj.data.t == 'READY':
-                    self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket identify ACK')
+                    self.log(
+                        0,
+                        f'OlivOS discord link server [{self.Proc_name}] websocket identify ACK',
+                    )
             elif tmp_data_rx_obj.data.op == 10:
                 self.Proc_data['extend_data']['pulse_interval'] = tmp_data_rx_obj.data.d['heartbeat_interval'] / 1000
                 tmp_data = OlivOS.discordSDK.PAYLOAD.sendIdentify(
@@ -101,20 +104,35 @@ class server(OlivOS.API.Proc_templet):
                     args=()
                 ).start()
                 ws.send(tmp_data)
-                self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket identify send')
+                self.log(
+                    0,
+                    f'OlivOS discord link server [{self.Proc_name}] websocket identify send',
+                )
             elif tmp_data_rx_obj.data.op == 11:
-                self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket pulse ACK')
+                self.log(
+                    0,
+                    f'OlivOS discord link server [{self.Proc_name}] websocket pulse ACK',
+                )
         except:
             pass
 
     def on_error(self, ws, error):
-        self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket link error')
+        self.log(
+            0,
+            f'OlivOS discord link server [{self.Proc_name}] websocket link error',
+        )
 
     def on_close(self, ws, close_status_code, close_msg):
-        self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket link close')
+        self.log(
+            0,
+            f'OlivOS discord link server [{self.Proc_name}] websocket link close',
+        )
 
     def on_open(self, ws):
-        self.log(2, 'OlivOS discord link server [' + self.Proc_name + '] websocket link start')
+        self.log(
+            2,
+            f'OlivOS discord link server [{self.Proc_name}] websocket link start',
+        )
 
     def run_pulse(self):
         tmp_ws_item = self.Proc_data['extend_data']['ws_item']
@@ -128,17 +146,25 @@ class server(OlivOS.API.Proc_templet):
             ).dump()
             if tmp_ws_item != self.Proc_data['extend_data']['ws_item'] or self.Proc_data['extend_data'][
                 'ws_item'] is None:
-                self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket pulse giveup')
+                self.log(
+                    0,
+                    f'OlivOS discord link server [{self.Proc_name}] websocket pulse giveup',
+                )
                 return
-            if self.Proc_data['extend_data']['ws_obj'] is not None:
-                try:
-                    self.Proc_data['extend_data']['ws_obj'].send(tmp_data)
-                    self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket pulse send')
-                except:
-                    break
-            else:
+            if self.Proc_data['extend_data']['ws_obj'] is None:
                 break
-        self.log(0, 'OlivOS discord link server [' + self.Proc_name + '] websocket pulse lost')
+            try:
+                self.Proc_data['extend_data']['ws_obj'].send(tmp_data)
+                self.log(
+                    0,
+                    f'OlivOS discord link server [{self.Proc_name}] websocket pulse send',
+                )
+            except:
+                break
+        self.log(
+            0,
+            f'OlivOS discord link server [{self.Proc_name}] websocket pulse lost',
+        )
         return
 
     def run_websocket_rx_connect_start(self):
@@ -157,7 +183,10 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['extend_data']['pulse_interval'] = None
         self.Proc_data['extend_data']['ws_obj'] = None
         self.Proc_data['extend_data']['ws_item'] = None
-        self.log(2, 'OlivOS discord link server [' + self.Proc_name + '] websocket link lost, will retry in 10s')
+        self.log(
+            2,
+            f'OlivOS discord link server [{self.Proc_name}] websocket link lost, will retry in 10s',
+        )
 
 
 def accountFix(bot_info_dict, logger_proc):
@@ -173,18 +202,38 @@ def accountFix(bot_info_dict, logger_proc):
                 this_msg_res_obj = json.loads(this_msg_res)
                 if 'id' in this_msg_res_obj and type(this_msg_res_obj['id']) == str:
                     if this_msg_res_obj['id'].isdigit():
-                        logger_proc.log(2, '[discord] account [' + str(
-                            bot_info_dict[bot_hash].id) + '] will be updated as [' + str(this_msg_res_obj['id']) + ']')
+                        logger_proc.log(
+                            2,
+                            (
+                                (
+                                    f'[discord] account [{str(bot_info_dict[bot_hash].id)}] will be updated as ['
+                                    + str(this_msg_res_obj['id'])
+                                )
+                                + ']'
+                            ),
+                        )
                         bot_info_dict[bot_hash].id = int(this_msg_res_obj['id'])
                         bot_info_dict[bot_hash].getHash()
                     else:
-                        logger_proc.log(2, '[discord] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                        logger_proc.log(
+                            2,
+                            f'[discord] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                        )
                 else:
-                    logger_proc.log(2, '[discord] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                    logger_proc.log(
+                        2,
+                        f'[discord] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                    )
                 res[bot_info_dict[bot_hash].hash] = bot_info_dict[bot_hash]
             except:
-                logger_proc.log(3, '[discord] account [' + str(
-                    bot_info_dict[bot_hash].id) + '] not hit:\n' + traceback.format_exc())
+                logger_proc.log(
+                    3,
+                    (
+                        f'[discord] account [{str(bot_info_dict[bot_hash].id)}'
+                        + '] not hit:\n'
+                    )
+                    + traceback.format_exc(),
+                )
                 continue
         else:
             res[bot_info_dict_this] = bot_info_dict[bot_info_dict_this]

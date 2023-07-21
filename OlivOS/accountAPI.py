@@ -28,19 +28,29 @@ default_account_conf = {
 modelName = 'accountAPI'
 
 class Account(object):
-    def load(path, logger_proc, safe_mode=False):
+    def load(self, logger_proc, safe_mode=False):
         account_conf = None
         try:
-            with open(path, 'r', encoding='utf-8') as account_conf_f:
+            with open(self, 'r', encoding='utf-8') as account_conf_f:
                 account_conf = json.loads(account_conf_f.read())
         except:
             pass
         if account_conf is None:
-            logger_proc.log(3, OlivOS.L10NAPI.getTrans('init account from [{0}] ... failed', [path], modelName))
+            logger_proc.log(
+                3,
+                OlivOS.L10NAPI.getTrans(
+                    'init account from [{0}] ... failed', [self], modelName
+                ),
+            )
             account_conf = default_account_conf
             logger_proc.log(2, OlivOS.L10NAPI.getTrans('init account from default ... done', [], modelName))
         else:
-            logger_proc.log(2, OlivOS.L10NAPI.getTrans('init account from [{0}] ... done', [path], modelName))
+            logger_proc.log(
+                2,
+                OlivOS.L10NAPI.getTrans(
+                    'init account from [{0}] ... done', [self], modelName
+                ),
+            )
         plugin_bot_info_dict = {}
         for account_conf_account_this in account_conf['account']:
             if safe_mode and account_conf_account_this['sdk_type'] not in [
@@ -71,18 +81,18 @@ class Account(object):
         logger_proc.log(2, OlivOS.L10NAPI.getTrans('generate account ... all done', [], modelName))
         return plugin_bot_info_dict
 
-    def save(path, logger_proc, Account_data, safe_mode=False):
-        tmp_total_account_data = {}
-        tmp_total_account_data['account'] = []
+    def save(self, logger_proc, Account_data, safe_mode=False):
+        tmp_total_account_data = {'account': []}
         for Account_data_this_key in Account_data:
             Account_data_this = Account_data[Account_data_this_key]
-            tmp_this_account_data = {}
-            tmp_this_account_data['id'] = Account_data_this.id
-            tmp_this_account_data['password'] = Account_data_this.password
-            tmp_this_account_data['sdk_type'] = Account_data_this.platform['sdk']
-            tmp_this_account_data['platform_type'] = Account_data_this.platform['platform']
-            tmp_this_account_data['model_type'] = Account_data_this.platform['model']
-            tmp_this_account_data['server'] = {}
+            tmp_this_account_data = {
+                'id': Account_data_this.id,
+                'password': Account_data_this.password,
+                'sdk_type': Account_data_this.platform['sdk'],
+                'platform_type': Account_data_this.platform['platform'],
+                'model_type': Account_data_this.platform['model'],
+                'server': {},
+            }
             tmp_this_account_data['server']['auto'] = Account_data_this.post_info.auto
             tmp_this_account_data['server']['type'] = Account_data_this.post_info.type
             tmp_this_account_data['server']['host'] = Account_data_this.post_info.host
@@ -90,7 +100,7 @@ class Account(object):
             tmp_this_account_data['server']['access_token'] = Account_data_this.post_info.access_token
             tmp_this_account_data['debug'] = Account_data_this.debug_mode
             tmp_total_account_data['account'].append(tmp_this_account_data)
-        with open(path, 'w', encoding='utf-8') as account_conf_f:
+        with open(self, 'w', encoding='utf-8') as account_conf_f:
             account_conf_f.write(json.dumps(tmp_total_account_data, indent=4))
 
 

@@ -51,7 +51,7 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['platform_bot_info_dict'] = None
 
     def run(self):
-        self.log(2, 'OlivOS dodo link server [' + self.Proc_name + '] is running')
+        self.log(2, f'OlivOS dodo link server [{self.Proc_name}] is running')
         while True:
             api_obj = OlivOS.dodoLinkSDK.API.getGateway(
                 OlivOS.dodoLinkSDK.get_SDK_bot_info_from_Plugin_bot_info(
@@ -85,13 +85,13 @@ class server(OlivOS.API.Proc_templet):
             pass
 
     def on_error(self, ws, error):
-        self.log(0, 'OlivOS dodo link server [' + self.Proc_name + '] websocket link error')
+        self.log(0, f'OlivOS dodo link server [{self.Proc_name}] websocket link error')
 
     def on_close(self, ws, close_status_code, close_msg):
-        self.log(0, 'OlivOS dodo link server [' + self.Proc_name + '] websocket link close')
+        self.log(0, f'OlivOS dodo link server [{self.Proc_name}] websocket link close')
 
     def on_open(self, ws):
-        self.log(2, 'OlivOS dodo link server [' + self.Proc_name + '] websocket link start')
+        self.log(2, f'OlivOS dodo link server [{self.Proc_name}] websocket link start')
 
     def run_websocket_rx_connect_start(self):
         websocket.enableTrace(False)
@@ -111,4 +111,4 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['extend_data']['pulse_interval'] = None
         self.Proc_data['extend_data']['ws_obj'] = None
         self.Proc_data['extend_data']['ws_item'] = None
-        self.log(2, 'OlivOS dodo link server [' + self.Proc_name + '] websocket link lost')
+        self.log(2, f'OlivOS dodo link server [{self.Proc_name}] websocket link lost')

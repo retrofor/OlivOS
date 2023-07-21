@@ -157,13 +157,12 @@ class shallow(OlivOS.API.Proc_templet):
                                                          block=False)
                     elif rx_packet_data.action == 'send':
                         self.menu_queue.append(rx_packet_data)
-                else:
-                    if self.Proc_config['treading_mode'] == 'none':
-                        self.run_plugin(rx_packet_data.sdk_event)
-                    elif self.Proc_config['treading_mode'] == 'full':
-                        t_run_plugin = None
-                        t_run_plugin = threading.Thread(target=self.run_plugin, args=(rx_packet_data.sdk_event,))
-                        t_run_plugin.start()
+                elif self.Proc_config['treading_mode'] == 'none':
+                    self.run_plugin(rx_packet_data.sdk_event)
+                elif self.Proc_config['treading_mode'] == 'full':
+                    t_run_plugin = None
+                    t_run_plugin = threading.Thread(target=self.run_plugin, args=(rx_packet_data.sdk_event,))
+                    t_run_plugin.start()
                 if self.Proc_config['enable_auto_restart']:
                     rx_count += 1
                     if rx_count == self.Proc_config['step_to_restart']:
@@ -171,12 +170,12 @@ class shallow(OlivOS.API.Proc_templet):
 
     def on_control_rx(self, packet):
         if type(packet) is OlivOS.API.Control.packet:
-            if 'send' == packet.action:
+            if packet.action == 'send':
                 if type(packet.key) is dict \
-                and 'data' in packet.key \
-                and type(packet.key['data']) \
-                and 'action' in packet.key['data']:
-                    if 'account_update' == packet.key['data']['action']:
+                    and 'data' in packet.key \
+                    and type(packet.key['data']) \
+                    and 'action' in packet.key['data']:
+                    if packet.key['data']['action'] == 'account_update':
                         self.set_restart()
 
     def set_restart(self):
@@ -212,12 +211,11 @@ class shallow(OlivOS.API.Proc_templet):
             platform_platform=plugin_event.platform['platform'],
             platform_model=plugin_event.platform['model']
         )
-        if plugin_event.active:
-            if plugin_event_bot_hash in self.Proc_data['bot_info_dict']:
+        if plugin_event_bot_hash in self.Proc_data['bot_info_dict']:
+            if plugin_event.active:
                 plugin_event.bot_info = self.Proc_data['bot_info_dict'][plugin_event_bot_hash]
-            elif plugin_event.plugin_info['func_type'] in ['menu']:
-                pass
-            else:
+        elif plugin_event.plugin_info['func_type'] not in ['menu']:
+            if plugin_event.active:
                 self.log(3, OlivOS.L10NAPI.getTrans(
                     'Account [{0}] not found, please check your account config', [
                         str(plugin_event.base_info['self_id'])
@@ -229,11 +227,12 @@ class shallow(OlivOS.API.Proc_templet):
             plugin_event.plugin_info['tx_queue'] = self.Proc_info.tx_queue
             plugin_event.plugin_info['control_queue'] = self.Proc_info.control_queue
             for plugin_models_index_this in self.plugin_models_call_list:
-                flag_support_found_dict = {}
-                flag_support_found_dict['sdk'] = False
-                flag_support_found_dict['platform'] = False
-                flag_support_found_dict['model'] = False
-                flag_support_found_dict['flag'] = False
+                flag_support_found_dict = {
+                    'sdk': False,
+                    'platform': False,
+                    'model': False,
+                    'flag': False,
+                }
                 for plugin_model_support_this in self.plugin_models_dict[plugin_models_index_this]['support']:
                     if plugin_event.platform['sdk'] == 'all':
                         flag_support_found_dict['sdk'] = True
@@ -254,7 +253,7 @@ class shallow(OlivOS.API.Proc_templet):
                     elif plugin_model_support_this['model'] == plugin_event.platform['model']:
                         flag_support_found_dict['model'] = True
                     if flag_support_found_dict['sdk'] and flag_support_found_dict['platform'] and \
-                            flag_support_found_dict['model']:
+                                flag_support_found_dict['model']:
                         flag_support_found_dict['flag'] = True
                 if flag_support_found_dict['flag']:
                     plugin_event.plugin_info['name'] = self.plugin_models_dict[plugin_models_index_this]['name']
@@ -366,14 +365,14 @@ class shallow(OlivOS.API.Proc_templet):
 
     def run_plugin_data_release_by_name(self, plugin_models_index_this):
         func_name = 'release_data'
-        dataPath = './plugin/data/%s/data' % plugin_models_index_this
+        dataPath = f'./plugin/data/{plugin_models_index_this}/data'
         dataPathFromList = [
-            './plugin/app/%s/data' % plugin_models_index_this,
-            './plugin/tmp/%s/data' % plugin_models_index_this
+            f'./plugin/app/{plugin_models_index_this}/data',
+            f'./plugin/tmp/{plugin_models_index_this}/data',
         ]
         for dataPathFrom in dataPathFromList:
             if os.path.exists(dataPathFrom) \
-            and os.path.isdir(dataPathFrom):
+                and os.path.isdir(dataPathFrom):
                 try:
                     removeDir(dataPath)
                     shutil.copytree(dataPathFrom, dataPath)
@@ -443,16 +442,15 @@ class shallow(OlivOS.API.Proc_templet):
                     plugin_models_this_menu = plugin_models_this['menu_config']
                     if type(plugin_models_this_menu) == list:
                         if len(plugin_models_this_menu) > 0:
-                            tmp_plugin_list_this = []
-                            for plugin_models_this_menu_this in plugin_models_this_menu:
-                                tmp_plugin_list_this.append(
-                                    [
-                                        plugin_models_this_menu_this['title'],
-                                        plugin_models_this['namespace'],
-                                        plugin_models_this_menu_this['event']
-                                    ]
-                                )
-                            if len(tmp_plugin_list_this) > 0:
+                            tmp_plugin_list_this = [
+                                [
+                                    plugin_models_this_menu_this['title'],
+                                    plugin_models_this['namespace'],
+                                    plugin_models_this_menu_this['event'],
+                                ]
+                                for plugin_models_this_menu_this in plugin_models_this_menu
+                            ]
+                            if tmp_plugin_list_this:
                                 tmp_plugin_list_send.append(
                                     [
                                         plugin_models_this['name'],
@@ -463,13 +461,10 @@ class shallow(OlivOS.API.Proc_templet):
                                 tmp_plugin_list_this = None
                 tmp_plugin_dict_send[plugin_models_this['namespace']] = [
                     plugin_models_this['name'],
-                    '%s(%s)' % (
-                        str(plugin_models_this['version']),
-                        str(plugin_models_this['svn'])
-                    ),
+                    f"{str(plugin_models_this['version'])}({str(plugin_models_this['svn'])})",
                     plugin_models_this['author'],
                     tmp_plugin_list_this,
-                    plugin_models_this['info']
+                    plugin_models_this['info'],
                 ]
         self.sendControlEvent('send', {
             'target': {

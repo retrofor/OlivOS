@@ -131,9 +131,7 @@ class Message_templet(object):
 
     def __str__(self):
         tmp_res = self.__dict__.copy()
-        tmp_res_data = []
-        for data_this in tmp_res['data']:
-            tmp_res_data.append(data_this.__dict__)
+        tmp_res_data = [data_this.__dict__ for data_this in tmp_res['data']]
         tmp_res['data'] = tmp_res_data
         return str(tmp_res)
 
@@ -158,40 +156,25 @@ class Message_templet(object):
     def get(self, get_type):
         res = None
         if not self.active:
-            res = str(self)
+            return str(self)
         elif get_type == 'olivos_para':
-            res = self
+            return self
         elif get_type == 'olivos_string':
-            res = ''
-            for data_this in self.data:
-                res += data_this.OP()
+            return ''.join(data_this.OP() for data_this in self.data)
         elif get_type == 'obv12_para':
-            res = []
-            for data_this in self.data:
-                res.append(data_this.OBV12())
+            return [data_this.OBV12() for data_this in self.data]
         elif get_type == 'old_string':
-            res = ''
-            for data_this in self.data:
-                res += data_this.CQ()
+            return ''.join(data_this.CQ() for data_this in self.data)
         elif get_type == 'fanbook_string':
-            res = ''
-            for data_this in self.data:
-                res += data_this.fanbook()
+            return ''.join(data_this.fanbook() for data_this in self.data)
         elif get_type == 'dodo_string':
-            res = ''
-            for data_this in self.data:
-                res += data_this.dodo()
+            return ''.join(data_this.dodo() for data_this in self.data)
         elif get_type == 'qqGuild_string':
-            res = ''
-            for data_this in self.data:
-                res += data_this.OP()
+            return ''.join(data_this.OP() for data_this in self.data)
         elif get_type == 'kaiheila_string':
-            res = ''
-            for data_this in self.data:
-                res += data_this.kaiheila()
+            return ''.join(data_this.kaiheila() for data_this in self.data)
         else:
-            res = str(self)
-        return res
+            return str(self)
 
     def init_data(self):
         if self.mode_rx == 'olivos_para':
@@ -214,63 +197,78 @@ class Message_templet(object):
             self.init_from_discord_code_string()
 
     def init_from_olivos_para(self):
-        tmp_data = []
         if type(self.data_raw) == list:
-            for data_raw_this in self.data_raw:
-                if data_raw_this.__class__.__base__ == PARA_templet:
-                    tmp_data.append(data_raw_this)
+            tmp_data = [
+                data_raw_this
+                for data_raw_this in self.data_raw
+                if data_raw_this.__class__.__base__ == PARA_templet
+            ]
             self.data = tmp_data
         else:
             self.active = False
 
     def init_from_obv12_para(self):
-        tmp_data = []
         if type(self.data_raw) == list:
+            tmp_data = []
             for data_raw_this in self.data_raw:
                 if type(data_raw_this) is dict \
-                and 'type' in data_raw_this \
-                and 'data' in data_raw_this \
-                and type(data_raw_this['data']) is dict:
-                    if 'text' == data_raw_this['type'] \
-                    and 'text' in data_raw_this['data']:
+                    and 'type' in data_raw_this \
+                    and 'data' in data_raw_this \
+                    and type(data_raw_this['data']) is dict:
+                    if (
+                        data_raw_this['type'] == 'text'
+                        and 'text' in data_raw_this['data']
+                    ):
                         tmp_data.append(
                             PARA.text(data_raw_this['data']['text'])
                         )
-                    elif 'mention' == data_raw_this['type'] \
-                    and 'user_id' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'mention'
+                        and 'user_id' in data_raw_this['data']
+                    ):
                         tmp_data.append(
                             PARA.at(str(data_raw_this['data']['user_id']))
                         )
-                    elif 'mention_all' == data_raw_this['type']:
+                    elif data_raw_this['type'] == 'mention_all':
                         tmp_data.append(
                             PARA.at('all')
                         )
-                    elif 'image' == data_raw_this['type'] \
-                    and 'file_id' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'image'
+                        and 'file_id' in data_raw_this['data']
+                    ):
                         tmp_this = PARA.image(data_raw_this['data']['file_id'])
                         if 'url' in data_raw_this['data']:
                             tmp_this.data['url'] = data_raw_this['data']['url']
                         if 'flush' in data_raw_this['data'] \
-                        and True is data_raw_this['data']['flush']:
+                            and True is data_raw_this['data']['flush']:
                             tmp_this.data['type'] = 'flush'
                         tmp_data.append(tmp_this)
-                    elif 'voice' == data_raw_this['type'] \
-                    and 'file_id' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'voice'
+                        and 'file_id' in data_raw_this['data']
+                    ):
                         tmp_this = PARA.record(data_raw_this['data']['file_id'])
                         tmp_data.append(tmp_this)
-                    elif 'audio' == data_raw_this['type'] \
-                    and 'file_id' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'audio'
+                        and 'file_id' in data_raw_this['data']
+                    ):
                         tmp_this = PARA.record(data_raw_this['data']['file_id'])
                         tmp_data.append(tmp_this)
-                    elif 'video' == data_raw_this['type'] \
-                    and 'file_id' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'video'
+                        and 'file_id' in data_raw_this['data']
+                    ):
                         tmp_this = PARA.video(data_raw_this['data']['file_id'])
                         tmp_data.append(tmp_this)
-                    elif 'location' == data_raw_this['type'] \
-                    and 'latitude' in data_raw_this['data'] \
-                    and 'longitude' in data_raw_this['data'] \
-                    and 'title' in data_raw_this['data'] \
-                    and 'content' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'location'
+                        and 'latitude' in data_raw_this['data']
+                        and 'longitude' in data_raw_this['data']
+                        and 'title' in data_raw_this['data']
+                        and 'content' in data_raw_this['data']
+                    ):
                         tmp_this = PARA.location(
                             lat=data_raw_this['data']['latitude'],
                             lon=data_raw_this['data']['longitude'],
@@ -278,21 +276,29 @@ class Message_templet(object):
                             content=data_raw_this['data']['content']
                         )
                         tmp_data.append(tmp_this)
-                    elif 'face' == data_raw_this['type'] \
-                    and 'id' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'face'
+                        and 'id' in data_raw_this['data']
+                    ):
                         tmp_data.append(PARA.face(data_raw_this['data']['id']))
-                    elif 'dice' == data_raw_this['type']:
+                    elif data_raw_this['type'] == 'dice':
                         tmp_data.append(PARA.dice())
-                    elif 'rps' == data_raw_this['type']:
+                    elif data_raw_this['type'] == 'rps':
                         tmp_data.append(PARA.rps())
-                    elif 'reply' == data_raw_this['type'] \
-                    and 'message_id' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'reply'
+                        and 'message_id' in data_raw_this['data']
+                    ):
                         tmp_data.append(PARA.reply(str(data_raw_this['data']['message_id'])))
-                    elif 'json' == data_raw_this['type'] \
-                    and 'data' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'json'
+                        and 'data' in data_raw_this['data']
+                    ):
                         tmp_data.append(PARA.json(data_raw_this['data']['data']))
-                    elif 'xml' == data_raw_this['type'] \
-                    and 'data' in data_raw_this['data']:
+                    elif (
+                        data_raw_this['type'] == 'xml'
+                        and 'data' in data_raw_this['data']
+                    ):
                         tmp_data.append(PARA.xml(data_raw_this['data']['data']))
             self.data = tmp_data
         else:
@@ -305,7 +311,9 @@ class Message_templet(object):
         it_data_base = 0
         tmp_data_type = 'string'
         for it_data_this in it_data:
-            if tmp_data_type == 'string' and self.match_str(tmp_data_raw[it_data_this:], '[' + code_key + ':'):
+            if tmp_data_type == 'string' and self.match_str(
+                tmp_data_raw[it_data_this:], f'[{code_key}:'
+            ):
                 tmp_para_this = None
                 if it_data_this > it_data_base:
                     tmp_data_raw_this = tmp_data_raw[it_data_base:it_data_this]
@@ -318,7 +326,7 @@ class Message_templet(object):
                 if it_data_this > it_data_base:
                     tmp_data_raw_this_bak = tmp_data_raw[it_data_base:it_data_this + 1]
                     tmp_data_raw_this = tmp_data_raw_this_bak
-                    tmp_data_raw_this = tmp_data_raw_this[len('[' + code_key + ':'):]
+                    tmp_data_raw_this = tmp_data_raw_this[len(f'[{code_key}:'):]
                     tmp_data_raw_this = tmp_data_raw_this[:-len(']')]
                     tmp_data_raw_this_list = tmp_data_raw_this.split(',')
                     tmp_data_type_key = tmp_data_raw_this_list[0]
@@ -336,19 +344,23 @@ class Message_templet(object):
                                 flag_tmp_code_data_list_this_val_begin = False
                             tmp_code_data_list_this_val += tmp_code_data_list_this_val_this
                         tmp_code_data_dict[tmp_code_data_list_this_key] = tmp_code_data_list_this_val
-                    if tmp_data_type_key == 'face':
-                        tmp_para_this = PARA.face(
-                            id=str(self.get_from_dict(tmp_code_data_dict, ['id']))
-                        )
+                    if tmp_data_type_key == 'anonymous':
+                        tmp_para_this = PARA.anonymous()
                     elif tmp_data_type_key == 'at':
                         if code_key == 'CQ':
                             tmp_code_data_dict['id'] = str(self.get_from_dict(tmp_code_data_dict, ['qq'], -1))
                         tmp_para_this = PARA.at(
                             id=str(self.get_from_dict(tmp_code_data_dict, ['id'], -1))
                         )
-                    elif tmp_data_type_key == 'reply':
-                        tmp_para_this = PARA.reply(
-                            id=str(self.get_from_dict(tmp_code_data_dict, ['id'], 0))
+                    elif tmp_data_type_key == 'dice':
+                        tmp_para_this = PARA.dice()
+                    elif tmp_data_type_key == 'face':
+                        tmp_para_this = PARA.face(
+                            id=str(self.get_from_dict(tmp_code_data_dict, ['id']))
+                        )
+                    elif tmp_data_type_key == 'forward':
+                        tmp_para_this = PARA.forward(
+                            id=str(self.get_from_dict(tmp_code_data_dict, ['id'], 'NULLHASH'))
                         )
                     elif tmp_data_type_key == 'image':
                         tmp_para_this = PARA.image(
@@ -356,34 +368,9 @@ class Message_templet(object):
                             type=self.get_from_dict(tmp_code_data_dict, ['type'], None),
                             url=self.get_from_dict(tmp_code_data_dict, ['url'], None)
                         )
-                    elif tmp_data_type_key == 'record':
-                        tmp_para_this = PARA.record(
-                            file=str(self.get_from_dict(tmp_code_data_dict, ['file'])),
-                            url=str(self.get_from_dict(tmp_code_data_dict, ['url']))
-                        )
-                    elif tmp_data_type_key == 'video':
-                        tmp_para_this = PARA.video(
-                            file=str(self.get_from_dict(tmp_code_data_dict, ['file'])),
-                            url=str(self.get_from_dict(tmp_code_data_dict, ['url']))
-                        )
-                    elif tmp_data_type_key == 'rps':
-                        tmp_para_this = PARA.rps()
-                    elif tmp_data_type_key == 'dice':
-                        tmp_para_this = PARA.dice()
-                    elif tmp_data_type_key == 'shake':
-                        tmp_para_this = PARA.shake()
-                    elif tmp_data_type_key == 'poke':
-                        tmp_para_this = PARA.poke(
-                            id=str(self.get_from_dict(tmp_code_data_dict, ['id'], -1))
-                        )
-                    elif tmp_data_type_key == 'anonymous':
-                        tmp_para_this = PARA.anonymous()
-                    elif tmp_data_type_key == 'share':
-                        tmp_para_this = PARA.share(
-                            url=str(self.get_from_dict(tmp_code_data_dict, ['url'], '')),
-                            title=str(self.get_from_dict(tmp_code_data_dict, ['title'], '')),
-                            content=str(self.get_from_dict(tmp_code_data_dict, ['content'], '')),
-                            image=str(self.get_from_dict(tmp_code_data_dict, ['image'], ''))
+                    elif tmp_data_type_key == 'json':
+                        tmp_para_this = PARA.json(
+                            data=str(self.get_from_dict(tmp_code_data_dict, ['data'], ''))
                         )
                     elif tmp_data_type_key == 'location':
                         tmp_para_this = PARA.location(
@@ -402,16 +389,37 @@ class Message_templet(object):
                             content=str(self.get_from_dict(tmp_code_data_dict, ['content'], '')),
                             image=str(self.get_from_dict(tmp_code_data_dict, ['image'], ''))
                         )
-                    elif tmp_data_type_key == 'forward':
-                        tmp_para_this = PARA.forward(
-                            id=str(self.get_from_dict(tmp_code_data_dict, ['id'], 'NULLHASH'))
+                    elif tmp_data_type_key == 'poke':
+                        tmp_para_this = PARA.poke(
+                            id=str(self.get_from_dict(tmp_code_data_dict, ['id'], -1))
+                        )
+                    elif tmp_data_type_key == 'record':
+                        tmp_para_this = PARA.record(
+                            file=str(self.get_from_dict(tmp_code_data_dict, ['file'])),
+                            url=str(self.get_from_dict(tmp_code_data_dict, ['url']))
+                        )
+                    elif tmp_data_type_key == 'reply':
+                        tmp_para_this = PARA.reply(
+                            id=str(self.get_from_dict(tmp_code_data_dict, ['id'], 0))
+                        )
+                    elif tmp_data_type_key == 'rps':
+                        tmp_para_this = PARA.rps()
+                    elif tmp_data_type_key == 'shake':
+                        tmp_para_this = PARA.shake()
+                    elif tmp_data_type_key == 'share':
+                        tmp_para_this = PARA.share(
+                            url=str(self.get_from_dict(tmp_code_data_dict, ['url'], '')),
+                            title=str(self.get_from_dict(tmp_code_data_dict, ['title'], '')),
+                            content=str(self.get_from_dict(tmp_code_data_dict, ['content'], '')),
+                            image=str(self.get_from_dict(tmp_code_data_dict, ['image'], ''))
+                        )
+                    elif tmp_data_type_key == 'video':
+                        tmp_para_this = PARA.video(
+                            file=str(self.get_from_dict(tmp_code_data_dict, ['file'])),
+                            url=str(self.get_from_dict(tmp_code_data_dict, ['url']))
                         )
                     elif tmp_data_type_key == 'xml':
                         tmp_para_this = PARA.xml(
-                            data=str(self.get_from_dict(tmp_code_data_dict, ['data'], ''))
-                        )
-                    elif tmp_data_type_key == 'json':
-                        tmp_para_this = PARA.json(
                             data=str(self.get_from_dict(tmp_code_data_dict, ['data'], ''))
                         )
                     else:
@@ -564,7 +572,7 @@ class PARA_templet(object):
                 paraType = 'text'
                 paraData['text'] = str(self.data['text'])
             elif type(self) is PARA.at \
-            and self.data['id'] == 'all':
+                and self.data['id'] == 'all':
                 paraType = 'mention_all'
             elif type(self) is PARA.at:
                 paraType = 'mention'
@@ -573,7 +581,7 @@ class PARA_templet(object):
                 paraType = 'image'
                 paraData['file_id'] = self.data['file']
                 paraData['url'] = self.data['url']
-                paraData['flush'] = True if self.data['type'] == 'flush' else False
+                paraData['flush'] = self.data['type'] == 'flush'
             elif type(self) is PARA.record:
                 paraType = 'record'
                 paraData['file_id'] = self.data['file']
@@ -608,11 +616,7 @@ class PARA_templet(object):
         if paraType is None:
             paraType = 'text'
             paraData = {'text': ''}
-        res = {
-            'type': paraType,
-            'data': paraData
-        }
-        return res
+        return {'type': paraType, 'data': paraData}
 
     def kaiheila(self):
         code_tmp = '${'
@@ -621,15 +625,14 @@ class PARA_templet(object):
                 for key_this in self.data:
                     if self.data[key_this] is not None:
                         code_tmp += '@'
-                        code_tmp += '#' + str(self.data[key_this])
+                        code_tmp += f'#{str(self.data[key_this])}'
         elif type(self) == PARA.text:
-            if self.data is not None:
-                if type(self.data['text']) is str:
-                    return self.data['text']
-                else:
-                    return str(self.data['text'])
-            else:
+            if self.data is None:
                 return ''
+            if type(self.data['text']) is str:
+                return self.data['text']
+            else:
+                return str(self.data['text'])
         code_tmp += '}'
         return code_tmp
 
@@ -640,15 +643,14 @@ class PARA_templet(object):
                 for key_this in self.data:
                     if self.data[key_this] is not None:
                         code_tmp += '@'
-                        code_tmp += '!' + str(self.data[key_this])
+                        code_tmp += f'!{str(self.data[key_this])}'
         elif type(self) == PARA.text:
-            if self.data is not None:
-                if type(self.data['text']) is str:
-                    return self.data['text']
-                else:
-                    return str(self.data['text'])
-            else:
+            if self.data is None:
                 return ''
+            if type(self.data['text']) is str:
+                return self.data['text']
+            else:
+                return str(self.data['text'])
         code_tmp += '}'
         return code_tmp
 
@@ -659,36 +661,34 @@ class PARA_templet(object):
                 for key_this in self.data:
                     if self.data[key_this] is not None:
                         code_tmp += '@'
-                        code_tmp += '!' + str(self.data[key_this])
+                        code_tmp += f'!{str(self.data[key_this])}'
         elif type(self) == PARA.text:
-            if self.data is not None:
-                if type(self.data['text']) is str:
-                    return self.data['text']
-                else:
-                    return str(self.data['text'])
-            else:
+            if self.data is None:
                 return ''
+            if type(self.data['text']) is str:
+                return self.data['text']
+            else:
+                return str(self.data['text'])
         code_tmp += '>'
         return code_tmp
 
     def get_string_by_key(self, code_key):
-        code_tmp = '[' + code_key + ':' + self.type
+        code_tmp = f'[{code_key}:{self.type}'
         if self.data is not None:
             for key_this in self.data:
                 if self.data[key_this] is not None:
-                    code_tmp += ',' + key_this + '=' + str(self.data[key_this])
+                    code_tmp += f',{key_this}={str(self.data[key_this])}'
         code_tmp += ']'
         return code_tmp
 
     def PARA(self):
         PARA_tmp = self.cut()
         if self.data is None:
-            PARA_tmp.data = dict()
+            PARA_tmp.data = {}
         return json.dumps(obj=PARA_tmp.__dict__)
 
     def copy(self):
-        copy_tmp = PARA_templet(self.type, self.data.copy())
-        return copy_tmp
+        return PARA_templet(self.type, self.data.copy())
 
     def cut(self):
         copy_tmp = self.copy()
@@ -714,13 +714,12 @@ class PARA(object):
                 self['text'] = text
 
         def get_string_by_key(self, code_key):
-            if self.data is not None:
-                if type(self.data['text']) is str:
-                    return self.data['text']
-                else:
-                    return str(self.data['text'])
-            else:
+            if self.data is None:
                 return ''
+            if type(self.data['text']) is str:
+                return self.data['text']
+            else:
+                return str(self.data['text'])
 
     class face(PARA_templet):
         def __init__(self, id):
@@ -744,20 +743,18 @@ class PARA(object):
                 self['timeout'] = timeout
 
         def get_string_by_key(self, code_key):
-            code_tmp = '[' + code_key + ':' + self.type
+            code_tmp = f'[{code_key}:{self.type}'
             if self.data is not None:
                 for key_this in self.data:
                     if self.data[key_this] is not None:
                         if code_key == 'CQ' and key_this == 'file':
-                            code_tmp += ',' + key_this + '='
+                            code_tmp += f',{key_this}='
                             if self.data['url'] is not None:
                                 code_tmp += str(self.data['url'])
                             else:
                                 code_tmp += str(self.data[key_this])
-                        elif code_key == 'CQ' and key_this == 'url':
-                            pass
-                        else:
-                            code_tmp += ',' + key_this + '=' + str(self.data[key_this])
+                        elif code_key != 'CQ' or key_this != 'url':
+                            code_tmp += f',{key_this}={str(self.data[key_this])}'
             code_tmp += ']'
             return code_tmp
 

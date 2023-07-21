@@ -51,10 +51,6 @@ def run_HostUI_asayc(plugin_bot_info_dict, control_queue):
                 control_queue=control_queue
             )
             tmp_res = tmp_t.start()
-            if tmp_res != True:
-                pass
-            if tmp_t.UIData['flag_commit']:
-                pass
         except Exception as e:
             traceback.print_exc()
 
@@ -134,10 +130,7 @@ class HostUI(object):
             self.logger_proc.log(log_level, log_message)
 
     def start(self):
-        if self.rootMode:
-            self.UIObject['root'] = tkinter.Tk()
-        else:
-            self.UIObject['root'] = tkinter.Toplevel()
+        self.UIObject['root'] = tkinter.Tk() if self.rootMode else tkinter.Toplevel()
         self.UIObject['root'].title('OlivOS 登录管理器')
         self.UIObject['root'].geometry('518x400')
         self.UIObject['root'].resizable(
@@ -279,7 +272,7 @@ class HostUI(object):
 
     def tree_edit(self, action):
         hash_key_how = None
-        if action == 'update' or action == 'delete':
+        if action in ['update', 'delete']:
             hash_key_how = get_tree_force(self.UIObject['tree'])['text']
             if hash_key_how == '':
                 action = 'create'
@@ -297,10 +290,10 @@ class HostUI(object):
             Edit_old_hash,
             Edit_new_info
         ] = Edit_res
-        if Edit_action == 'update' or Edit_action == 'delete':
+        if Edit_action in ['update', 'delete']:
             if Edit_old_hash in self.UIData['Account_data']:
                 self.UIData['Account_data'].pop(Edit_old_hash)
-        if Edit_action == 'create' or Edit_action == 'update':
+        if Edit_action in ['create', 'update']:
             self.UIData['Account_data'][Edit_new_info.hash] = Edit_new_info
         self.tree_load()
 

@@ -121,12 +121,12 @@ class payload_template(object):
             return str(self.__dict__)
 
     def dump(self):
-        res_obj = {}
-        for data_this in self.data.__dict__:
-            if self.data.__dict__[data_this] is not None:
-                res_obj[data_this] = self.data.__dict__[data_this]
-        res = json.dumps(obj=res_obj)
-        return res
+        res_obj = {
+            data_this: self.data.__dict__[data_this]
+            for data_this in self.data.__dict__
+            if self.data.__dict__[data_this] is not None
+        }
+        return json.dumps(obj=res_obj)
 
     def load(self, data, is_rx):
         if data is not None:
@@ -183,10 +183,7 @@ class api_templet(object):
             headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA,
-                'Authorization': 'Bot %s.%s' % (
-                    str(self.bot_info.id),
-                    self.bot_info.access_token
-                )
+                'Authorization': f'Bot {str(self.bot_info.id)}.{self.bot_info.access_token}',
             }
 
             msg_res = None
@@ -197,7 +194,9 @@ class api_templet(object):
 
             if self.bot_info.debug_mode:
                 if self.bot_info.debug_logger is not None:
-                    self.bot_info.debug_logger.log(0, self.node_ext + ' - sendding succeed: ' + msg_res.text)
+                    self.bot_info.debug_logger.log(
+                        0, f'{self.node_ext} - sendding succeed: {msg_res.text}'
+                    )
 
             self.res = msg_res.text
             return msg_res.text
@@ -284,7 +283,9 @@ class API(object):
 
         def do_api(self, req_type='POST'):
             try:
-                tmp_payload_dict = {'file': (str(uuid.uuid4()) + '.png', self.data.file, 'image/png')}
+                tmp_payload_dict = {
+                    'file': (f'{str(uuid.uuid4())}.png', self.data.file, 'image/png')
+                }
                 payload = MultipartEncoder(
                     fields=tmp_payload_dict
                 )
@@ -296,10 +297,7 @@ class API(object):
                     'Content-Type': payload.content_type,
                     'Content-Length': str(len(self.data.file)),
                     'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA,
-                    'Authorization': 'Bot %s.%s' % (
-                        str(self.bot_info.id),
-                        self.bot_info.access_token
-                    )
+                    'Authorization': f'Bot {str(self.bot_info.id)}.{self.bot_info.access_token}',
                 }
 
                 msg_res = None

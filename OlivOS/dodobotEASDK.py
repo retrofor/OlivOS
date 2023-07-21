@@ -124,33 +124,31 @@ def get_Event_from_SDK(target_event):
     target_event.platform['platform'] = target_event.sdk_event.platform['platform']
     target_event.platform['model'] = target_event.sdk_event.platform['model']
     target_event.plugin_info['message_mode_rx'] = 'old_string'
-    # 现阶段只有频道消息
-    if True:
-        target_event.active = True
-        target_event.plugin_info['func_type'] = 'group_message'
-        target_event.data = target_event.group_message(
-            target_event.sdk_event.json['FromChannel'],
-            target_event.sdk_event.json['Uid'],
-            target_event.sdk_event.json['Content'],
-            'group'
-        )
-        target_event.data.message_sdk = OlivOS.messageAPI.Message_templet('old_string',
-                                                                          target_event.sdk_event.json['Content'])
-        target_event.data.message_id = target_event.sdk_event.json['Id']
-        target_event.data.raw_message = target_event.sdk_event.json['OriginalContent']
-        target_event.data.raw_message_sdk = OlivOS.messageAPI.Message_templet('old_string', target_event.sdk_event.json[
-            'OriginalContent'])
-        target_event.data.font = None
-        target_event.data.sender['user_id'] = target_event.sdk_event.json['Uid']
-        target_event.data.sender['nickname'] = target_event.sdk_event.json['NickName']
-        target_event.data.sender['sex'] = 'unknown'
-        target_event.data.sender['age'] = 0
+    target_event.active = True
+    target_event.plugin_info['func_type'] = 'group_message'
+    target_event.data = target_event.group_message(
+        target_event.sdk_event.json['FromChannel'],
+        target_event.sdk_event.json['Uid'],
+        target_event.sdk_event.json['Content'],
+        'group'
+    )
+    target_event.data.message_sdk = OlivOS.messageAPI.Message_templet('old_string',
+                                                                      target_event.sdk_event.json['Content'])
+    target_event.data.message_id = target_event.sdk_event.json['Id']
+    target_event.data.raw_message = target_event.sdk_event.json['OriginalContent']
+    target_event.data.raw_message_sdk = OlivOS.messageAPI.Message_templet('old_string', target_event.sdk_event.json[
+        'OriginalContent'])
+    target_event.data.font = None
+    target_event.data.sender['user_id'] = target_event.sdk_event.json['Uid']
+    target_event.data.sender['nickname'] = target_event.sdk_event.json['NickName']
+    target_event.data.sender['sex'] = 'unknown'
+    target_event.data.sender['age'] = 0
 
 
 # 支持OlivOS API调用的方法实现
 class event_action(object):
-    def send_msg(target_event, chat_id, message):
-        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(target_event))
+    def send_msg(self, chat_id, message):
+        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(self))
         this_msg.data.chat_id = chat_id
         this_msg.data.text = message
         return this_msg.do_api()
@@ -166,16 +164,16 @@ class api_templet(object):
     def do_api(self):
         res = {}
         if self.node_ext == 'sendMessage':
-            res.update({
+            res |= {
                 'Type': 1,
                 'Context': self.data.text,
                 'Account': {
                     "Uid": self.bot_info.id,
-                    "Token": self.bot_info.access_token
+                    "Token": self.bot_info.access_token,
                 },
                 'Channel': self.data.chat_id,
-                'ReferencedMessageId': None
-            })
+                'ReferencedMessageId': None,
+            }
         self.res = res
         return res
 

@@ -45,7 +45,7 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['bot_info_island_list'] = {}
 
     def run(self):
-        self.log(2, 'OlivOS fanbook poll server [' + self.Proc_name + '] is running')
+        self.log(2, f'OlivOS fanbook poll server [{self.Proc_name}] is running')
         flag_first = True
         while True:
             time.sleep(self.Proc_info.scan_interval)
@@ -76,16 +76,15 @@ class server(OlivOS.API.Proc_templet):
                     if bot_info_this in self.Proc_data['bot_info_first']:
                         try:
                             res_obj = json.loads(sdk_api_res)
-                            if res_obj['ok'] is True:
-                                if type(res_obj['result']) == list:
-                                    for tmp_messages_this in res_obj['result']:
-                                        sdk_event = OlivOS.fanbookSDK.event(tmp_messages_this, bot_info_this_obj)
-                                        tx_packet_data = OlivOS.pluginAPI.shallow.rx_packet(sdk_event)
-                                        self.Proc_info.tx_queue.put(tx_packet_data, block=False)
-                                else:
-                                    continue
-                            else:
+                            if (
+                                res_obj['ok'] is not True
+                                or type(res_obj['result']) != list
+                            ):
                                 continue
+                            for tmp_messages_this in res_obj['result']:
+                                sdk_event = OlivOS.fanbookSDK.event(tmp_messages_this, bot_info_this_obj)
+                                tx_packet_data = OlivOS.pluginAPI.shallow.rx_packet(sdk_event)
+                                self.Proc_info.tx_queue.put(tx_packet_data, block=False)
                         except Exception as e:
                             skip_result = '%s\n%s\n[data]\n%s' % (
                                 str(e),
@@ -117,15 +116,28 @@ def accountFix(bot_info_dict, logger_proc):
                 this_msg_res_obj = json.loads(this_msg_res)
                 if this_msg_res_obj['ok'] is True:
                     if type(this_msg_res_obj['result']['id']) == int:
-                        logger_proc.log(2, '[fanbook] account [' + str(
-                            bot_info_dict[bot_hash].id) + '] will be updated as [' + str(
-                            this_msg_res_obj['result']['id']) + ']')
+                        logger_proc.log(
+                            2,
+                            (
+                                (
+                                    f'[fanbook] account [{str(bot_info_dict[bot_hash].id)}] will be updated as ['
+                                    + str(this_msg_res_obj['result']['id'])
+                                )
+                                + ']'
+                            ),
+                        )
                         bot_info_dict[bot_hash].id = this_msg_res_obj['result']['id']
                         bot_info_dict[bot_hash].getHash()
                     else:
-                        logger_proc.log(2, '[fanbook] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                        logger_proc.log(
+                            2,
+                            f'[fanbook] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                        )
                 else:
-                    logger_proc.log(2, '[fanbook] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                    logger_proc.log(
+                        2,
+                        f'[fanbook] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                    )
                 res[bot_info_dict[bot_hash].hash] = bot_info_dict[bot_hash]
                 # 刷新至私有模式
                 if bot_info_dict[bot_hash].platform['model'] == 'private':
@@ -137,7 +149,10 @@ def accountFix(bot_info_dict, logger_proc):
                         this_msg_res_obj['result']['id']) + '] set to private mode')
                 continue
             except:
-                logger_proc.log(2, '[fanbook] account [' + str(bot_info_dict[bot_hash].id) + '] not hit')
+                logger_proc.log(
+                    2,
+                    f'[fanbook] account [{str(bot_info_dict[bot_hash].id)}] not hit',
+                )
                 continue
         else:
             res[bot_info_dict_this] = bot_info_dict[bot_info_dict_this]

@@ -100,12 +100,12 @@ class payload_template(object):
             self.sn = None
 
     def dump(self):
-        res_obj = {}
-        for data_this in self.data.__dict__:
-            if self.data.__dict__[data_this] is not None:
-                res_obj[data_this] = self.data.__dict__[data_this]
-        res = json.dumps(obj=res_obj)
-        return res
+        res_obj = {
+            data_this: self.data.__dict__[data_this]
+            for data_this in self.data.__dict__
+            if self.data.__dict__[data_this] is not None
+        }
+        return json.dumps(obj=res_obj)
 
     def load(self, data, is_rx):
         if data is not None:
@@ -165,7 +165,7 @@ class api_templet(object):
             headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA,
-                'Authorization': 'Bot %s' % self.bot_info.access_token
+                'Authorization': f'Bot {self.bot_info.access_token}',
             }
 
             msg_res = None
@@ -264,8 +264,7 @@ class API(object):
 
 
 def get_kmarkdown_message_raw(data: dict):
-    res = data['raw_content']
-    return res
+    return data['raw_content']
 
 
 def get_Event_from_SDK(target_event):
@@ -312,7 +311,7 @@ def get_Event_from_SDK(target_event):
                                 )
                                 message_obj.data_raw.append(
                                     OlivOS.messageAPI.PARA.image(
-                                        '%s' % attachments_this['url']
+                                        f"{attachments_this['url']}"
                                     )
                                 )
                 elif 'kmarkdown' in target_event.sdk_event.payload.data.d['extra']:
@@ -401,7 +400,7 @@ def get_Event_from_SDK(target_event):
                                 )
                                 message_obj.data_raw.append(
                                     OlivOS.messageAPI.PARA.image(
-                                        '%s' % attachments_this['url']
+                                        f"{attachments_this['url']}"
                                     )
                                 )
                 elif 'kmarkdown' in target_event.sdk_event.payload.data.d['extra']:
@@ -475,7 +474,7 @@ def get_Event_from_SDK(target_event):
 
 # 支持OlivOS API调用的方法实现
 class event_action(object):
-    def send_msg(target_event, chat_id, message, flag_direct=False):
+    def send_msg(self, chat_id, message, flag_direct=False):
         this_msg = None
         res_data = {
             "type": "card",
@@ -484,9 +483,9 @@ class event_action(object):
             "modules": []
         }
         if flag_direct:
-            this_msg = API.creatDirectMessage(get_SDK_bot_info_from_Event(target_event))
+            this_msg = API.creatDirectMessage(get_SDK_bot_info_from_Event(self))
         else:
-            this_msg = API.creatMessage(get_SDK_bot_info_from_Event(target_event))
+            this_msg = API.creatMessage(get_SDK_bot_info_from_Event(self))
         this_msg.data.target_id = str(chat_id)
         if this_msg is None:
             return
@@ -518,10 +517,10 @@ class event_action(object):
             this_msg.data.content = json.dumps([res_data], ensure_ascii=False)
             this_msg.do_api()
 
-    def get_login_info(target_event):
+    def get_login_info(self):
         res_data = OlivOS.contentAPI.api_result_data_template.get_login_info()
         raw_obj = None
-        this_msg = API.getMe(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.getMe(get_SDK_bot_info_from_Event(self))
         try:
             this_msg.do_api('GET')
             if this_msg.res is not None:
@@ -535,10 +534,10 @@ class event_action(object):
             res_data['active'] = False
         return res_data
 
-    def get_stranger_info(target_event, user_id):
+    def get_stranger_info(self, user_id):
         res_data = OlivOS.contentAPI.api_result_data_template.get_stranger_info()
         raw_obj = None
-        this_msg = API.getUserViewStranger(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.getUserViewStranger(get_SDK_bot_info_from_Event(self))
         this_msg.metadata.user_id = str(user_id)
         try:
             this_msg.do_api('GET')
@@ -553,10 +552,10 @@ class event_action(object):
             res_data['active'] = False
         return res_data
 
-    def get_group_member_info(target_event, host_id, user_id):
+    def get_group_member_info(self, host_id, user_id):
         res_data = OlivOS.contentAPI.api_result_data_template.get_group_member_info()
         raw_obj = None
-        this_msg = API.getUserView(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.getUserView(get_SDK_bot_info_from_Event(self))
         this_msg.metadata.user_id = str(user_id)
         this_msg.metadata.guild_id = str(host_id)
         this_msg.do_api()
@@ -595,9 +594,7 @@ def init_api_json(raw_str):
         if tmp_obj['code'] == 0:
             flag_is_active = True
     if flag_is_active:
-        if type(tmp_obj) == dict:
-            res_data = tmp_obj.copy()
-        elif type(tmp_obj) == list:
+        if type(tmp_obj) in [dict, list]:
             res_data = tmp_obj.copy()
     return res_data
 
@@ -612,12 +609,8 @@ def init_api_do_mapping_for_dict(src_data, path_list, src_type):
     flag_active = True
     tmp_src_data = src_data
     for path_list_this in path_list:
-        if type(tmp_src_data) == dict:
-            if path_list_this in tmp_src_data:
-                tmp_src_data = tmp_src_data[path_list_this]
-            else:
-                return None
+        if type(tmp_src_data) == dict and path_list_this in tmp_src_data:
+            tmp_src_data = tmp_src_data[path_list_this]
         else:
             return None
-    res_data = init_api_do_mapping(src_type, tmp_src_data)
-    return res_data
+    return init_api_do_mapping(src_type, tmp_src_data)

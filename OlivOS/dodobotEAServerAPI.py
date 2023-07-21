@@ -43,14 +43,18 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['platform_bot_info_dict'] = None
 
     def run(self):
-        self.log(2, 'OlivOS dodobot ea server [' + self.Proc_name + '] is running')
+        self.log(2, f'OlivOS dodobot ea server [{self.Proc_name}] is running')
         while True:
             headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': 'OlivOS/0.0.1'
             }
-            msg_res = req.request("GET", OlivOS.dodobotEASDK.post_host + ':' + str(
-                OlivOS.dodobotEASDK.post_port) + '/GetAccounts', headers=headers, data='')
+            msg_res = req.request(
+                "GET",
+                f'{OlivOS.dodobotEASDK.post_host}:{str(OlivOS.dodobotEASDK.post_port)}/GetAccounts',
+                headers=headers,
+                data='',
+            )
             try:
                 msg_res_obj = json.loads(msg_res.text)
                 if 'Code' in msg_res_obj:
@@ -77,8 +81,7 @@ class server(OlivOS.API.Proc_templet):
     async def run_websockets_rx_connect(self):
         while True:
             try:
-                async with websockets.connect(OlivOS.dodobotEASDK.websocket_host + ':' + str(
-                        OlivOS.dodobotEASDK.websocket_port)) as websocket:
+                async with websockets.connect(f'{OlivOS.dodobotEASDK.websocket_host}:{str(OlivOS.dodobotEASDK.websocket_port)}') as websocket:
                     while True:
                         tmp_recv_pkg = None
                         tmp_recv_pkg_data = None

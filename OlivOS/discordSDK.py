@@ -98,8 +98,7 @@ def get_SDK_bot_info_from_Plugin_bot_info(plugin_bot_info):
 
 
 def get_SDK_bot_info_from_Event(target_event):
-    res = get_SDK_bot_info_from_Plugin_bot_info(target_event.bot_info)
-    return res
+    return get_SDK_bot_info_from_Plugin_bot_info(target_event.bot_info)
 
 
 class event(object):
@@ -136,21 +135,18 @@ class payload_template(object):
             self.t = None
 
     def dump(self):
-        res_obj = {}
-        for data_this in self.data.__dict__:
-            if self.data.__dict__[data_this] is not None:
-                res_obj[data_this] = self.data.__dict__[data_this]
-        res = json.dumps(obj=res_obj)
-        return res
+        res_obj = {
+            data_this: self.data.__dict__[data_this]
+            for data_this in self.data.__dict__
+            if self.data.__dict__[data_this] is not None
+        }
+        return json.dumps(obj=res_obj)
 
     def load(self, data, is_rx):
         if data is not None:
             if type(data) == dict:
-                if 'op' in data:
-                    if type(data['op']) == int:
-                        self.data.op = data['op']
-                    else:
-                        self.active = False
+                if 'op' in data and type(data['op']) == int:
+                    self.data.op = data['op']
                 else:
                     self.active = False
                 if 'd' in data:
@@ -160,12 +156,9 @@ class payload_template(object):
                         self.data.s = data['s']
                     else:
                         self.active = False
-                if 't' in data:
-                    if type(data['t']) == str:
-                        self.data.t = data['t']
-                    else:
-                        self.active = False
-                elif is_rx:
+                if 't' in data and type(data['t']) == str:
+                    self.data.t = data['t']
+                elif 't' in data or is_rx:
                     self.active = False
             else:
                 self.active = False
@@ -185,11 +178,9 @@ class PAYLOAD(object):
             self.data.op = 2
             try:
                 self.data.d = {
-                    'token': 'Bot %s' % (bot_info.access_token),
+                    'token': f'Bot {bot_info.access_token}',
                     'intents': tmp_intents,
-                    'properties': {
-                        'os': OlivOS.infoAPI.OlivOS_Header_UA
-                    }
+                    'properties': {'os': OlivOS.infoAPI.OlivOS_Header_UA},
                 }
             except:
                 self.active = False
@@ -201,12 +192,12 @@ class PAYLOAD(object):
             self.data.d = last_s
 
         def dump(self):
-            res_obj = {}
-            for data_this in self.data.__dict__:
-                if self.data.__dict__[data_this] is not None or data_this == 'd':
-                    res_obj[data_this] = self.data.__dict__[data_this]
-            res = json.dumps(obj=res_obj)
-            return res
+            res_obj = {
+                data_this: self.data.__dict__[data_this]
+                for data_this in self.data.__dict__
+                if self.data.__dict__[data_this] is not None or data_this == 'd'
+            }
+            return json.dumps(obj=res_obj)
 
 
 '''
@@ -240,8 +231,7 @@ class api_templet(object):
             send_url = send_url_temp.format(**tmp_sdkAPIRouteTemp)
             headers = {
                 'Content-Type': 'application/json',
-                # 'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA,
-                'Authorization': 'Bot %s' % self.bot_info.access_token
+                'Authorization': f'Bot {self.bot_info.access_token}',
             }
 
             msg_res = None
@@ -253,7 +243,9 @@ class api_templet(object):
 
             if self.bot_info.debug_mode:
                 if self.bot_info.debug_logger is not None:
-                    self.bot_info.debug_logger.log(0, self.node_ext + ' - sendding succeed: ' + msg_res.text)
+                    self.bot_info.debug_logger.log(
+                        0, f'{self.node_ext} - sendding succeed: {msg_res.text}'
+                    )
 
             self.res = msg_res.text
             return msg_res.text
@@ -317,17 +309,15 @@ class API(object):
                 send_url = send_url_temp.format(**tmp_sdkAPIRouteTemp)
                 headers = {
                     'Content-Type': 'application/json',
-                    # 'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA,
-                    'Authorization': 'Bot %s' % self.bot_info.access_token
+                    'Authorization': f'Bot {self.bot_info.access_token}',
                 }
 
                 if len(self.imagedata) > 0:
-                    payload = {
-                        #'payload_json': (None, payload, 'application/json')
-                    }
                     count = 0
-                    for i in self.imagedata:
-                        payload['file[%d]' % count] = ('image_%d.png' % count, i, 'image/png')
+                    payload = {
+                        'file[%d]' % count: ('image_%d.png' % count, i, 'image/png')
+                        for i in self.imagedata
+                    }
                     count += 1
                     payload, payload_content_type = encode_multipart_formdata(fields=payload, boundary='boundary')
                     headers['Content-Type'] = payload_content_type
@@ -368,10 +358,7 @@ def checkInDictSafe(var_key, var_dict, var_path=None):
             var_dict_this = var_dict_this[var_key_this]
         else:
             return False
-    if var_key in var_dict_this:
-        return True
-    else:
-        return False
+    return var_key in var_dict_this
 
 
 def checkEquelInDictSafe(var_it, var_dict, var_path=None):
@@ -383,19 +370,15 @@ def checkEquelInDictSafe(var_it, var_dict, var_path=None):
             var_dict_this = var_dict_this[var_key_this]
         else:
             return False
-    if var_it == var_dict_this:
-        return True
-    else:
-        return False
+    return var_it == var_dict_this
 
 
 def checkByListAnd(check_list):
     flag_res = True
-    for check_list_this in check_list:
-        if not check_list_this:
-            flag_res = False
-            return flag_res
-    return flag_res
+    return next(
+        (False for check_list_this in check_list if not check_list_this),
+        flag_res,
+    )
 
 
 def get_Event_from_SDK(target_event):
@@ -456,7 +439,7 @@ def get_Event_from_SDK(target_event):
                         if attachments_this['content_type'].startswith('image'):
                             message_obj.data_raw.append(
                                 OlivOS.messageAPI.PARA.image(
-                                    '%s' % attachments_this['url']
+                                    f"{attachments_this['url']}"
                                 )
                             )
         try:
@@ -535,7 +518,7 @@ def get_Event_from_SDK(target_event):
                         if attachments_this['content_type'].startswith('image'):
                             message_obj.data_raw.append(
                                 OlivOS.messageAPI.PARA.image(
-                                    '%s' % attachments_this['url']
+                                    f"{attachments_this['url']}"
                                 )
                             )
         try:
@@ -572,19 +555,17 @@ def get_Event_from_SDK(target_event):
 
 # 支持OlivOS API调用的方法实现
 class event_action(object):
-    def send_msg(target_event, chat_id, message, flag_direct=False):
+    def send_msg(self, chat_id, message, flag_direct=False):
         this_msg = None
-        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(self))
         if flag_direct:
             if str(chat_id) in sdkDMInfo:
                 this_msg.metadata.channel_id = sdkDMInfo[str(chat_id)]
             else:
-                this_msg_dm = API.createDM(get_SDK_bot_info_from_Event(target_event))
+                this_msg_dm = API.createDM(get_SDK_bot_info_from_Event(self))
                 this_msg_dm.data.recipient_id = int(chat_id)
                 this_msg_dm.do_api()
-                raw_obj = None
-                if this_msg_dm.res is not None:
-                    raw_obj = init_api_json(this_msg_dm.res)
+                raw_obj = None if this_msg_dm.res is None else init_api_json(this_msg_dm.res)
                 if raw_obj is not None:
                     if type(raw_obj) == dict:
                         this_msg.metadata.channel_id = int(init_api_do_mapping_for_dict(raw_obj, ['id'], str))
@@ -625,13 +606,7 @@ class event_action(object):
                 if pic_file != None:
                     this_msg.imagedata.append(pic_file)
                     pic_name = 'image_%d.png' % image_count
-                    this_msg.data.embeds.append(
-                        {
-                            "thumbnail": {
-                                "url": 'attachment://%s' % pic_name
-                            }
-                        }
-                    )
+                    this_msg.data.embeds.append({"thumbnail": {"url": f'attachment://{pic_name}'}})
                     this_msg.data.attachments.append(
                         {
                             "id": image_count,
@@ -652,10 +627,10 @@ class event_action(object):
                 )
                 this_msg.do_api()
 
-    def get_login_info(target_event):
+    def get_login_info(self):
         res_data = OlivOS.contentAPI.api_result_data_template.get_login_info()
         raw_obj = None
-        this_msg = API.getMe(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.getMe(get_SDK_bot_info_from_Event(self))
         try:
             this_msg.do_api('GET')
             if this_msg.res is not None:
@@ -673,17 +648,13 @@ class event_action(object):
 def init_api_json(raw_str):
     res_data = None
     tmp_obj = None
-    flag_is_active = False
     try:
         tmp_obj = json.loads(raw_str)
     except:
         tmp_obj = None
-    if type(tmp_obj) == dict:
-        flag_is_active = True
+    flag_is_active = type(tmp_obj) == dict
     if flag_is_active:
-        if type(tmp_obj) == dict:
-            res_data = tmp_obj.copy()
-        elif type(tmp_obj) == list:
+        if type(tmp_obj) in [dict, list]:
             res_data = tmp_obj.copy()
     return res_data
 
@@ -698,12 +669,8 @@ def init_api_do_mapping_for_dict(src_data, path_list, src_type):
     flag_active = True
     tmp_src_data = src_data
     for path_list_this in path_list:
-        if type(tmp_src_data) == dict:
-            if path_list_this in tmp_src_data:
-                tmp_src_data = tmp_src_data[path_list_this]
-            else:
-                return None
+        if type(tmp_src_data) == dict and path_list_this in tmp_src_data:
+            tmp_src_data = tmp_src_data[path_list_this]
         else:
             return None
-    res_data = init_api_do_mapping(src_type, tmp_src_data)
-    return res_data
+    return init_api_do_mapping(src_type, tmp_src_data)

@@ -151,12 +151,12 @@ def get_Event_from_SDK(target_event: event):
 
 # 支持OlivOS API调用的方法实现
 class event_action(object):
-    def send_msg(target_event, message, control_queue):
+    def send_msg(self, message, control_queue):
         plugin_event_bot_hash = OlivOS.API.getBotHash(
-            bot_id=target_event.base_info['self_id'],
-            platform_sdk=target_event.platform['sdk'],
-            platform_platform=target_event.platform['platform'],
-            platform_model=target_event.platform['model']
+            bot_id=self.base_info['self_id'],
+            platform_sdk=self.platform['sdk'],
+            platform_platform=self.platform['platform'],
+            platform_model=self.platform['model'],
         )
         message_new = ''
         message_obj = OlivOS.messageAPI.Message_templet(
@@ -165,16 +165,13 @@ class event_action(object):
         )
         if message_obj.active:
             for data_this in message_obj.data:
-                if data_this.type == 'text':
-                    message_new += data_this.data['text']
-                elif data_this.type == 'image':
+                if data_this.type == 'image':
                     imagePath = data_this.data['file']
                     if data_this.data['url'] is not None:
                         imagePath = data_this.data['url']
-                    message_new += '![%s](%s)' % (
-                        imagePath,
-                        imagePath
-                    )
+                    message_new += f'![{imagePath}]({imagePath})'
+                elif data_this.type == 'text':
+                    message_new += data_this.data['text']
         if len(message_new) > 0:
             send_ws_event(
                 plugin_event_bot_hash,
@@ -297,25 +294,19 @@ async def aiohttpPost(session: ClientSession, url: str, **data):
 
 
 def get_cookies(cookies: cookiejar.CookieJar, name: str):
-    for cookie in cookies:
-        if cookie.key == name:
-            return cookie.value
-    return None
+    return next((cookie.value for cookie in cookies if cookie.key == name), None)
 
 
 def load_cookies(path: str):
     cookies = {}
-    session_exist = exists(path)
-    if session_exist:
+    if session_exist := exists(path):
         with open(path, encoding='utf-8') as f:
             cookies = json.load(f)
     return cookies
 
 
 def save_cookies(cookies: cookiejar.CookieJar, path: str):
-    cookies_dict = {}
-    for cookie in cookies:
-        cookies_dict[cookie.key] = cookie.value
+    cookies_dict = {cookie.key: cookie.value for cookie in cookies}
     with open(path, mode='w', encoding='utf-8') as f:
         json.dump(cookies_dict, f)
     return None

@@ -44,7 +44,7 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['bot_info_island_list'] = {}
 
     def run(self):
-        self.log(2, 'OlivOS dodo poll server [' + self.Proc_name + '] is running')
+        self.log(2, f'OlivOS dodo poll server [{self.Proc_name}] is running')
         while True:
             time.sleep(self.Proc_info.scan_interval)
             self.run_poll_list()
@@ -89,21 +89,18 @@ class server(OlivOS.API.Proc_templet):
                     if not flag_not_attach:
                         try:
                             res_obj = json.loads(sdk_api_res)
-                            if res_obj['status'] == 0:
-                                if type(res_obj['data']) == dict:
-                                    if type(res_obj['data']['islands']) == list:
-                                        for tmp_islands_this in res_obj['data']['islands']:
-                                            tmp_islands_this_dict = {
-                                                'id': tmp_islands_this['id'],
-                                                'title': tmp_islands_this['title']
-                                            }
-                                            tmp_island_list.append(tmp_islands_this_dict)
-                                    else:
-                                        continue
-                                else:
-                                    continue
-                            else:
+                            if res_obj['status'] != 0:
                                 continue
+                            if type(res_obj['data']) != dict:
+                                continue
+                            if type(res_obj['data']['islands']) != list:
+                                continue
+                            for tmp_islands_this in res_obj['data']['islands']:
+                                tmp_islands_this_dict = {
+                                    'id': tmp_islands_this['id'],
+                                    'title': tmp_islands_this['title']
+                                }
+                                tmp_island_list.append(tmp_islands_this_dict)
                         except:
                             continue
                     self.Proc_data['bot_info_island_list'][bot_info_this] = tmp_island_list
@@ -121,26 +118,22 @@ class server(OlivOS.API.Proc_templet):
                         try:
                             res_obj_2 = json.loads(sdk_api_res_2)
                             tmp_message_id_max = self.Proc_data['bot_info_update_id'][bot_info_this]
-                            if res_obj_2['status'] == 0:
-                                if type(res_obj_2['data']) == dict:
-                                    if type(res_obj_2['data']['messages']) == list:
-                                        for tmp_messages_this in res_obj_2['data']['messages']:
-                                            if self.Proc_data['bot_info_update_id'][bot_info_this] < tmp_messages_this['id']:
-                                                if tmp_messages_this['uid'] != bot_info_this_obj.id:
-                                                    sdk_event = OlivOS.dodoSDK.event(tmp_messages_this,
-                                                                                     bot_info_this_obj,
-                                                                                     sdk_api_tmp_2.data.islandId)
-                                                    tx_packet_data = OlivOS.pluginAPI.shallow.rx_packet(sdk_event)
-                                                    self.Proc_info.tx_queue.put(tx_packet_data, block=False)
-                                            if tmp_message_id_max < tmp_messages_this['id']:
-                                                tmp_message_id_max = tmp_messages_this['id']
-                                        self.Proc_data['bot_info_update_id'][bot_info_this] = tmp_message_id_max
-                                    else:
-                                        continue
-                                else:
-                                    continue
-                            else:
+                            if res_obj_2['status'] != 0:
                                 continue
+                            if type(res_obj_2['data']) != dict:
+                                continue
+                            if type(res_obj_2['data']['messages']) != list:
+                                continue
+                            for tmp_messages_this in res_obj_2['data']['messages']:
+                                if self.Proc_data['bot_info_update_id'][bot_info_this] < tmp_messages_this['id']:
+                                    if tmp_messages_this['uid'] != bot_info_this_obj.id:
+                                        sdk_event = OlivOS.dodoSDK.event(tmp_messages_this,
+                                                                         bot_info_this_obj,
+                                                                         sdk_api_tmp_2.data.islandId)
+                                        tx_packet_data = OlivOS.pluginAPI.shallow.rx_packet(sdk_event)
+                                        self.Proc_info.tx_queue.put(tx_packet_data, block=False)
+                                tmp_message_id_max = max(tmp_message_id_max, tmp_messages_this['id'])
+                            self.Proc_data['bot_info_update_id'][bot_info_this] = tmp_message_id_max
                         except:
                             continue
                     time.sleep(1)

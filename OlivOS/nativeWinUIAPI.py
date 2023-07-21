@@ -68,38 +68,40 @@ class dock(OlivOS.API.Proc_templet):
         )
         self.Proc_config['ready_for_restart'] = False
         self.bot_info = bot_info_dict
-        self.UIObject = {}
-        self.UIData = {}
-        self.UIObject['root_window_on'] = False
-        self.UIObject['root_shallow'] = None
-        self.UIObject['root_OlivOS_terminal'] = None
-        self.UIObject['root_OlivOS_terminal_data'] = []
-        self.UIObject['root_OlivOS_terminal_data_max'] = 500
-        self.UIObject['root_gocqhttp_terminal'] = {}
-        self.UIObject['root_gocqhttp_terminal_data'] = {}
-        self.UIObject['root_gocqhttp_terminal_data_max'] = 500
-        self.UIObject['root_walleq_terminal'] = {}
-        self.UIObject['root_walleq_terminal_data'] = {}
-        self.UIObject['root_walleq_terminal_data_max'] = 500
-        self.UIObject['root_cwcb_terminal'] = {}
-        self.UIObject['root_cwcb_terminal_data'] = {}
-        self.UIObject['root_cwcb_terminal_data_max'] = 500
-        self.UIObject['root_virtual_terminal_terminal'] = {}
-        self.UIObject['root_virtual_terminal_terminal_data'] = {}
-        self.UIObject['root_virtual_terminal_terminal_data_max'] = 150
-        self.UIObject['root_qrcode_window'] = {}
-        self.UIObject['root_qrcode_window_thread'] = {}
-        self.UIObject['root_qrcode_window_enable'] = False
-        self.UIObject['root_plugin_edit'] = {}
-        self.UIObject['root_plugin_edit_enable'] = False
-        self.UIObject['root_plugin_edit_count'] = 0
-        self.UIObject['flag_have_update'] = False
-        self.UIData['shallow_plugin_menu_list'] = None
-        self.UIData['shallow_gocqhttp_menu_list'] = None
-        self.UIData['shallow_walleq_menu_list'] = None
-        self.UIData['shallow_cwcb_menu_list'] = None
-        self.UIData['shallow_virtual_terminal_menu_list'] = None
-        self.UIData['shallow_plugin_data_dict'] = None
+        self.UIObject = {
+            'root_window_on': False,
+            'root_shallow': None,
+            'root_OlivOS_terminal': None,
+            'root_OlivOS_terminal_data': [],
+            'root_OlivOS_terminal_data_max': 500,
+            'root_gocqhttp_terminal': {},
+            'root_gocqhttp_terminal_data': {},
+            'root_gocqhttp_terminal_data_max': 500,
+            'root_walleq_terminal': {},
+            'root_walleq_terminal_data': {},
+            'root_walleq_terminal_data_max': 500,
+            'root_cwcb_terminal': {},
+            'root_cwcb_terminal_data': {},
+            'root_cwcb_terminal_data_max': 500,
+            'root_virtual_terminal_terminal': {},
+            'root_virtual_terminal_terminal_data': {},
+            'root_virtual_terminal_terminal_data_max': 150,
+            'root_qrcode_window': {},
+            'root_qrcode_window_thread': {},
+            'root_qrcode_window_enable': False,
+            'root_plugin_edit': {},
+            'root_plugin_edit_enable': False,
+            'root_plugin_edit_count': 0,
+            'flag_have_update': False,
+        }
+        self.UIData = {
+            'shallow_plugin_menu_list': None,
+            'shallow_gocqhttp_menu_list': None,
+            'shallow_walleq_menu_list': None,
+            'shallow_cwcb_menu_list': None,
+            'shallow_virtual_terminal_menu_list': None,
+            'shallow_plugin_data_dict': None,
+        }
         self.updateShallowMenuList()
 
     def run(self):
@@ -111,21 +113,22 @@ class dock(OlivOS.API.Proc_templet):
         self.UIObject['main_tk'].mainloop()
 
     def on_control_rx(self, packet):
-        if type(packet) is OlivOS.API.Control.packet:
-            if 'send' == packet.action:
-                if type(packet.key) is dict \
-                and 'data' in packet.key \
-                and type(packet.key['data']) \
-                and 'action' in packet.key['data']:
-                    if 'account_update' == packet.key['data']['action']:
-                        if 'data' in packet.key['data'] \
+        if type(packet) is not OlivOS.API.Control.packet:
+            return
+        if packet.action == 'send':
+            if type(packet.key) is dict \
+                    and 'data' in packet.key \
+                    and type(packet.key['data']) \
+                    and 'action' in packet.key['data']:
+                if packet.key['data']['action'] == 'account_update':
+                    if 'data' in packet.key['data'] \
                         and type(packet.key['data']['data']) is dict:
-                            self.bot_info = packet.key['data']['data']
-                        self.UIData['shallow_gocqhttp_menu_list'] = None
-                        self.UIData['shallow_walleq_menu_list'] = None
-                        self.UIData['shallow_cwcb_menu_list'] = None
-                        self.UIData['shallow_virtual_terminal_menu_list'] = None
-                        self.updateShallowMenuList()
+                        self.bot_info = packet.key['data']['data']
+                    self.UIData['shallow_gocqhttp_menu_list'] = None
+                    self.UIData['shallow_walleq_menu_list'] = None
+                    self.UIData['shallow_cwcb_menu_list'] = None
+                    self.UIData['shallow_virtual_terminal_menu_list'] = None
+                    self.updateShallowMenuList()
 
     def process_msg(self):
         self.UIObject['main_tk'].after(50, self.process_msg)

@@ -44,12 +44,12 @@ class server(OlivOS.API.Proc_templet):
         self.Proc_data['platform_bot_info_dict'] = None
 
     def run(self):
-        self.log(2, 'OlivOS biliLive Link server [' + self.Proc_name + '] is running')
+        self.log(2, f'OlivOS biliLive Link server [{self.Proc_name}] is running')
         while True:
             try:
                 asyncio.run(start(int(self.Proc_data['bot_info_dict'].post_info.access_token), self))
             except:
-                self.log(2, 'OlivOS biliLive Link server [' + self.Proc_name + '] link lost')
+                self.log(2, f'OlivOS biliLive Link server [{self.Proc_name}] link lost')
             time.sleep(5)
 
 
@@ -82,17 +82,20 @@ async def start(room: int, Proc: server):
                         releaseDir('./conf/')
                         releaseDir('./conf/biliLive')
                         releaseDir(conf_dir_path)
-                        qr.make_image().save(conf_dir_path + '/qrcode.png')
+                        qr.make_image().save(f'{conf_dir_path}/qrcode.png')
                         OlivOS.biliLiveSDK.send_QRCode_event(
                             Proc.Proc_data['bot_info_dict'].hash,
-                            os.path.abspath(conf_dir_path + '/qrcode.png'),
-                            Proc.Proc_info.control_queue
+                            os.path.abspath(f'{conf_dir_path}/qrcode.png'),
+                            Proc.Proc_info.control_queue,
                         )
                         # os.startfile(os.path.abspath('./conf/biliLive/' + Proc.Proc_data['bot_info_dict'].hash + '/qrcode.png')) # Linux方案: subprocess.call(["xdg-open",file_path])
                         while True:
                             await asyncio.sleep(5)
                             if time.time() > outdated:
-                                Proc.log(2, 'OlivOS biliLive Link server [' + Proc.Proc_name + '] login out of time')
+                                Proc.log(
+                                    2,
+                                    f'OlivOS biliLive Link server [{Proc.Proc_name}] login out of time',
+                                )
                                 break  # 登入失敗
                             res = await OlivOS.biliLiveSDK.aiohttpPost(
                                 session,
@@ -101,17 +104,17 @@ async def start(room: int, Proc: server):
                             )
                             if res['status']:
                                 isLoop = False
-                                OlivOS.biliLiveSDK.save_cookies(cookie, conf_dir_path + '/cookies.json')
+                                OlivOS.biliLiveSDK.save_cookies(cookie, f'{conf_dir_path}/cookies.json')
                                 break
                             else:
                                 code = res['data']
                                 if code in [-1, -2]:
-                                    Proc.log(2, 'OlivOS biliLive Link server [' + Proc.Proc_name + '] login failed')
+                                    Proc.log(2, f'OlivOS biliLive Link server [{Proc.Proc_name}] login failed')
                                     break
                 except Exception as e:
-                    Proc.log(2, 'OlivOS biliLive Link server [' + Proc.Proc_name + '] login error')
+                    Proc.log(2, f'OlivOS biliLive Link server [{Proc.Proc_name}] login error')
                     traceback.print_exc()
-            Proc.log(2, 'OlivOS biliLive Link server [' + Proc.Proc_name + '] login succeed')
+            Proc.log(2, f'OlivOS biliLive Link server [{Proc.Proc_name}] login succeed')
         bot = OlivOS.biliLiveSDK.BiliLiveBot(
             room_id=room,
             uid=0,
@@ -121,7 +124,7 @@ async def start(room: int, Proc: server):
         )
         await bot.init_room()
         bot.start()
-        Proc.log(2, 'OlivOS biliLive Link server [' + Proc.Proc_name + '] link start')
+        Proc.log(2, f'OlivOS biliLive Link server [{Proc.Proc_name}] link start')
         while True:
             if Proc.Proc_info.rx_queue.empty():
                 await asyncio.sleep(0.01)
@@ -132,7 +135,7 @@ async def start(room: int, Proc: server):
                     rx_packet_data = None
                 if rx_packet_data is not None:
                     if 'data' in rx_packet_data.key and 'action' in rx_packet_data.key['data']:
-                        if 'send' == rx_packet_data.key['data']['action']:
+                        if rx_packet_data.key['data']['action'] == 'send':
                             if 'data' in rx_packet_data.key['data']:
                                 # Proc.Proc_data['extend_data']['ws_obj'].send(rx_packet_data.key['data']['data'])
                                 if type(rx_packet_data.key['data']['data']) == dict:

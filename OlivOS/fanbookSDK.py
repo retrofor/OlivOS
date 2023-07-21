@@ -70,29 +70,28 @@ class api_templet(object):
         self.res = None
 
     def do_api(self):
-        if True:
-            tmp_payload_dict = {}
-            tmp_fanbookAPIRouteTemp = fanbookAPIRouteTemp.copy()
-            tmp_fanbookAPIRouteTemp.update({
-                'token': self.bot_info.access_token
-            })
-            if self.data is not None:
-                for data_this in self.data.__dict__:
-                    if self.data.__dict__[data_this] is not None:
-                        tmp_payload_dict[data_this] = self.data.__dict__[data_this]
+        tmp_payload_dict = {}
+        tmp_fanbookAPIRouteTemp = fanbookAPIRouteTemp.copy()
+        tmp_fanbookAPIRouteTemp.update({
+            'token': self.bot_info.access_token
+        })
+        if self.data is not None:
+            for data_this in self.data.__dict__:
+                if self.data.__dict__[data_this] is not None:
+                    tmp_payload_dict[data_this] = self.data.__dict__[data_this]
 
-            payload = json.dumps(obj=tmp_payload_dict)
-            send_url_temp = self.host + ':' + str(self.port) + self.route
-            send_url = send_url_temp.format(**tmp_fanbookAPIRouteTemp)
-            headers = {
-                'Content-Type': 'application/json',
-                'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA
-            }
+        payload = json.dumps(obj=tmp_payload_dict)
+        send_url_temp = f'{self.host}:{str(self.port)}{self.route}'
+        send_url = send_url_temp.format(**tmp_fanbookAPIRouteTemp)
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': OlivOS.infoAPI.OlivOS_Header_UA
+        }
 
-            msg_res = req.request("POST", send_url, headers=headers, data=payload)
+        msg_res = req.request("POST", send_url, headers=headers, data=payload)
 
-            self.res = msg_res.text
-            return msg_res.text
+        self.res = msg_res.text
+        return msg_res.text
 
 
 class event(object):
@@ -126,10 +125,7 @@ def checkInDictSafe(var_key, var_dict, var_path=None):
             var_dict_this = var_dict_this[var_key_this]
         else:
             return False
-    if var_key in var_dict_this:
-        return True
-    else:
-        return False
+    return var_key in var_dict_this
 
 
 def checkEquelInDictSafe(var_it, var_dict, var_path=None):
@@ -141,19 +137,15 @@ def checkEquelInDictSafe(var_it, var_dict, var_path=None):
             var_dict_this = var_dict_this[var_key_this]
         else:
             return False
-    if var_it == var_dict_this:
-        return True
-    else:
-        return False
+    return var_it == var_dict_this
 
 
 def checkByListAnd(check_list):
     flag_res = True
-    for check_list_this in check_list:
-        if not check_list_this:
-            flag_res = False
-            return flag_res
-    return flag_res
+    return next(
+        (False for check_list_this in check_list if not check_list_this),
+        flag_res,
+    )
 
 
 def get_Event_from_SDK(target_event):
@@ -217,9 +209,13 @@ def get_Event_from_SDK(target_event):
         message_obj = None
         message_para_list = []
         if type(target_event.sdk_event.json['channel_post']['photo']) == list:
-            for photo_this in target_event.sdk_event.json['channel_post']['photo']:
-                if 'file_id' in photo_this:
-                    message_para_list.append(OlivOS.messageAPI.PARA.image(photo_this['file_id']))
+            message_para_list.extend(
+                OlivOS.messageAPI.PARA.image(photo_this['file_id'])
+                for photo_this in target_event.sdk_event.json['channel_post'][
+                    'photo'
+                ]
+                if 'file_id' in photo_this
+            )
         message_obj = OlivOS.messageAPI.Message_templet(
             'olivos_para',
             message_para_list
@@ -249,10 +245,10 @@ def get_Event_from_SDK(target_event):
 
 # 支持OlivOS API调用的方法实现
 class event_action(object):
-    def send_msg(target_event, chat_id, message):
+    def send_msg(self, chat_id, message):
         flag_now_type = 'string'
-        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(target_event))
-        this_msg_image = API.sendPhoto(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.sendMessage(get_SDK_bot_info_from_Event(self))
+        this_msg_image = API.sendPhoto(get_SDK_bot_info_from_Event(self))
         this_msg.data.chat_id = int(chat_id)
         this_msg_image.data.chat_id = int(chat_id)
         this_msg.data.text = ''
@@ -275,9 +271,9 @@ class event_action(object):
             if this_msg.data.text != '':
                 this_msg.do_api()
 
-    def send_private_msg(target_event, chat_id, message):
+    def send_private_msg(self, chat_id, message):
         private_chat_id = None
-        this_msg = API.getPrivateChat(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.getPrivateChat(get_SDK_bot_info_from_Event(self))
         this_msg.data.user_id = int(chat_id)
         try:
             tmp_res = this_msg.do_api()
@@ -287,12 +283,12 @@ class event_action(object):
         except:
             return
         if private_chat_id is not None:
-            event_action.send_msg(target_event, private_chat_id, message)
+            event_action.send_msg(self, private_chat_id, message)
 
-    def get_login_info(target_event):
+    def get_login_info(self):
         res_data = OlivOS.contentAPI.api_result_data_template.get_login_info()
         private_chat_id = None
-        this_msg = API.getMe(get_SDK_bot_info_from_Event(target_event))
+        this_msg = API.getMe(get_SDK_bot_info_from_Event(self))
         try:
             tmp_res = this_msg.do_api()
             tmp_res_obj = json.loads(tmp_res)
@@ -315,15 +311,11 @@ def init_api_do_mapping_for_dict(src_data, path_list, src_type):
     flag_active = True
     tmp_src_data = src_data
     for path_list_this in path_list:
-        if type(tmp_src_data) == dict:
-            if path_list_this in tmp_src_data:
-                tmp_src_data = tmp_src_data[path_list_this]
-            else:
-                return None
+        if type(tmp_src_data) == dict and path_list_this in tmp_src_data:
+            tmp_src_data = tmp_src_data[path_list_this]
         else:
             return None
-    res_data = init_api_do_mapping(src_type, tmp_src_data)
-    return res_data
+    return init_api_do_mapping(src_type, tmp_src_data)
 
 
 class API(object):

@@ -46,55 +46,56 @@ def startCWCBQLibExeModel(
     basic_conf_models,
     tmp_proc_mode
 ):
-    if platform.system() == 'Windows':
-        flagActive = False
-        for bot_info_key in plugin_bot_info_dict:
-            if plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList:
-                flagActive = True
-        if flagActive:
-            releaseDir('./lib')
-            OlivOS.updateAPI.checkResouceFile(
+    if platform.system() != 'Windows':
+        return
+    flagActive = any(
+        plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList
+        for bot_info_key in plugin_bot_info_dict
+    )
+    if flagActive:
+        releaseDir('./lib')
+        OlivOS.updateAPI.checkResouceFile(
+            logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
+            resouce_api='https://api.oliva.icu/olivosver/resource/',
+            resouce_name='ComWeChat-Client',
+            filePath='./lib/ComWeChat-Client.exe',
+            filePathUpdate='./lib/ComWeChat-Client.exe.tmp',
+            filePathFORCESKIP='./lib/FORCESKIP'
+        )
+        OlivOS.updateAPI.checkResouceFile(
+            logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
+            resouce_api='https://api.oliva.icu/olivosver/resource/',
+            resouce_name='CWeChatRobot-exe',
+            filePath='./lib/CWeChatRobot.exe',
+            filePathUpdate='./lib/CWeChatRobot.exe.tmp',
+            filePathFORCESKIP='./lib/FORCESKIP'
+        )
+        OlivOS.updateAPI.checkResouceFile(
+            logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
+            resouce_api='https://api.oliva.icu/olivosver/resource/',
+            resouce_name='DWeChatRobot-dll',
+            filePath='./lib/DWeChatRobot.dll',
+            filePathUpdate='./lib/DWeChatRobot.dll.tmp',
+            filePathFORCESKIP='./lib/FORCESKIP'
+        )
+    for bot_info_key in plugin_bot_info_dict:
+        if plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList:
+            tmp_Proc_name = basic_conf_models_this['name'] + '=' + bot_info_key
+            tmp_queue_name = basic_conf_models_this['rx_queue'] + '=' + bot_info_key
+            multiprocessing_dict[tmp_queue_name] = multiprocessing.Queue()
+            Proc_dict[tmp_Proc_name] = OlivOS.libCWCBEXEModelAPI.server(
+                Proc_name=tmp_Proc_name,
+                scan_interval=basic_conf_models_this['interval'],
+                dead_interval=basic_conf_models_this['dead_interval'],
+                rx_queue=multiprocessing_dict[tmp_queue_name],
+                tx_queue=multiprocessing_dict[basic_conf_models_this['tx_queue']],
+                control_queue=multiprocessing_dict[basic_conf_models_this['control_queue']],
                 logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
-                resouce_api='https://api.oliva.icu/olivosver/resource/',
-                resouce_name='ComWeChat-Client',
-                filePath='./lib/ComWeChat-Client.exe',
-                filePathUpdate='./lib/ComWeChat-Client.exe.tmp',
-                filePathFORCESKIP='./lib/FORCESKIP'
+                bot_info_dict=plugin_bot_info_dict[bot_info_key],
+                target_proc=None,
+                debug_mode=False
             )
-            OlivOS.updateAPI.checkResouceFile(
-                logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
-                resouce_api='https://api.oliva.icu/olivosver/resource/',
-                resouce_name='CWeChatRobot-exe',
-                filePath='./lib/CWeChatRobot.exe',
-                filePathUpdate='./lib/CWeChatRobot.exe.tmp',
-                filePathFORCESKIP='./lib/FORCESKIP'
-            )
-            OlivOS.updateAPI.checkResouceFile(
-                logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
-                resouce_api='https://api.oliva.icu/olivosver/resource/',
-                resouce_name='DWeChatRobot-dll',
-                filePath='./lib/DWeChatRobot.dll',
-                filePathUpdate='./lib/DWeChatRobot.dll.tmp',
-                filePathFORCESKIP='./lib/FORCESKIP'
-            )
-        for bot_info_key in plugin_bot_info_dict:
-            if plugin_bot_info_dict[bot_info_key].platform['model'] in gCheckList:
-                tmp_Proc_name = basic_conf_models_this['name'] + '=' + bot_info_key
-                tmp_queue_name = basic_conf_models_this['rx_queue'] + '=' + bot_info_key
-                multiprocessing_dict[tmp_queue_name] = multiprocessing.Queue()
-                Proc_dict[tmp_Proc_name] = OlivOS.libCWCBEXEModelAPI.server(
-                    Proc_name=tmp_Proc_name,
-                    scan_interval=basic_conf_models_this['interval'],
-                    dead_interval=basic_conf_models_this['dead_interval'],
-                    rx_queue=multiprocessing_dict[tmp_queue_name],
-                    tx_queue=multiprocessing_dict[basic_conf_models_this['tx_queue']],
-                    control_queue=multiprocessing_dict[basic_conf_models_this['control_queue']],
-                    logger_proc=Proc_dict[basic_conf_models_this['logger_proc']],
-                    bot_info_dict=plugin_bot_info_dict[bot_info_key],
-                    target_proc=None,
-                    debug_mode=False
-                )
-                Proc_Proc_dict[tmp_Proc_name] = Proc_dict[tmp_Proc_name].start_unity(tmp_proc_mode)
+            Proc_Proc_dict[tmp_Proc_name] = Proc_dict[tmp_Proc_name].start_unity(tmp_proc_mode)
 
 class server(OlivOS.API.Proc_templet):
     def __init__(self, Proc_name, scan_interval=0.001, dead_interval=1, rx_queue=None, tx_queue=None,
@@ -199,10 +200,7 @@ class server(OlivOS.API.Proc_templet):
     def getBotIDStr(self):
         tmp_self_data = self.Proc_data['bot_info_dict'].platform['platform']
         if self.Proc_data['bot_info_dict'].id is not None:
-            tmp_self_data = '%s|%s' % (
-                self.Proc_data['bot_info_dict'].platform['platform'],
-                str(self.Proc_data['bot_info_dict'].id)
-            )
+            tmp_self_data = f"{self.Proc_data['bot_info_dict'].platform['platform']}|{str(self.Proc_data['bot_info_dict'].id)}"
         return tmp_self_data
 
     def check_stdin(self, model_Proc: subprocess.Popen):
@@ -215,13 +213,13 @@ class server(OlivOS.API.Proc_templet):
                 except:
                     rx_packet_data = None
                 if 'data' in rx_packet_data.key and 'action' in rx_packet_data.key['data']:
-                    if 'input' == rx_packet_data.key['data']['action']:
+                    if rx_packet_data.key['data']['action'] == 'input':
                         if 'data' in rx_packet_data.key['data']:
                             input_raw = str(rx_packet_data.key['data']['data'])
                             input_data = ('%s\r\n' % input_raw).encode('utf-8')
                             model_Proc.stdin.write(input_data)
                             model_Proc.stdin.flush()
-                            log_data = ('%s' % input_raw)
+                            log_data = f'{input_raw}'
                             self.send_log_event(log_data)
                             self.log(2, log_data, [
                                 (self.getBotIDStr(), 'default'),
@@ -378,7 +376,7 @@ cache_days = 3
 
         self.config_file_str = self.config_file_str.format(**self.config_file_format)
 
-        with open('./conf/ComWeChatBotClient/' + self.bot_info_dict.hash + '/.env', 'w+', encoding='utf-8') as tmp:
+        with open(f'./conf/ComWeChatBotClient/{self.bot_info_dict.hash}/.env', 'w+', encoding='utf-8') as tmp:
             tmp.write(self.config_file_str)
 
 def releaseDir(dir_path):

@@ -141,9 +141,7 @@ class api_result_data_template(object):
             )
 
         def yes(self):
-            if self['data']['yes'] is True:
-                return True
-            return False
+            return self['data']['yes'] is True
 
     class can_send_record(dict):
         def __init__(self):
@@ -156,9 +154,7 @@ class api_result_data_template(object):
             )
 
         def yes(self):
-            if self['data']['yes'] is True:
-                return True
-            return False
+            return self['data']['yes'] is True
 
     class get_status(dict):
         def __init__(self):
@@ -212,11 +208,10 @@ def get_Event_from_fake_SDK(target_event):
                     OlivOS.messageAPI.dictMessageType[target_event.platform['platform']][target_event.platform['sdk']][
                         target_event.platform['model']]
     target_event.plugin_info['name'] = target_event.sdk_event.fakename
-    if True:
-        if target_event.sdk_event.data['type'] == 'fake_event':
-            target_event.active = True
-            target_event.plugin_info['func_type'] = 'fake_event'
-            target_event.data = target_event.fake_event()
+    if target_event.sdk_event.data['type'] == 'fake_event':
+        target_event.active = True
+        target_event.plugin_info['func_type'] = 'fake_event'
+        target_event.data = target_event.fake_event()
 
 
 class fake_sdk_event(object):
@@ -231,13 +226,12 @@ class fake_sdk_event(object):
             'type': 'fake_event'
         }
         if type(data) == dict:
-            tmp_data.update(data)
+            tmp_data |= data
         self.raw = self.event_dump(data)
         self.data = tmp_data
-        self.platform = {}
-        self.platform.update(tmp_platform)
+        self.platform = dict(tmp_platform)
         if type(platform) == dict:
-            self.platform.update(platform)
+            self.platform |= platform
         self.active = False
         self.bot_info = bot_info
         if self.bot_info is not None:
@@ -261,16 +255,16 @@ def resourcePathTransform(ftype:str, path:str):
     releaseDir(os.path.join('data', ftype))
     exePath = os.path.realpath('.')
     res = None
-    if os.path.isabs(path):
-        res = path
-    else:
-        res = os.path.join(
+    return (
+        path
+        if os.path.isabs(path)
+        else os.path.join(
             exePath,
             'data',
             ftype,
-            os.path.relpath(os.path.realpath(path), exePath)
+            os.path.relpath(os.path.realpath(path), exePath),
         )
-    return res
+    )
 
 def releaseDir(dir_path):
     if not os.path.exists(dir_path):
