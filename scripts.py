@@ -21,18 +21,19 @@ class CommandHandler:
     def __getattr__(self, item: str) -> Callable[..., Awaitable[Any]]:
         return getattr(self, item, None)
     
-    def execute(self, *args: Optional[List[str]]) -> None:
-        getattr(self, self.command_prefix, lambda *args: print("Invalid command"))(*args)
+    def execute(self, _args: Optional[List[str]]) -> None:
+        getattr(self, self.command_prefix, None)(_args)
 
-    def build(self, *args: Optional[List[str]]) -> None:
+    def build(self, _args: Optional[List[str]] = None) -> None:
         platform_commands = {
             "win32": "pyinstaller main.spec",
             "linux": "pyinstaller main_linux.spec",
-            "darwin": "pyinstaller main_mac.spec",  
+            "darwin": "pyinstaller main_mac.spec",
+            "debug": "pyinstaller main_debug.spec"
         }
-        os.system(platform_commands.get(sys.platform, "echo Unsupported platform"))
+        os.system(platform_commands.get((_args[0] if _args else sys.platform), "echo Unsupported platform"))
 
-    def start(self, *args: Optional[List[str]]) -> None:
+    def start(self) -> None:
         os.system("python main.py")
 
 if __name__ == "__main__":

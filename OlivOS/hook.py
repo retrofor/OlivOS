@@ -14,19 +14,56 @@ _  / / /_  /  __  / __ | / /_  / / /____ \
 @Desc      :   None
 """
 
+import os
+import sys
 import platform
-
-# pillow
-from PIL import Image
-
-# sqlite
 import sqlite3
-
-# pyjson5
 import pyjson5
 
-# win
-if platform.system() == "Windows":
+from PIL import Image
+from PyInstaller.utils.hooks import collect_all
+
+if sys.platform == 'win32':
     import win32com.client
     import pythoncom
     import webview
+
+if os.environ.get('OLIVOS_ENV') == "pack":
+    if sys.platform == 'win32':
+        import winsound
+    from lxml import etree
+    import yaml
+    import openpyxl
+    import aiohttp
+    import qrcode
+    import certifi
+    import httpx
+    import prompt_toolkit
+    import regex
+    import rich
+    import smtplib
+    import email
+    
+    if os.environ.get('OLIVOS_ENV') != "debug":
+        # Are we running in a PyInstaller bundle
+        # https://pyinstaller.org/en/stable/runtime-information.html#run-time-information
+        if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+
+            class NullOutput(object):
+                def write(self, string):
+                    pass
+
+                def isatty(self):
+                    return False
+
+            sys.stdout = NullOutput()
+            sys.stderr = NullOutput()
+
+# collect all specific modules
+def hook(hook_api):
+    packages = ["email", "gevent", "sqlite3", "tkinter"]
+    for package in packages:
+        datas, binaries, hiddenimports = collect_all(package)
+        # hook_api.add_datas(datas)
+        # hook_api.add_binaries(binaries)
+        hook_api.add_imports(*hiddenimports)
