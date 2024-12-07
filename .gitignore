@@ -16,3 +16,6 @@ logfile/
 
 # OlivOS lib directory
 lib/
+
+# ruff cache
+.ruff_cache/
