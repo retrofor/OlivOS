@@ -60,7 +60,7 @@ include = ["/README.md", "/LICENSE"]
 packages = ["/OlivOS"]
 
 [project.scripts]
-ovo = "__main__:main"
+ovo = "OlivOS.__main__:main"
 
 [build-system]
 requires = ["hatchling"]
