@@ -295,14 +295,16 @@ class HostUI(object):
 
         self.UIObject["root_frame_skip_root_label_note_commit"] = tkinter.Label(
             self.UIObject["root_frame_skip_root"],
-            text="\n".join([
-                "OlivOS 的大部分功能都是基于账号进行的",
-                "",
-                "无账号的确可以正常运行",
-                "但请确保你真的明白你要做什么",
-                "",
-                "你真的要这么做吗？",
-            ]),
+            text="\n".join(
+                [
+                    "OlivOS 的大部分功能都是基于账号进行的",
+                    "",
+                    "无账号的确可以正常运行",
+                    "但请确保你真的明白你要做什么",
+                    "",
+                    "你真的要这么做吗？",
+                ]
+            ),
         )
         self.UIObject["root_frame_skip_root_label_note_commit"].configure(
             bg=self.UIConfig["color_001"],
@@ -867,9 +869,9 @@ class TreeEditUI(object):
                 tmp_Entry_slot = {}
             tmp_mapping_slot.append(copy.deepcopy(tmp_Entry_slot))
             tmp_type_mapping_list[key_this] = tmp_mapping_slot
-        self.UIData["edit_root_Combobox_dict"]["type_mapping_list"] = (
-            tmp_type_mapping_list
-        )
+        self.UIData["edit_root_Combobox_dict"][
+            "type_mapping_list"
+        ] = tmp_type_mapping_list
 
     def tree_edit_commit(self):
         miss_key_list = None
@@ -1124,17 +1126,19 @@ class TreeEditUI(object):
                     tmp_port = "0"
                 if tmp_access_token == "":
                     tmp_access_token = "NONEED"
-            if not checkByListEmptyOr([
-                tmp_id,
-                tmp_server_auto,
-                tmp_server_type,
-                tmp_host,
-                tmp_port,
-                tmp_access_token,
-                tmp_platform_sdk,
-                tmp_platform_platform,
-                tmp_platform_model,
-            ]):
+            if not checkByListEmptyOr(
+                [
+                    tmp_id,
+                    tmp_server_auto,
+                    tmp_server_type,
+                    tmp_host,
+                    tmp_port,
+                    tmp_access_token,
+                    tmp_platform_sdk,
+                    tmp_platform_platform,
+                    tmp_platform_model,
+                ]
+            ):
                 tmp_id_last = str(tmp_id)
                 try:
                     tmp_id_last = int(tmp_id)

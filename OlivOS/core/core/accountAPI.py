@@ -118,9 +118,9 @@ class Account(object):
             tmp_this_account_data["server"]["type"] = Account_data_this.post_info.type
             tmp_this_account_data["server"]["host"] = Account_data_this.post_info.host
             tmp_this_account_data["server"]["port"] = Account_data_this.post_info.port
-            tmp_this_account_data["server"]["access_token"] = (
-                Account_data_this.post_info.access_token
-            )
+            tmp_this_account_data["server"][
+                "access_token"
+            ] = Account_data_this.post_info.access_token
             tmp_this_account_data["extends"] = Account_data_this.extends
             tmp_this_account_data["debug"] = Account_data_this.debug_mode
             tmp_total_account_data["account"].append(tmp_this_account_data)
@@ -141,9 +141,9 @@ def accountFix(basic_conf_models, bot_info_dict, logger_proc):
                     "127.0.0.1",
                     basic_conf_models[basic_conf_models_this]["server"]["port"],
                 ):
-                    basic_conf_models[basic_conf_models_this]["server"]["port"] = (
-                        g.get_free_port()
-                    )
+                    basic_conf_models[basic_conf_models_this]["server"][
+                        "port"
+                    ] = g.get_free_port()
             if (
                 platform.system() == "Windows"
                 and basic_conf_models[basic_conf_models_this]["type"]
@@ -161,9 +161,9 @@ def accountFix(basic_conf_models, bot_info_dict, logger_proc):
                     "127.0.0.1",
                     basic_conf_models[basic_conf_models_this]["server"]["port"],
                 ):
-                    basic_conf_models[basic_conf_models_this]["server"]["port"] = (
-                        g.get_free_port()
-                    )
+                    basic_conf_models[basic_conf_models_this]["server"][
+                        "port"
+                    ] = g.get_free_port()
         for bot_info_dict_this in bot_info_dict:
             Account_data_this = bot_info_dict[bot_info_dict_this]
             if platform.system() == "Windows":

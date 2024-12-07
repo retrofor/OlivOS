@@ -266,144 +266,180 @@ class Event(object):
             tmp_log_message = ""
             tmp_log_message_default = "N/A"
             if self.plugin_info["func_type"] == "fake_event":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["self", self.base_info["self_id"]]
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [["self", self.base_info["self_id"]]]
+                )
             elif self.plugin_info["func_type"] == "private_message":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["nickname", self.data.sender["nickname"]],
-                    ["user_id", self.data.user_id],
-                    ["message", self.data.message],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["nickname", self.data.sender["nickname"]],
+                        ["user_id", self.data.user_id],
+                        ["message", self.data.message],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "private_message_sent":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["nickname", self.data.sender["nickname"]],
-                    ["user_id", self.data.user_id],
-                    ["message", self.data.message],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["nickname", self.data.sender["nickname"]],
+                        ["user_id", self.data.user_id],
+                        ["message", self.data.message],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_message":
                 tmp_host_id = "-"
                 if self.data.host_id is not None:
                     tmp_host_id = str(self.data.host_id)
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["host_id", tmp_host_id],
-                    ["group_id", self.data.group_id],
-                    ["nickname", self.data.sender["nickname"]],
-                    ["user_id", self.data.user_id],
-                    ["message", self.data.message],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["host_id", tmp_host_id],
+                        ["group_id", self.data.group_id],
+                        ["nickname", self.data.sender["nickname"]],
+                        ["user_id", self.data.user_id],
+                        ["message", self.data.message],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_message_sent":
                 tmp_host_id = "-"
                 if self.data.host_id is not None:
                     tmp_host_id = str(self.data.host_id)
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["host_id", tmp_host_id],
-                    ["group_id", self.data.group_id],
-                    ["nickname", self.data.sender["nickname"]],
-                    ["user_id", self.data.user_id],
-                    ["message", self.data.message],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["host_id", tmp_host_id],
+                        ["group_id", self.data.group_id],
+                        ["nickname", self.data.sender["nickname"]],
+                        ["user_id", self.data.user_id],
+                        ["message", self.data.message],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_file_upload":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["name", self.data.file["name"]],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["name", self.data.file["name"]],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_admin":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["action", self.data.action],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["action", self.data.action],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_member_decrease":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["operator_id", self.data.operator_id],
-                    ["action", self.data.action],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["operator_id", self.data.operator_id],
+                        ["action", self.data.action],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_member_increase":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["operator_id", self.data.operator_id],
-                    ["action", self.data.action],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["operator_id", self.data.operator_id],
+                        ["action", self.data.action],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_ban":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["operator_id", self.data.operator_id],
-                    ["duration", self.data.duration],
-                    ["action", self.data.action],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["operator_id", self.data.operator_id],
+                        ["duration", self.data.duration],
+                        ["action", self.data.action],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "friend_add":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["user_id", self.data.user_id]
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [["user_id", self.data.user_id]]
+                )
             elif self.plugin_info["func_type"] == "group_message_recall":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["operator_id", self.data.operator_id],
-                    ["message_id", self.data.message_id],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["operator_id", self.data.operator_id],
+                        ["message_id", self.data.message_id],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "private_message_recall":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["user_id", self.data.user_id],
-                    ["message_id", self.data.message_id],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["user_id", self.data.user_id],
+                        ["message_id", self.data.message_id],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "poke":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["target_id", self.data.target_id],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["target_id", self.data.target_id],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_lucky_king":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["target_id", self.data.target_id],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["target_id", self.data.target_id],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_honor":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["type", self.data.type],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["type", self.data.type],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "friend_add_request":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["user_id", self.data.user_id],
-                    ["flag", self.data.flag],
-                    ["comment", self.data.comment],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["user_id", self.data.user_id],
+                        ["flag", self.data.flag],
+                        ["comment", self.data.comment],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_add_request":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["flag", self.data.flag],
-                    ["comment", self.data.comment],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["flag", self.data.flag],
+                        ["comment", self.data.comment],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "group_invite_request":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["group_id", self.data.group_id],
-                    ["user_id", self.data.user_id],
-                    ["flag", self.data.flag],
-                    ["comment", self.data.comment],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["group_id", self.data.group_id],
+                        ["user_id", self.data.user_id],
+                        ["flag", self.data.flag],
+                        ["comment", self.data.comment],
+                    ]
+                )
             elif self.plugin_info["func_type"] == "lifecycle":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["action", self.data.action]
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [["action", self.data.action]]
+                )
             elif self.plugin_info["func_type"] == "heartbeat":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["interval", self.data.interval]
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [["interval", self.data.interval]]
+                )
             elif self.plugin_info["func_type"] == "menu":
-                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping([
-                    ["namespace", self.data.namespace],
-                    ["event", self.data.event],
-                ])
+                tmp_globalMetaTableTemp_patch = OlivOS.metadataAPI.getPairMapping(
+                    [
+                        ["namespace", self.data.namespace],
+                        ["event", self.data.event],
+                    ]
+                )
             if self.plugin_info["func_type"] in OlivOS.metadataAPI.eventLogMetaTable:
                 tmp_log_level = OlivOS.metadataAPI.eventLogMetaTable[
                     self.plugin_info["func_type"]

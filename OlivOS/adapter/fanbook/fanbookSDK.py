@@ -156,21 +156,27 @@ def get_Event_from_SDK(target_event):
     target_event.platform["platform"] = target_event.sdk_event.platform["platform"]
     target_event.platform["model"] = target_event.sdk_event.platform["model"]
     target_event.plugin_info["message_mode_rx"] = "olivos_para"
-    if checkByListAnd([
-        not target_event.active,
-        checkInDictSafe("channel_post", target_event.sdk_event.json, []),
-        checkInDictSafe("text", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe("chat", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe("type", target_event.sdk_event.json, ["channel_post", "chat"]),
-        checkInDictSafe("message_id", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe("from", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe(
-            "first_name", target_event.sdk_event.json, ["channel_post", "from"]
-        ),
-        checkEquelInDictSafe(
-            "channel", target_event.sdk_event.json, ["channel_post", "chat", "type"]
-        ),
-    ]):
+    if checkByListAnd(
+        [
+            not target_event.active,
+            checkInDictSafe("channel_post", target_event.sdk_event.json, []),
+            checkInDictSafe("text", target_event.sdk_event.json, ["channel_post"]),
+            checkInDictSafe("chat", target_event.sdk_event.json, ["channel_post"]),
+            checkInDictSafe(
+                "type", target_event.sdk_event.json, ["channel_post", "chat"]
+            ),
+            checkInDictSafe(
+                "message_id", target_event.sdk_event.json, ["channel_post"]
+            ),
+            checkInDictSafe("from", target_event.sdk_event.json, ["channel_post"]),
+            checkInDictSafe(
+                "first_name", target_event.sdk_event.json, ["channel_post", "from"]
+            ),
+            checkEquelInDictSafe(
+                "channel", target_event.sdk_event.json, ["channel_post", "chat", "type"]
+            ),
+        ]
+    ):
         message_obj = None
         message_obj = OlivOS.messageAPI.Message_templet(
             "fanbook_string", target_event.sdk_event.json["channel_post"]["text"]
@@ -212,21 +218,27 @@ def get_Event_from_SDK(target_event):
         target_event.data.extend["host_group_id"] = str(
             target_event.sdk_event.json["channel_post"]["chat"]["guild_id"]
         )
-    elif checkByListAnd([
-        not target_event.active,
-        checkInDictSafe("channel_post", target_event.sdk_event.json, []),
-        checkInDictSafe("photo", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe("chat", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe("type", target_event.sdk_event.json, ["channel_post", "chat"]),
-        checkInDictSafe("message_id", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe("from", target_event.sdk_event.json, ["channel_post"]),
-        checkInDictSafe(
-            "first_name", target_event.sdk_event.json, ["channel_post", "from"]
-        ),
-        checkEquelInDictSafe(
-            "channel", target_event.sdk_event.json, ["channel_post", "chat", "type"]
-        ),
-    ]):
+    elif checkByListAnd(
+        [
+            not target_event.active,
+            checkInDictSafe("channel_post", target_event.sdk_event.json, []),
+            checkInDictSafe("photo", target_event.sdk_event.json, ["channel_post"]),
+            checkInDictSafe("chat", target_event.sdk_event.json, ["channel_post"]),
+            checkInDictSafe(
+                "type", target_event.sdk_event.json, ["channel_post", "chat"]
+            ),
+            checkInDictSafe(
+                "message_id", target_event.sdk_event.json, ["channel_post"]
+            ),
+            checkInDictSafe("from", target_event.sdk_event.json, ["channel_post"]),
+            checkInDictSafe(
+                "first_name", target_event.sdk_event.json, ["channel_post", "from"]
+            ),
+            checkEquelInDictSafe(
+                "channel", target_event.sdk_event.json, ["channel_post", "chat", "type"]
+            ),
+        ]
+    ):
         message_obj = None
         message_para_list = []
         if type(target_event.sdk_event.json["channel_post"]["photo"]) == list:

@@ -192,9 +192,9 @@ _  / / /_  /  __  / __ | / /_  / / /____ \
                             basic_conf_models_this["name"]
                         ].start_unity(tmp_proc_mode)
                         for this_bot_info in plugin_bot_info_dict:
-                            plugin_bot_info_dict[
-                                this_bot_info
-                            ].debug_logger = Proc_dict[basic_conf_models_this["name"]]
+                            plugin_bot_info_dict[this_bot_info].debug_logger = (
+                                Proc_dict[basic_conf_models_this["name"]]
+                            )
                         logger_proc = Proc_dict[basic_conf_models_this["name"]]
                         gLoggerProc = Proc_dict[basic_conf_models_this["name"]]
                     elif basic_conf_models_this["type"] == "plugin":

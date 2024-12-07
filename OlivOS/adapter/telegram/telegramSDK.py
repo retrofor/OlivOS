@@ -123,11 +123,13 @@ class event(object):
         if self.json is not None:
             self.active = True
         self.base_info = {}
-        if checkByListAnd([
-            self.active,
-            checkInDictSafe("message", self.json, []),
-            checkInDictSafe("date", self.json, ["message"]),
-        ]):
+        if checkByListAnd(
+            [
+                self.active,
+                checkInDictSafe("message", self.json, []),
+                checkInDictSafe("date", self.json, ["message"]),
+            ]
+        ):
             self.base_info["time"] = self.json["message"]["date"]
         else:
             self.base_info["time"] = 0
@@ -186,9 +188,9 @@ def checkByListAnd(check_list):
 def get_message_obj_from_SDK(target_event):
     message_obj = None
     if True:
-        if checkByListAnd([
-            checkInDictSafe("text", target_event.sdk_event.json, ["message"])
-        ]):
+        if checkByListAnd(
+            [checkInDictSafe("text", target_event.sdk_event.json, ["message"])]
+        ):
             message_list = []
             tmp_message_raw = target_event.sdk_event.json["message"]["text"]
             tmp_message_raw_1 = ""
@@ -196,9 +198,9 @@ def get_message_obj_from_SDK(target_event):
             tmp_message_raw_3 = ""
             tmp_message_raw_3 = tmp_message_raw
             tmp_message_offset_count = 0
-            if checkByListAnd([
-                checkInDictSafe("entities", target_event.sdk_event.json, ["message"])
-            ]):
+            if checkByListAnd(
+                [checkInDictSafe("entities", target_event.sdk_event.json, ["message"])]
+            ):
                 for entities_this in target_event.sdk_event.json["message"]["entities"]:
                     if entities_this["type"] == "mention":
                         tmp_message_raw_1 = ""
@@ -230,9 +232,9 @@ def get_message_obj_from_SDK(target_event):
                 message_list.append(OlivOS.messageAPI.PARA.text(text=tmp_message_raw_3))
             message_obj = OlivOS.messageAPI.Message_templet("olivos_para", message_list)
             target_event.active = True
-        elif checkByListAnd([
-            checkInDictSafe("photo", target_event.sdk_event.json, ["message"])
-        ]):
+        elif checkByListAnd(
+            [checkInDictSafe("photo", target_event.sdk_event.json, ["message"])]
+        ):
             message_list = []
             if type(target_event.sdk_event.json["message"]["photo"]) is list:
                 message_list.append(
@@ -240,9 +242,9 @@ def get_message_obj_from_SDK(target_event):
                         target_event.sdk_event.json["message"]["photo"][0]["file_id"]
                     )
                 )
-            if checkByListAnd([
-                checkInDictSafe("caption", target_event.sdk_event.json, ["message"])
-            ]):
+            if checkByListAnd(
+                [checkInDictSafe("caption", target_event.sdk_event.json, ["message"])]
+            ):
                 message_list.append(
                     OlivOS.messageAPI.PARA.text(
                         text=str(target_event.sdk_event.json["message"]["caption"])
@@ -250,9 +252,9 @@ def get_message_obj_from_SDK(target_event):
                 )
             message_obj = OlivOS.messageAPI.Message_templet("olivos_para", message_list)
             target_event.active = True
-        elif checkByListAnd([
-            checkInDictSafe("sticker", target_event.sdk_event.json, ["message"])
-        ]):
+        elif checkByListAnd(
+            [checkInDictSafe("sticker", target_event.sdk_event.json, ["message"])]
+        ):
             message_list = []
             message_list.append(
                 OlivOS.messageAPI.PARA.image(
@@ -296,19 +298,23 @@ def get_Event_from_SDK(target_event):
                 ]
         except:
             pass
-    if checkByListAnd([
-        not target_event.active,
-        checkInDictSafe("message", target_event.sdk_event.json, []),
-        checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("type", target_event.sdk_event.json, ["message", "chat"]),
-        checkInDictSafe("message_id", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("first_name", target_event.sdk_event.json, ["message", "from"]),
-        # checkInDictSafe('text', target_event.sdk_event.json, ['message']),
-        checkEquelInDictSafe(
-            "private", target_event.sdk_event.json, ["message", "chat", "type"]
-        ),
-    ]):
+    if checkByListAnd(
+        [
+            not target_event.active,
+            checkInDictSafe("message", target_event.sdk_event.json, []),
+            checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("type", target_event.sdk_event.json, ["message", "chat"]),
+            checkInDictSafe("message_id", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe(
+                "first_name", target_event.sdk_event.json, ["message", "from"]
+            ),
+            # checkInDictSafe('text', target_event.sdk_event.json, ['message']),
+            checkEquelInDictSafe(
+                "private", target_event.sdk_event.json, ["message", "chat", "type"]
+            ),
+        ]
+    ):
         message_obj = None
         message_obj = get_message_obj_from_SDK(target_event)
         if not target_event.active:
@@ -344,21 +350,25 @@ def get_Event_from_SDK(target_event):
             target_event.data.extend["sub_self_id"] = str(
                 sdkSubSelfInfo[plugin_event_bot_hash]
             )
-    if checkByListAnd([
-        not target_event.active,
-        "message" in target_event.sdk_event.json,
-        checkInDictSafe("message", target_event.sdk_event.json, []),
-        checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("type", target_event.sdk_event.json, ["message", "chat"]),
-        checkInDictSafe("message_id", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
-        checkInDictSafe("first_name", target_event.sdk_event.json, ["message", "from"]),
-        # checkInDictSafe('text', target_event.sdk_event.json, ['message']),
-        checkEquelInDictSafe(
-            "group", target_event.sdk_event.json, ["message", "chat", "type"]
-        ),
-    ]):
+    if checkByListAnd(
+        [
+            not target_event.active,
+            "message" in target_event.sdk_event.json,
+            checkInDictSafe("message", target_event.sdk_event.json, []),
+            checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("type", target_event.sdk_event.json, ["message", "chat"]),
+            checkInDictSafe("message_id", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
+            checkInDictSafe(
+                "first_name", target_event.sdk_event.json, ["message", "from"]
+            ),
+            # checkInDictSafe('text', target_event.sdk_event.json, ['message']),
+            checkEquelInDictSafe(
+                "group", target_event.sdk_event.json, ["message", "chat", "type"]
+            ),
+        ]
+    ):
         message_obj = None
         message_obj = get_message_obj_from_SDK(target_event)
         if not target_event.active:
@@ -396,21 +406,25 @@ def get_Event_from_SDK(target_event):
             target_event.data.extend["sub_self_id"] = str(
                 sdkSubSelfInfo[plugin_event_bot_hash]
             )
-    if checkByListAnd([
-        not target_event.active,
-        "message" in target_event.sdk_event.json,
-        checkInDictSafe("message", target_event.sdk_event.json, []),
-        checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("type", target_event.sdk_event.json, ["message", "chat"]),
-        checkInDictSafe("message_id", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
-        checkInDictSafe("first_name", target_event.sdk_event.json, ["message", "from"]),
-        # checkInDictSafe('text', target_event.sdk_event.json, ['message']),
-        checkEquelInDictSafe(
-            "supergroup", target_event.sdk_event.json, ["message", "chat", "type"]
-        ),
-    ]):
+    if checkByListAnd(
+        [
+            not target_event.active,
+            "message" in target_event.sdk_event.json,
+            checkInDictSafe("message", target_event.sdk_event.json, []),
+            checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("type", target_event.sdk_event.json, ["message", "chat"]),
+            checkInDictSafe("message_id", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
+            checkInDictSafe(
+                "first_name", target_event.sdk_event.json, ["message", "from"]
+            ),
+            # checkInDictSafe('text', target_event.sdk_event.json, ['message']),
+            checkEquelInDictSafe(
+                "supergroup", target_event.sdk_event.json, ["message", "chat", "type"]
+            ),
+        ]
+    ):
         message_obj = None
         message_obj = get_message_obj_from_SDK(target_event)
         if not target_event.active:
@@ -448,19 +462,23 @@ def get_Event_from_SDK(target_event):
             target_event.data.extend["sub_self_id"] = sdkSubSelfInfo[
                 plugin_event_bot_hash
             ]
-    if checkByListAnd([
-        not target_event.active,
-        "message" in target_event.sdk_event.json,
-        checkInDictSafe("message", target_event.sdk_event.json, []),
-        checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
-        checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("id", target_event.sdk_event.json, ["message", "chat"]),
-        checkInDictSafe("new_chat_member", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe(
-            "id", target_event.sdk_event.json, ["message", "new_chat_member"]
-        ),
-    ]):
+    if checkByListAnd(
+        [
+            not target_event.active,
+            "message" in target_event.sdk_event.json,
+            checkInDictSafe("message", target_event.sdk_event.json, []),
+            checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
+            checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("id", target_event.sdk_event.json, ["message", "chat"]),
+            checkInDictSafe(
+                "new_chat_member", target_event.sdk_event.json, ["message"]
+            ),
+            checkInDictSafe(
+                "id", target_event.sdk_event.json, ["message", "new_chat_member"]
+            ),
+        ]
+    ):
         target_event.active = True
         target_event.plugin_info["func_type"] = "group_member_increase"
         target_event.data = target_event.group_member_increase(
@@ -469,19 +487,23 @@ def get_Event_from_SDK(target_event):
             target_event.sdk_event.json["message"]["new_chat_member"]["id"],
         )
         target_event.data.action = "invite"
-    if checkByListAnd([
-        not target_event.active,
-        "message" in target_event.sdk_event.json,
-        checkInDictSafe("message", target_event.sdk_event.json, []),
-        checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
-        checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe("id", target_event.sdk_event.json, ["message", "chat"]),
-        checkInDictSafe("left_chat_member", target_event.sdk_event.json, ["message"]),
-        checkInDictSafe(
-            "id", target_event.sdk_event.json, ["message", "left_chat_member"]
-        ),
-    ]):
+    if checkByListAnd(
+        [
+            not target_event.active,
+            "message" in target_event.sdk_event.json,
+            checkInDictSafe("message", target_event.sdk_event.json, []),
+            checkInDictSafe("from", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("id", target_event.sdk_event.json, ["message", "from"]),
+            checkInDictSafe("chat", target_event.sdk_event.json, ["message"]),
+            checkInDictSafe("id", target_event.sdk_event.json, ["message", "chat"]),
+            checkInDictSafe(
+                "left_chat_member", target_event.sdk_event.json, ["message"]
+            ),
+            checkInDictSafe(
+                "id", target_event.sdk_event.json, ["message", "left_chat_member"]
+            ),
+        ]
+    ):
         target_event.active = True
         target_event.plugin_info["func_type"] = "group_member_decrease"
         target_event.data = target_event.group_member_decrease(

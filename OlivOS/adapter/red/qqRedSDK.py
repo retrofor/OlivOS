@@ -259,19 +259,23 @@ class PAYLOAD(object):
             elements_list = []
             for message_this in message.data:
                 if type(message_this) is OlivOS.messageAPI.PARA.text:
-                    elements_list.append({
-                        "elementType": 1,
-                        "textElement": {"content": message_this.data["text"]},
-                    })
+                    elements_list.append(
+                        {
+                            "elementType": 1,
+                            "textElement": {"content": message_this.data["text"]},
+                        }
+                    )
                 if type(message_this) is OlivOS.messageAPI.PARA.at:
-                    elements_list.append({
-                        "elementType": 1,
-                        "textElement": {
-                            "content": message_this.data["id"],
-                            "atType": 2,
-                            "atNtUin": message_this.data["id"],
-                        },
-                    })
+                    elements_list.append(
+                        {
+                            "elementType": 1,
+                            "textElement": {
+                                "content": message_this.data["id"],
+                                "atType": 2,
+                                "atNtUin": message_this.data["id"],
+                            },
+                        }
+                    )
             self.payload = {
                 "peer": {
                     "chatType": target_type,  # private 1, group 2

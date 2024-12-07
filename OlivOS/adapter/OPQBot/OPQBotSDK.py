@@ -925,7 +925,9 @@ class event_action(object):
                 ):
                     res_data["active"] = True
                     for raw_obj_this in raw_obj["GroupLists"]:
-                        tmp_res_data_this = OlivOS.contentAPI.api_result_data_template.get_user_info_strip()
+                        tmp_res_data_this = (
+                            OlivOS.contentAPI.api_result_data_template.get_user_info_strip()
+                        )
                         tmp_res_data_this["name"] = init_api_do_mapping_for_dict(
                             raw_obj_this, ["GroupName"], str
                         )

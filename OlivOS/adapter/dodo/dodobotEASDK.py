@@ -168,16 +168,18 @@ class api_templet(object):
     def do_api(self):
         res = {}
         if self.node_ext == "sendMessage":
-            res.update({
-                "Type": 1,
-                "Context": self.data.text,
-                "Account": {
-                    "Uid": self.bot_info.id,
-                    "Token": self.bot_info.access_token,
-                },
-                "Channel": self.data.chat_id,
-                "ReferencedMessageId": None,
-            })
+            res.update(
+                {
+                    "Type": 1,
+                    "Context": self.data.text,
+                    "Account": {
+                        "Uid": self.bot_info.id,
+                        "Token": self.bot_info.access_token,
+                    },
+                    "Channel": self.data.chat_id,
+                    "ReferencedMessageId": None,
+                }
+            )
         self.res = res
         return res
 

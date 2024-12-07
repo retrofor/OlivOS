@@ -18,6 +18,7 @@ import requests as req
 import json
 import time
 import uuid
+
 # import urllib
 
 import OlivOS
@@ -188,13 +189,15 @@ class event_action(object):
                     if this_msg.data.content != "":
                         this_msg.do_api()
                 this_msg.data.content = ""
-                this_msg.data.resourceJson = json.dumps({
-                    "resourceType": 1,
-                    "useType": 1,
-                    "width": 283,
-                    "height": 283,
-                    "resourceUrl": message_this.data["file"],
-                })
+                this_msg.data.resourceJson = json.dumps(
+                    {
+                        "resourceType": 1,
+                        "useType": 1,
+                        "width": 283,
+                        "height": 283,
+                        "resourceUrl": message_this.data["file"],
+                    }
+                )
                 this_msg.data.type = 2
                 this_msg.data.tk = uuid.uuid4()
                 if this_msg.data.resourceJson != "{}":
@@ -228,13 +231,15 @@ class event_action(object):
                     this_msg.do_api()
             elif type(message_this) == OlivOS.messageAPI.PARA.image:
                 this_msg.data.content = ""
-                this_msg.data.resourceJson = json.dumps({
-                    "resourceType": 1,
-                    "useType": 1,
-                    "width": 283,
-                    "height": 283,
-                    "resourceUrl": message_this.data["file"],
-                })
+                this_msg.data.resourceJson = json.dumps(
+                    {
+                        "resourceType": 1,
+                        "useType": 1,
+                        "width": 283,
+                        "height": 283,
+                        "resourceUrl": message_this.data["file"],
+                    }
+                )
                 this_msg.data.type = 2
                 this_msg.data.tk = uuid.uuid4()
                 if this_msg.data.resourceJson != "{}":

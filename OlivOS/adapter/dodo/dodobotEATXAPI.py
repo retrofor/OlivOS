@@ -117,11 +117,11 @@ class server(OlivOS.API.Proc_templet):
                                         rx_packet_data_data["Account"]["Uid"]
                                         in self.Proc_data["platform_bot_info_dict"]
                                     ):
-                                        rx_packet_data_data["Account"]["Token"] = (
-                                            self.Proc_data["platform_bot_info_dict"][
-                                                rx_packet_data_data["Account"]["Uid"]
-                                            ].access_token
-                                        )
+                                        rx_packet_data_data["Account"][
+                                            "Token"
+                                        ] = self.Proc_data["platform_bot_info_dict"][
+                                            rx_packet_data_data["Account"]["Uid"]
+                                        ].access_token
                                     await websocket.send(
                                         json.dumps(rx_packet_data_data)
                                     )

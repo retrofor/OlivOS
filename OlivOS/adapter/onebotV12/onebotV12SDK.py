@@ -131,12 +131,14 @@ def get_Event_from_SDK(target_event: OlivOS.API.Event):
             target_event.data.raw_message = target_event.data.message
             target_event.data.raw_message_sdk = target_event.data.message_sdk
             target_event.data.font = None
-            target_event.data.sender.update({
-                "id": target_event.data.user_id,
-                "user_id": target_event.data.user_id,
-                "name": "NoBody",
-                "nickname": "NoBody",
-            })
+            target_event.data.sender.update(
+                {
+                    "id": target_event.data.user_id,
+                    "user_id": target_event.data.user_id,
+                    "name": "NoBody",
+                    "nickname": "NoBody",
+                }
+            )
             if "user_name" in target_event.sdk_event.json:
                 target_event.data.sender["name"] = target_event.sdk_event.json[
                     "user_name"
@@ -167,12 +169,14 @@ def get_Event_from_SDK(target_event: OlivOS.API.Event):
             target_event.data.raw_message = target_event.data.message
             target_event.data.raw_message_sdk = target_event.data.message_sdk
             target_event.data.font = None
-            target_event.data.sender.update({
-                "id": target_event.data.user_id,
-                "user_id": target_event.data.user_id,
-                "name": "NoBody",
-                "nickname": "NoBody",
-            })
+            target_event.data.sender.update(
+                {
+                    "id": target_event.data.user_id,
+                    "user_id": target_event.data.user_id,
+                    "name": "NoBody",
+                    "nickname": "NoBody",
+                }
+            )
             if "user_name" in target_event.sdk_event.json:
                 target_event.data.sender["name"] = target_event.sdk_event.json[
                     "user_name"
@@ -203,12 +207,14 @@ def get_Event_from_SDK(target_event: OlivOS.API.Event):
             target_event.data.raw_message = target_event.data.message
             target_event.data.raw_message_sdk = target_event.data.message_sdk
             target_event.data.font = None
-            target_event.data.sender.update({
-                "id": target_event.data.user_id,
-                "user_id": target_event.data.user_id,
-                "name": "NoBody",
-                "nickname": "NoBody",
-            })
+            target_event.data.sender.update(
+                {
+                    "id": target_event.data.user_id,
+                    "user_id": target_event.data.user_id,
+                    "name": "NoBody",
+                    "nickname": "NoBody",
+                }
+            )
             if "user_name" in target_event.sdk_event.json:
                 target_event.data.sender["name"] = target_event.sdk_event.json[
                     "user_name"

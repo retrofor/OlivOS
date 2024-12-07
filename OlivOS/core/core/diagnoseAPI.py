@@ -343,17 +343,19 @@ class logger(OlivOS.API.Proc_templet):
             )
         elif flag_have_color:
             log_output_str = "%s%s%s" % (
-                self.log_output_shader_key([
-                    self.Proc_config["color_dict"]["shader"][tmp_shader],
+                self.log_output_shader_key(
                     [
-                        self.Proc_config["color_dict"]["type"]["front"],
-                        self.Proc_config["color_dict"]["color"][tmp_color],
-                    ],
-                ]),
+                        self.Proc_config["color_dict"]["shader"][tmp_shader],
+                        [
+                            self.Proc_config["color_dict"]["type"]["front"],
+                            self.Proc_config["color_dict"]["color"][tmp_color],
+                        ],
+                    ]
+                ),
                 log_output_str,
-                self.log_output_shader_key([
-                    self.Proc_config["color_dict"]["shader"]["default"]
-                ]),
+                self.log_output_shader_key(
+                    [self.Proc_config["color_dict"]["shader"]["default"]]
+                ),
             )
             print(log_output_str)
         else:

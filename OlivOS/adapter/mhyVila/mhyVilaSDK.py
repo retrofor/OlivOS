@@ -287,8 +287,12 @@ class payload_template(object):
 
     class dataHeader_T(object):
         def __init__(self):
-            self.HeaderLen: int = 24  # uint32    变长头总长度，变长头部分所有字段（包括HeaderLen本身）的总长度。 注：也就是说这玩意每个版本是固定的
-            self.ID: int = 1  # uint64    协议包序列ID，同一条连接上的发出的协议包应该单调递增，相同序列ID且Flag字段相同的包应该被认为是同一个包
+            self.HeaderLen: int = (
+                24  # uint32    变长头总长度，变长头部分所有字段（包括HeaderLen本身）的总长度。 注：也就是说这玩意每个版本是固定的
+            )
+            self.ID: int = (
+                1  # uint64    协议包序列ID，同一条连接上的发出的协议包应该单调递增，相同序列ID且Flag字段相同的包应该被认为是同一个包
+            )
             self.Flag: int = (
                 1  # uint32    配合bizType使用，用于标识同一个bizType协议的方向。
             )

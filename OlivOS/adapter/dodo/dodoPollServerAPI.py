@@ -126,9 +126,9 @@ class server(OlivOS.API.Proc_templet):
                                 continue
                         except:
                             continue
-                    self.Proc_data["bot_info_island_list"][bot_info_this] = (
-                        tmp_island_list
-                    )
+                    self.Proc_data["bot_info_island_list"][
+                        bot_info_this
+                    ] = tmp_island_list
                     self.Proc_data["bot_info_first"][bot_info_this] = True
                 for tmp_island_list_this in self.Proc_data["bot_info_island_list"][
                     bot_info_this

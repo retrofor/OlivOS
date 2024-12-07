@@ -566,9 +566,11 @@ class event_action(object):
             res_list = []
             for res_this in res.split("\n"):
                 if res_this != "":
-                    res_list.append({
-                        "name": res_this,
-                    })
+                    res_list.append(
+                        {
+                            "name": res_this,
+                        }
+                    )
             this_msg.data.embed = {"prompt": res, "fields": res_list}
             this_msg.do_api()
 

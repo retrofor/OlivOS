@@ -683,14 +683,16 @@ class event_action(object):
                 if pic_file != None:
                     this_msg.imagedata.append(pic_file)
                     pic_name = "image_%d.png" % image_count
-                    this_msg.data.embeds.append({
-                        "thumbnail": {"url": "attachment://%s" % pic_name}
-                    })
-                    this_msg.data.attachments.append({
-                        "id": image_count,
-                        "description": "",
-                        "filename": pic_name,
-                    })
+                    this_msg.data.embeds.append(
+                        {"thumbnail": {"url": "attachment://%s" % pic_name}}
+                    )
+                    this_msg.data.attachments.append(
+                        {
+                            "id": image_count,
+                            "description": "",
+                            "filename": pic_name,
+                        }
+                    )
                     image_count += 1
                     this_msg.do_api()
             elif type(message_this) == OlivOS.messageAPI.PARA.text:

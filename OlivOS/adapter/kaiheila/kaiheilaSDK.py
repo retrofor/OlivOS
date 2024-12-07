@@ -904,39 +904,47 @@ class event_action(object):
                     msg_type_last = "media"
             elif message_type == "card":
                 if type(message_this) == OlivOS.messageAPI.PARA.text:
-                    res_data["modules"].append({
-                        "type": "section",
-                        "text": {
-                            "type": "plain-text",
-                            "content": message_this.data["text"],
-                        },
-                    })
+                    res_data["modules"].append(
+                        {
+                            "type": "section",
+                            "text": {
+                                "type": "plain-text",
+                                "content": message_this.data["text"],
+                            },
+                        }
+                    )
                 elif type(message_this) == OlivOS.messageAPI.PARA.image:
                     image_path = event_action.setResourceUploadFast(
                         target_event, message_this.data["file"], "images"
                     )
-                    res_data["modules"].append({
-                        "type": "image-group",
-                        "elements": [{"type": "image", "src": image_path}],
-                    })
+                    res_data["modules"].append(
+                        {
+                            "type": "image-group",
+                            "elements": [{"type": "image", "src": image_path}],
+                        }
+                    )
                 elif type(message_this) == OlivOS.messageAPI.PARA.video:
                     video_path = event_action.setResourceUploadFast(
                         target_event, message_this.data["file"], "videos"
                     )
-                    res_data["modules"].append({
-                        "type": "video",
-                        "title": "video.mp4",
-                        "src": video_path,
-                    })
+                    res_data["modules"].append(
+                        {
+                            "type": "video",
+                            "title": "video.mp4",
+                            "src": video_path,
+                        }
+                    )
                 elif type(message_this) == OlivOS.messageAPI.PARA.record:
                     audio_path = event_action.setResourceUploadFast(
                         target_event, message_this.data["file"], "audios"
                     )
-                    res_data["modules"].append({
-                        "type": "audio",
-                        "title": "audio.mp4",
-                        "src": audio_path,
-                    })
+                    res_data["modules"].append(
+                        {
+                            "type": "audio",
+                            "title": "audio.mp4",
+                            "src": audio_path,
+                        }
+                    )
         if message_type == "text":
             if len(res_data) > 0:
                 this_msg.data.type = 9

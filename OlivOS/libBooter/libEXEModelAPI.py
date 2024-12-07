@@ -1023,7 +1023,9 @@ database: # 数据库相关设置
             + str(self.target_proc["server"]["port"])
             + "/OlivOSMsgApi/qq/onebot/gocqhttp"
         )
-        self.config_file_format["sign-servers-data"] = """
+        self.config_file_format[
+            "sign-servers-data"
+        ] = """
     - url: '-'
       key: '-'
       authorization: '-'
@@ -1041,11 +1043,16 @@ database: # 数据库相关设置
                     and "addr" in tmp_data_this
                     and "key" in tmp_data_this
                 ):
-                    self.config_file_format["sign-servers-data"] += """
+                    self.config_file_format[
+                        "sign-servers-data"
+                    ] += """
     - url: '%s'
       key: '%s'
       authorization: '-'
-""" % (tmp_data_this["addr"], tmp_data_this["key"])
+""" % (
+                        tmp_data_this["addr"],
+                        tmp_data_this["key"],
+                    )
 
         if (
             "qsign-server-protocal" in self.bot_info_dict.extends
@@ -1053,13 +1060,16 @@ database: # 数据库相关设置
             and self.bot_info_dict.extends["qsign-server-protocal"]
             in gProtocalEXECheckList
         ):
-            self.config_file_format["sign-servers-data"] = """
+            self.config_file_format["sign-servers-data"] = (
+                """
     - url: 'http://localhost:%s/'
       key: '%s'
       authorization: '-'
-""" % (
-                str(self.sub_target_proc["server"]["port"]),
-                str(self.sub_target_proc["server"]["token"]),
+"""
+                % (
+                    str(self.sub_target_proc["server"]["port"]),
+                    str(self.sub_target_proc["server"]["token"]),
+                )
             )
             self.config_file_format["auto-register"] = "true"
 
@@ -1193,35 +1203,37 @@ def deviceInfoFix(deviceInfo: dict):
         flagRelease = True
 
     if flagRelease:
-        deviceResPatch.update({
-            "display": "MIRAI.123456.001",
-            "product": "mirai",
-            "device": "mirai",
-            "board": "mirai",
-            "model": "mirai",
-            "boot_id": "cb886ae2-00b6-4d68-a230-787f111d12c7",
-            "proc_version": "Linux version 3.0.31-cb886ae2 (android-build@xxx.xxx.xxx.xxx.com)",
-            "imei": "468356291846738",
-            "brand": "mamoe",
-            "bootloader": "unknown",
-            "base_band": "",
-            "version": {
-                "incremental": "5891938",
-                "release": "10",
-                "codename": "REL",
-                "sdk": 29,
-            },
-            "sim_info": "T-Mobile",
-            "os_type": "android",
-            "mac_address": "00:50:56:C0:00:08",
-            "ip_address": [10, 0, 1, 3],
-            "wifi_bssid": "00:50:56:C0:00:08",
-            "wifi_ssid": "<unknown ssid>",
-            "android_id": "MIRAI.123456.001",
-            "apn": "wifi",
-            "vendor_name": "MIUI",
-            "vendor_os_name": "mirai",
-        })
+        deviceResPatch.update(
+            {
+                "display": "MIRAI.123456.001",
+                "product": "mirai",
+                "device": "mirai",
+                "board": "mirai",
+                "model": "mirai",
+                "boot_id": "cb886ae2-00b6-4d68-a230-787f111d12c7",
+                "proc_version": "Linux version 3.0.31-cb886ae2 (android-build@xxx.xxx.xxx.xxx.com)",
+                "imei": "468356291846738",
+                "brand": "mamoe",
+                "bootloader": "unknown",
+                "base_band": "",
+                "version": {
+                    "incremental": "5891938",
+                    "release": "10",
+                    "codename": "REL",
+                    "sdk": 29,
+                },
+                "sim_info": "T-Mobile",
+                "os_type": "android",
+                "mac_address": "00:50:56:C0:00:08",
+                "ip_address": [10, 0, 1, 3],
+                "wifi_bssid": "00:50:56:C0:00:08",
+                "wifi_ssid": "<unknown ssid>",
+                "android_id": "MIRAI.123456.001",
+                "apn": "wifi",
+                "vendor_name": "MIUI",
+                "vendor_os_name": "mirai",
+            }
+        )
         deviceResPatch["android_id"] = "MIRAI.%s.001" % getRandomStringOfInt(6)
         deviceResPatch["finger_print"] = (
             "mamoe/mirai/mirai:10/MIRAI.200122.001/%s:user/release-keys"

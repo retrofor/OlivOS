@@ -38,14 +38,16 @@ class api_result_data_template(object):
         def __init__(self):
             self["active"] = False
             self["data"] = {}
-            self["data"].update({
-                "message_id": None,
-                "id": -1,
-                "sender": {"id": -1, "name": None},
-                "time": -1,
-                "message": None,
-                "raw_message": None,
-            })
+            self["data"].update(
+                {
+                    "message_id": None,
+                    "id": -1,
+                    "sender": {"id": -1, "name": None},
+                    "time": -1,
+                    "message": None,
+                    "raw_message": None,
+                }
+            )
 
     class get_login_info(dict):
         def __init__(self):
@@ -85,20 +87,22 @@ class api_result_data_template(object):
 
     class get_group_member_info_strip(dict):
         def __init__(self):
-            self.update({
-                "name": None,
-                "id": -1,
-                "user_id": -1,
-                "group_id": -1,
-                "times": {
-                    "join_time": 0,
-                    "last_sent_time": 0,
-                    "shut_up_timestamp": 0,
-                },
-                "role": None,
-                "card": None,
-                "title": None,
-            })
+            self.update(
+                {
+                    "name": None,
+                    "id": -1,
+                    "user_id": -1,
+                    "group_id": -1,
+                    "times": {
+                        "join_time": 0,
+                        "last_sent_time": 0,
+                        "shut_up_timestamp": 0,
+                    },
+                    "role": None,
+                    "card": None,
+                    "title": None,
+                }
+            )
 
     class get_group_member_info(dict):
         def __init__(self):
@@ -137,31 +141,35 @@ class api_result_data_template(object):
         def __init__(self):
             self["active"] = False
             self["data"] = {}
-            self["data"].update({
-                "online": False,
-                "status": {
-                    "packet_received": 0,
-                    "packet_sent": 0,
-                    "packet_lost": 0,
-                    "message_received": 0,
-                    "message_sent": 0,
-                    "disconnect_times": 0,
-                    "lost_times": 0,
-                    "last_message_time": 0,
-                },
-            })
+            self["data"].update(
+                {
+                    "online": False,
+                    "status": {
+                        "packet_received": 0,
+                        "packet_sent": 0,
+                        "packet_lost": 0,
+                        "message_received": 0,
+                        "message_sent": 0,
+                        "disconnect_times": 0,
+                        "lost_times": 0,
+                        "last_message_time": 0,
+                    },
+                }
+            )
 
     class get_version_info(dict):
         def __init__(self):
             self["active"] = False
             self["data"] = {}
-            self["data"].update({
-                "name": None,
-                "version_full": None,
-                "version": None,
-                "path": None,
-                "os": None,
-            })
+            self["data"].update(
+                {
+                    "name": None,
+                    "version_full": None,
+                    "version": None,
+                    "path": None,
+                    "os": None,
+                }
+            )
 
 
 def get_Event_from_fake_SDK(target_event):

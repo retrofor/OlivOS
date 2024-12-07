@@ -624,16 +624,20 @@ class shallow(OlivOS.API.Proc_templet):
                         if len(plugin_models_this_menu) > 0:
                             tmp_plugin_list_this = []
                             for plugin_models_this_menu_this in plugin_models_this_menu:
-                                tmp_plugin_list_this.append([
-                                    plugin_models_this_menu_this["title"],
-                                    plugin_models_this["namespace"],
-                                    plugin_models_this_menu_this["event"],
-                                ])
+                                tmp_plugin_list_this.append(
+                                    [
+                                        plugin_models_this_menu_this["title"],
+                                        plugin_models_this["namespace"],
+                                        plugin_models_this_menu_this["event"],
+                                    ]
+                                )
                             if len(tmp_plugin_list_this) > 0:
-                                tmp_plugin_list_send.append([
-                                    plugin_models_this["name"],
-                                    tmp_plugin_list_this,
-                                ])
+                                tmp_plugin_list_send.append(
+                                    [
+                                        plugin_models_this["name"],
+                                        tmp_plugin_list_this,
+                                    ]
+                                )
                             else:
                                 tmp_plugin_list_this = None
                 tmp_plugin_dict_send[plugin_models_this["namespace"]] = [

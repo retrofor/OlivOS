@@ -211,7 +211,9 @@ class dock(OlivOS.API.Proc_templet):
                                                 OlivOS.multiLoginUIAPI.run_HostUI_asayc(
                                                     plugin_bot_info_dict=rx_packet_data.key[
                                                         "data"
-                                                    ]["bot_info"],
+                                                    ][
+                                                        "bot_info"
+                                                    ],
                                                     control_queue=self.Proc_info.control_queue,
                                                 )
                                         elif (
@@ -283,20 +285,24 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ]["hash"]
+                                                                        ][
+                                                                            "hash"
+                                                                        ]
                                                                     ].id
                                                                 )
                                                             )
                                                             self.UIData[
                                                                 "shallow_napcat_menu_list"
-                                                            ].append([
-                                                                tmp_title,
-                                                                rx_packet_data.key[
-                                                                    "data"
-                                                                ]["hash"],
-                                                                "",
-                                                                "napcat",
-                                                            ])
+                                                            ].append(
+                                                                [
+                                                                    tmp_title,
+                                                                    rx_packet_data.key[
+                                                                        "data"
+                                                                    ]["hash"],
+                                                                    "",
+                                                                    "napcat",
+                                                                ]
+                                                            )
                                                             self.updateShallowMenuList()
                                                     if (
                                                         self.UIObject["root_shallow"]
@@ -458,20 +464,24 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ]["hash"]
+                                                                        ][
+                                                                            "hash"
+                                                                        ]
                                                                     ].id
                                                                 )
                                                             )
                                                             self.UIData[
                                                                 "shallow_gocqhttp_menu_list"
-                                                            ].append([
-                                                                tmp_title,
-                                                                rx_packet_data.key[
-                                                                    "data"
-                                                                ]["hash"],
-                                                                "",
-                                                                "gocqhttp",
-                                                            ])
+                                                            ].append(
+                                                                [
+                                                                    tmp_title,
+                                                                    rx_packet_data.key[
+                                                                        "data"
+                                                                    ]["hash"],
+                                                                    "",
+                                                                    "gocqhttp",
+                                                                ]
+                                                            )
                                                             self.updateShallowMenuList()
                                                     if (
                                                         self.UIObject["root_shallow"]
@@ -656,20 +666,24 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ]["hash"]
+                                                                        ][
+                                                                            "hash"
+                                                                        ]
                                                                     ].id
                                                                 )
                                                             )
                                                             self.UIData[
                                                                 "shallow_walleq_menu_list"
-                                                            ].append([
-                                                                tmp_title,
-                                                                rx_packet_data.key[
-                                                                    "data"
-                                                                ]["hash"],
-                                                                "",
-                                                                "walleq",
-                                                            ])
+                                                            ].append(
+                                                                [
+                                                                    tmp_title,
+                                                                    rx_packet_data.key[
+                                                                        "data"
+                                                                    ]["hash"],
+                                                                    "",
+                                                                    "walleq",
+                                                                ]
+                                                            )
                                                             self.updateShallowMenuList()
                                                     if (
                                                         self.UIObject["root_shallow"]
@@ -831,20 +845,24 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ]["hash"]
+                                                                        ][
+                                                                            "hash"
+                                                                        ]
                                                                     ].id
                                                                 )
                                                             )
                                                             self.UIData[
                                                                 "shallow_cwcb_menu_list"
-                                                            ].append([
-                                                                tmp_title,
-                                                                rx_packet_data.key[
-                                                                    "data"
-                                                                ]["hash"],
-                                                                "",
-                                                                "ComWeChatBotClient",
-                                                            ])
+                                                            ].append(
+                                                                [
+                                                                    tmp_title,
+                                                                    rx_packet_data.key[
+                                                                        "data"
+                                                                    ]["hash"],
+                                                                    "",
+                                                                    "ComWeChatBotClient",
+                                                                ]
+                                                            )
                                                             self.updateShallowMenuList()
                                                     if (
                                                         self.UIObject["root_shallow"]
@@ -963,20 +981,24 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ]["hash"]
+                                                                        ][
+                                                                            "hash"
+                                                                        ]
                                                                     ].id
                                                                 )
                                                             )
                                                             self.UIData[
                                                                 "shallow_opqbot_menu_list"
-                                                            ].append([
-                                                                tmp_title,
-                                                                rx_packet_data.key[
-                                                                    "data"
-                                                                ]["hash"],
-                                                                "",
-                                                                "opqbot",
-                                                            ])
+                                                            ].append(
+                                                                [
+                                                                    tmp_title,
+                                                                    rx_packet_data.key[
+                                                                        "data"
+                                                                    ]["hash"],
+                                                                    "",
+                                                                    "opqbot",
+                                                                ]
+                                                            )
                                                             self.updateShallowMenuList()
                                                     if (
                                                         self.UIObject["root_shallow"]
@@ -1117,20 +1139,24 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ]["hash"]
+                                                                        ][
+                                                                            "hash"
+                                                                        ]
                                                                     ].id
                                                                 )
                                                             )
                                                             self.UIData[
                                                                 "shallow_virtual_terminal_menu_list"
-                                                            ].append([
-                                                                tmp_title,
-                                                                rx_packet_data.key[
-                                                                    "data"
-                                                                ]["hash"],
-                                                                "",
-                                                                "virtual_terminal",
-                                                            ])
+                                                            ].append(
+                                                                [
+                                                                    tmp_title,
+                                                                    rx_packet_data.key[
+                                                                        "data"
+                                                                    ]["hash"],
+                                                                    "",
+                                                                    "virtual_terminal",
+                                                                ]
+                                                            )
                                                             self.updateShallowMenuList()
                                                     if (
                                                         self.UIObject["root_shallow"]
@@ -3451,9 +3477,9 @@ class OlivOSTerminalUI(object):
         self.UIData["level_default"] = "INFO"
         for level_this in OlivOS.diagnoseAPI.level_dict:
             self.UIData["level_list"].append(OlivOS.diagnoseAPI.level_dict[level_this])
-            self.UIData["level_find"][OlivOS.diagnoseAPI.level_dict[level_this]] = (
-                level_this
-            )
+            self.UIData["level_find"][
+                OlivOS.diagnoseAPI.level_dict[level_this]
+            ] = level_this
         self.UIObject["root_level"]["value"] = tuple(self.UIData["level_list"])
         self.UIObject["root_level"].current(
             self.UIData["level_list"].index(self.UIData["level_default"])

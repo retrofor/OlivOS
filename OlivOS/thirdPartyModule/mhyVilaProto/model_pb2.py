@@ -7,6 +7,7 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
 from google.protobuf.internal import builder as _builder
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -59,9 +60,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
     _globals[
         "_ROBOTEVENT_EXTENDDATA_AUDITCALLBACKINFO_AUDITRESULT"
     ]._serialized_start = 2244
-    _globals[
-        "_ROBOTEVENT_EXTENDDATA_AUDITCALLBACKINFO_AUDITRESULT"
-    ]._serialized_end = 2289
+    _globals["_ROBOTEVENT_EXTENDDATA_AUDITCALLBACKINFO_AUDITRESULT"]._serialized_end = (
+        2289
+    )
     _globals["_ROBOTEVENT_EXTENDDATA_CLICKMSGCOMPONENTINFO"]._serialized_start = 2292
     _globals["_ROBOTEVENT_EXTENDDATA_CLICKMSGCOMPONENTINFO"]._serialized_end = 2458
     _globals["_ROBOTEVENT_EVENTTYPE"]._serialized_start = 2475
