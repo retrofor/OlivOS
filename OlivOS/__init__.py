@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 _______________________    ________________
 __  __ \__  /____  _/_ |  / /_  __ \_  ___/
 _  / / /_  /  __  / __ | / /_  / / /____ \
@@ -12,7 +12,7 @@ _  / / /_  /  __  / __ | / /_  / / /____ \
 @License   :   AGPL
 @Copyright :   (C) 2020-2023, OlivOS-Team
 @Desc      :   None
-'''
+"""
 
 # here put the import lib
 
@@ -73,7 +73,8 @@ from .adapter.biliLive import biliLiveSDK
 from .adapter.biliLive import biliLiveLinkServerAPI
 from .core.web import updateAPI
 from .core.web import webTool
-if platform.system() == 'Windows':
+
+if platform.system() == "Windows":
     from .nativeGUI import multiLoginUIAPI
     from .libBooter import libEXEModelAPI
     from .libBooter import libWQEXEModelAPI

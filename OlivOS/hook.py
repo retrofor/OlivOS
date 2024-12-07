@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 _______________________    ________________
 __  __ \__  /____  _/_ |  / /_  __ \_  ___/
 _  / / /_  /  __  / __ | / /_  / / /____ \
@@ -12,7 +12,7 @@ _  / / /_  /  __  / __ | / /_  / / /____ \
 @License   :   AGPL
 @Copyright :   (C) 2020-2023, OlivOS-Team
 @Desc      :   None
-'''
+"""
 
 import platform
 
@@ -26,7 +26,7 @@ import sqlite3
 import pyjson5
 
 # win
-if platform.system() == 'Windows':
+if platform.system() == "Windows":
     import win32com.client
     import pythoncom
     import webview

@@ -3,12 +3,12 @@ import json
 from typing import *
 
 __all__ = (
-    'HeartbeatMessage',
-    'DanmakuMessage',
-    'GiftMessage',
-    'GuardBuyMessage',
-    'SuperChatMessage',
-    'SuperChatDeleteMessage',
+    "HeartbeatMessage",
+    "DanmakuMessage",
+    "GiftMessage",
+    "GuardBuyMessage",
+    "SuperChatMessage",
+    "SuperChatDeleteMessage",
 )
 
 
@@ -28,7 +28,7 @@ class HeartbeatMessage:
     @classmethod
     def from_command(cls, data: dict):
         return cls(
-            popularity=data['popularity'],
+            popularity=data["popularity"],
         )
 
 
@@ -91,9 +91,7 @@ class DanmakuMessage:
         emoticon_options: Union[dict, str] = None,
         voice_config: Union[dict, str] = None,
         mode_info: dict = None,
-
         msg: str = None,
-
         uid: int = None,
         uname: str = None,
         admin: int = None,
@@ -102,21 +100,17 @@ class DanmakuMessage:
         urank: int = None,
         mobile_verify: int = None,
         uname_color: str = None,
-
         medal_level: str = None,
         medal_name: str = None,
         runame: str = None,
         medal_room_id: int = None,
         mcolor: int = None,
         special_medal: str = None,
-
         user_level: int = None,
         ulevel_color: int = None,
         ulevel_rank: str = None,
-
         old_title: str = None,
         title: str = None,
-
         privilege_type: int = None,
     ):
         self.mode: int = mode
@@ -170,8 +164,8 @@ class DanmakuMessage:
             special_medal = info[3][5]
         else:
             medal_level = 0
-            medal_name = ''
-            runame = ''
+            medal_name = ""
+            runame = ""
             room_id = 0
             mcolor = 0
             special_medal = 0
@@ -189,9 +183,7 @@ class DanmakuMessage:
             emoticon_options=info[0][13],
             voice_config=info[0][14],
             mode_info=info[0][15],
-
             msg=info[1],
-
             uid=info[2][0],
             uname=info[2][1],
             admin=info[2][2],
@@ -200,21 +192,17 @@ class DanmakuMessage:
             urank=info[2][5],
             mobile_verify=info[2][6],
             uname_color=info[2][7],
-
             medal_level=medal_level,
             medal_name=medal_name,
             runame=runame,
             medal_room_id=room_id,
             mcolor=mcolor,
             special_medal=special_medal,
-
             user_level=info[4][0],
             ulevel_color=info[4][2],
             ulevel_rank=info[4][3],
-
             old_title=info[5][0],
             title=info[5][1],
-
             privilege_type=info[7],
         )
 
@@ -308,21 +296,21 @@ class GiftMessage:
     @classmethod
     def from_command(cls, data: dict):
         return cls(
-            gift_name=data['giftName'],
-            num=data['num'],
-            uname=data['uname'],
-            face=data['face'],
-            guard_level=data['guard_level'],
-            uid=data['uid'],
-            timestamp=data['timestamp'],
-            gift_id=data['giftId'],
-            gift_type=data['giftType'],
-            action=data['action'],
-            price=data['price'],
-            rnd=data['rnd'],
-            coin_type=data['coin_type'],
-            total_coin=data['total_coin'],
-            tid=data['tid'],
+            gift_name=data["giftName"],
+            num=data["num"],
+            uname=data["uname"],
+            face=data["face"],
+            guard_level=data["guard_level"],
+            uid=data["uid"],
+            timestamp=data["timestamp"],
+            gift_id=data["giftId"],
+            gift_type=data["giftType"],
+            action=data["action"],
+            price=data["price"],
+            rnd=data["rnd"],
+            coin_type=data["coin_type"],
+            total_coin=data["total_coin"],
+            tid=data["tid"],
         )
 
 
@@ -366,15 +354,15 @@ class GuardBuyMessage:
     @classmethod
     def from_command(cls, data: dict):
         return cls(
-            uid=data['uid'],
-            username=data['username'],
-            guard_level=data['guard_level'],
-            num=data['num'],
-            price=data['price'],
-            gift_id=data['gift_id'],
-            gift_name=data['gift_name'],
-            start_time=data['start_time'],
-            end_time=data['end_time'],
+            uid=data["uid"],
+            username=data["username"],
+            guard_level=data["guard_level"],
+            num=data["num"],
+            price=data["price"],
+            gift_id=data["gift_id"],
+            gift_name=data["gift_name"],
+            start_time=data["start_time"],
+            end_time=data["end_time"],
         )
 
 
@@ -448,25 +436,25 @@ class SuperChatMessage:
     @classmethod
     def from_command(cls, data: dict):
         return cls(
-            price=data['price'],
-            message=data['message'],
-            message_trans=data['message_trans'],
-            start_time=data['start_time'],
-            end_time=data['end_time'],
-            time=data['time'],
-            id_=data['id'],
-            gift_id=data['gift']['gift_id'],
-            gift_name=data['gift']['gift_name'],
-            uid=data['uid'],
-            uname=data['user_info']['uname'],
-            face=data['user_info']['face'],
-            guard_level=data['user_info']['guard_level'],
-            user_level=data['user_info']['user_level'],
-            background_bottom_color=data['background_bottom_color'],
-            background_color=data['background_color'],
-            background_icon=data['background_icon'],
-            background_image=data['background_image'],
-            background_price_color=data['background_price_color'],
+            price=data["price"],
+            message=data["message"],
+            message_trans=data["message_trans"],
+            start_time=data["start_time"],
+            end_time=data["end_time"],
+            time=data["time"],
+            id_=data["id"],
+            gift_id=data["gift"]["gift_id"],
+            gift_name=data["gift"]["gift_name"],
+            uid=data["uid"],
+            uname=data["user_info"]["uname"],
+            face=data["user_info"]["face"],
+            guard_level=data["user_info"]["guard_level"],
+            user_level=data["user_info"]["user_level"],
+            background_bottom_color=data["background_bottom_color"],
+            background_color=data["background_color"],
+            background_icon=data["background_icon"],
+            background_image=data["background_image"],
+            background_price_color=data["background_price_color"],
         )
 
 
@@ -486,5 +474,5 @@ class SuperChatDeleteMessage:
     @classmethod
     def from_command(cls, data: dict):
         return cls(
-            ids=data['ids'],
+            ids=data["ids"],
         )

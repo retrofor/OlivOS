@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 _______________________    ________________
 __  __ \__  /____  _/_ |  / /_  __ \_  ___/
 _  / / /_  /  __  / __ | / /_  / / /____ \
@@ -12,7 +12,7 @@ _  / / /_  /  __  / __ | / /_  / / /____ \
 @License   :   AGPL
 @Copyright :   (C) 2020-2023, OlivOS-Team
 @Desc      :   None
-'''
+"""
 
 import platform
 
@@ -23,7 +23,7 @@ from PIL import Image
 import sqlite3
 
 # win
-if platform.system() == 'Windows':
+if platform.system() == "Windows":
     import win32com.client
     import winsound
     import pythoncom
@@ -61,7 +61,8 @@ import sys
 
 # Are we running in a PyInstaller bundle
 # https://pyinstaller.org/en/stable/runtime-information.html#run-time-information
-if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+
     class NullOutput(object):
         def write(self, string):
             pass
