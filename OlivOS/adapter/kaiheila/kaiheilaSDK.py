@@ -538,9 +538,9 @@ def get_Event_from_SDK(target_event):
                             ]
                         )
                         target_event.data.sender["nickname"] = (
-                            target_event.sdk_event.payload.data.d["extra"]["author"][
-                                "username"
-                            ]
+                            target_event.sdk_event.payload.data.d[
+                                "extra"
+                            ]["author"]["username"]
                         )
                         target_event.data.sender["id"] = str(
                             target_event.sdk_event.payload.data.d["extra"]["author"][
@@ -548,9 +548,9 @@ def get_Event_from_SDK(target_event):
                             ]
                         )
                         target_event.data.sender["name"] = (
-                            target_event.sdk_event.payload.data.d["extra"]["author"][
-                                "username"
-                            ]
+                            target_event.sdk_event.payload.data.d[
+                                "extra"
+                            ]["author"]["username"]
                         )
                         target_event.data.sender["sex"] = "unknown"
                         target_event.data.sender["age"] = 0
@@ -600,9 +600,9 @@ def get_Event_from_SDK(target_event):
                             ]
                         )
                         target_event.data.sender["nickname"] = (
-                            target_event.sdk_event.payload.data.d["extra"]["author"][
-                                "username"
-                            ]
+                            target_event.sdk_event.payload.data.d[
+                                "extra"
+                            ]["author"]["username"]
                         )
                         target_event.data.sender["id"] = str(
                             target_event.sdk_event.payload.data.d["extra"]["author"][
@@ -610,9 +610,9 @@ def get_Event_from_SDK(target_event):
                             ]
                         )
                         target_event.data.sender["name"] = (
-                            target_event.sdk_event.payload.data.d["extra"]["author"][
-                                "username"
-                            ]
+                            target_event.sdk_event.payload.data.d[
+                                "extra"
+                            ]["author"]["username"]
                         )
                         target_event.data.sender["sex"] = "unknown"
                         target_event.data.sender["age"] = 0

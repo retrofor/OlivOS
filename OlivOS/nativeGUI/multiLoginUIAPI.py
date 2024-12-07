@@ -869,9 +869,9 @@ class TreeEditUI(object):
                 tmp_Entry_slot = {}
             tmp_mapping_slot.append(copy.deepcopy(tmp_Entry_slot))
             tmp_type_mapping_list[key_this] = tmp_mapping_slot
-        self.UIData["edit_root_Combobox_dict"][
-            "type_mapping_list"
-        ] = tmp_type_mapping_list
+        self.UIData["edit_root_Combobox_dict"]["type_mapping_list"] = (
+            tmp_type_mapping_list
+        )
 
     def tree_edit_commit(self):
         miss_key_list = None

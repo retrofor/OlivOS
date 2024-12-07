@@ -60,9 +60,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
     _globals[
         "_ROBOTEVENT_EXTENDDATA_AUDITCALLBACKINFO_AUDITRESULT"
     ]._serialized_start = 2244
-    _globals["_ROBOTEVENT_EXTENDDATA_AUDITCALLBACKINFO_AUDITRESULT"]._serialized_end = (
-        2289
-    )
+    _globals[
+        "_ROBOTEVENT_EXTENDDATA_AUDITCALLBACKINFO_AUDITRESULT"
+    ]._serialized_end = 2289
     _globals["_ROBOTEVENT_EXTENDDATA_CLICKMSGCOMPONENTINFO"]._serialized_start = 2292
     _globals["_ROBOTEVENT_EXTENDDATA_CLICKMSGCOMPONENTINFO"]._serialized_end = 2458
     _globals["_ROBOTEVENT_EVENTTYPE"]._serialized_start = 2475

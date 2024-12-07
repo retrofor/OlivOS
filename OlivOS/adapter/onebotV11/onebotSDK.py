@@ -882,9 +882,7 @@ class event_action(object):
             if type(raw_obj) == list:
                 res_data["active"] = True
                 for raw_obj_this in raw_obj:
-                    tmp_res_data_this = (
-                        OlivOS.contentAPI.api_result_data_template.get_group_info_strip()
-                    )
+                    tmp_res_data_this = OlivOS.contentAPI.api_result_data_template.get_group_info_strip()
                     tmp_res_data_this["name"] = init_api_do_mapping_for_dict(
                         raw_obj_this, ["group_name"], str
                     )
@@ -962,9 +960,7 @@ class event_action(object):
             if type(raw_obj) == list:
                 res_data["active"] = True
                 for raw_obj_this in raw_obj:
-                    tmp_res_data_this = (
-                        OlivOS.contentAPI.api_result_data_template.get_group_member_info_strip()
-                    )
+                    tmp_res_data_this = OlivOS.contentAPI.api_result_data_template.get_group_member_info_strip()
                     tmp_res_data_this["name"] = init_api_do_mapping_for_dict(
                         raw_obj_this, ["nickname"], str
                     )

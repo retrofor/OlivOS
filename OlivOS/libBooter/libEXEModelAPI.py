@@ -1023,9 +1023,7 @@ database: # 数据库相关设置
             + str(self.target_proc["server"]["port"])
             + "/OlivOSMsgApi/qq/onebot/gocqhttp"
         )
-        self.config_file_format[
-            "sign-servers-data"
-        ] = """
+        self.config_file_format["sign-servers-data"] = """
     - url: '-'
       key: '-'
       authorization: '-'
@@ -1043,9 +1041,7 @@ database: # 数据库相关设置
                     and "addr" in tmp_data_this
                     and "key" in tmp_data_this
                 ):
-                    self.config_file_format[
-                        "sign-servers-data"
-                    ] += """
+                    self.config_file_format["sign-servers-data"] += """
     - url: '%s'
       key: '%s'
       authorization: '-'
@@ -1060,16 +1056,13 @@ database: # 数据库相关设置
             and self.bot_info_dict.extends["qsign-server-protocal"]
             in gProtocalEXECheckList
         ):
-            self.config_file_format["sign-servers-data"] = (
-                """
+            self.config_file_format["sign-servers-data"] = """
     - url: 'http://localhost:%s/'
       key: '%s'
       authorization: '-'
-"""
-                % (
-                    str(self.sub_target_proc["server"]["port"]),
-                    str(self.sub_target_proc["server"]["token"]),
-                )
+""" % (
+                str(self.sub_target_proc["server"]["port"]),
+                str(self.sub_target_proc["server"]["token"]),
             )
             self.config_file_format["auto-register"] = "true"
 

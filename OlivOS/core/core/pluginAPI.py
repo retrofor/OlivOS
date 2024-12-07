@@ -349,9 +349,9 @@ class shallow(OlivOS.API.Proc_templet):
                         in self.plugin_models_dict[plugin_models_index_this]
                     ):
                         plugin_event.plugin_info["message_mode_tx"] = (
-                            self.plugin_models_dict[plugin_models_index_this][
-                                "message_mode"
-                            ]
+                            self.plugin_models_dict[
+                                plugin_models_index_this
+                            ]["message_mode"]
                         )
                     else:
                         plugin_event.plugin_info["message_mode_tx"] = (

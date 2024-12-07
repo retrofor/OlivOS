@@ -554,9 +554,7 @@ def get_Event_from_SDK(target_event):
                     target_event.active = True
                     tmp_user_info = target_event.sdk_event.payload.data.data[
                         "eventBody"
-                    ][
-                        "personal"
-                    ]  # use personal info from remote instead of local
+                    ]["personal"]  # use personal info from remote instead of local
                     tmp_user_id = str(
                         target_event.sdk_event.payload.data.data["eventBody"][
                             "dodoSourceId"

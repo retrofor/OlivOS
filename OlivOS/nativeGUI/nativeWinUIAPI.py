@@ -211,9 +211,7 @@ class dock(OlivOS.API.Proc_templet):
                                                 OlivOS.multiLoginUIAPI.run_HostUI_asayc(
                                                     plugin_bot_info_dict=rx_packet_data.key[
                                                         "data"
-                                                    ][
-                                                        "bot_info"
-                                                    ],
+                                                    ]["bot_info"],
                                                     control_queue=self.Proc_info.control_queue,
                                                 )
                                         elif (
@@ -285,9 +283,7 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ][
-                                                                            "hash"
-                                                                        ]
+                                                                        ]["hash"]
                                                                     ].id
                                                                 )
                                                             )
@@ -464,9 +460,7 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ][
-                                                                            "hash"
-                                                                        ]
+                                                                        ]["hash"]
                                                                     ].id
                                                                 )
                                                             )
@@ -666,9 +660,7 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ][
-                                                                            "hash"
-                                                                        ]
+                                                                        ]["hash"]
                                                                     ].id
                                                                 )
                                                             )
@@ -845,9 +837,7 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ][
-                                                                            "hash"
-                                                                        ]
+                                                                        ]["hash"]
                                                                     ].id
                                                                 )
                                                             )
@@ -981,9 +971,7 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ][
-                                                                            "hash"
-                                                                        ]
+                                                                        ]["hash"]
                                                                     ].id
                                                                 )
                                                             )
@@ -1139,9 +1127,7 @@ class dock(OlivOS.API.Proc_templet):
                                                                     self.bot_info[
                                                                         rx_packet_data.key[
                                                                             "data"
-                                                                        ][
-                                                                            "hash"
-                                                                        ]
+                                                                        ]["hash"]
                                                                     ].id
                                                                 )
                                                             )
@@ -3477,9 +3463,9 @@ class OlivOSTerminalUI(object):
         self.UIData["level_default"] = "INFO"
         for level_this in OlivOS.diagnoseAPI.level_dict:
             self.UIData["level_list"].append(OlivOS.diagnoseAPI.level_dict[level_this])
-            self.UIData["level_find"][
-                OlivOS.diagnoseAPI.level_dict[level_this]
-            ] = level_this
+            self.UIData["level_find"][OlivOS.diagnoseAPI.level_dict[level_this]] = (
+                level_this
+            )
         self.UIObject["root_level"]["value"] = tuple(self.UIData["level_list"])
         self.UIObject["root_level"].current(
             self.UIData["level_list"].index(self.UIData["level_default"])
