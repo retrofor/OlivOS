@@ -16,6 +16,7 @@ _  / / /_  /  __  / __ | / /_  / / /____ \
 
 # here put the import lib
 
+import os
 import platform
 
 from .core.info import infoAPI
@@ -85,3 +86,4 @@ if platform.system() == "Windows":
     from .nativeGUI import nativeWinUIAPI
     from .nativeGUI import webviewUIAPI
 from . import userModule
+

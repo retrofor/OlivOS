@@ -59,8 +59,8 @@ include = ["/README.md", "/LICENSE"]
 [tool.hatch.build.targets.wheel]
 packages = ["/OlivOS"]
 
-[project.scripts]
-ovo = "OlivOS.__main__:main"
+# [project.scripts]
+# ovo = "OlivOS.cli:main"
 
 [build-system]
 requires = ["hatchling"]

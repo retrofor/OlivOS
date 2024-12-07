@@ -6,3 +6,13 @@ __pycache__/
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
+
+# pyinstaller build dist
+build/
+dist/
+
+# OlivOS logfile
+logfile/
+
+# OlivOS lib directory
+lib/

@@ -19,15 +19,6 @@ a = Analysis(['main.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
-splash = Splash(
-    './resource/intro.jpg',
-    binaries=a.binaries,
-    datas=a.datas,
-    text_pos=None,
-    text_size=12,
-    minify_script=True,
-    always_on_top=True,
-)
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
@@ -35,8 +26,6 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          splash,
-          splash.binaries,
           [],
           name='main',
           debug=False,
@@ -44,5 +33,5 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           upx_exclude=[],
-          runtime_tmpdir='./runtime/',
-          console=False , icon='resource/favoricon.ico')
+          runtime_tmpdir='./',
+          console=True , icon='resource/favoricon.ico')
