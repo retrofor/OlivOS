@@ -1,1 +1,8 @@
-__pycache__
+# Python specific files
+__pycache__/
+
+# Pyenv local version
+.python-version
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
