@@ -61,7 +61,7 @@ if os.environ.get('OLIVOS_ENV_PACK') == "1":
 
 # collect all specific modules
 def hook(hook_api):
-    packages = ["email", "gevent", "sqlite3", "tkinter"]
+    packages = ["email", "gevent", "sqlite3", "tkinter", "psutil"]
     for package in packages:
         datas, binaries, hiddenimports = collect_all(package)
         # hook_api.add_datas(datas)
