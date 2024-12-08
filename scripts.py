@@ -11,6 +11,8 @@ from __future__ import annotations
 import os
 import sys
 import OlivOS  # noqa: F401
+import PyInstaller.__main__
+
 from typing import Any, Awaitable, Callable, List, Optional
 
 
@@ -26,12 +28,20 @@ class CommandHandler:
 
     def build(self, _args: Optional[List[str]] = None) -> None:
         platform_commands = {
-            "win32": "pyinstaller main.spec",
-            "linux": "pyinstaller main_linux.spec",
-            "darwin": "pyinstaller main_mac.spec",
-            "debug": "pyinstaller main_debug.spec"
+            "win32": "OlivOS.spec",
+            "linux": "OlivOS_linux.spec",
+            "darwin": "OlivOS_mac.spec",
+            "debug": "OlivOS_debug.spec"
         }
-        os.system(platform_commands.get((_args[0] if _args else sys.platform), "echo Unsupported platform"))
+        _spec_or_python_file = platform_commands.get((_args[0] if _args else sys.platform), _args[0])
+        # https://pyinstaller.org/en/stable/usage.html#running-pyinstaller-from-python-code
+        PyInstaller.__main__.run(
+            [
+                _spec_or_python_file,
+                "--clean",
+                "--noconfirm",
+                ].append(_args[1:] if _args else [])
+            )
 
     def start(self) -> None:
         os.system("python main.py")

@@ -28,7 +28,7 @@ if sys.platform == 'win32':
     import pythoncom
     import webview
 
-if os.environ.get('OLIVOS_ENV') == "pack":
+if os.environ.get('OLIVOS_ENV_PACK') == "1":
     if sys.platform == 'win32':
         import winsound
     from lxml import etree
@@ -44,7 +44,7 @@ if os.environ.get('OLIVOS_ENV') == "pack":
     import smtplib
     import email
     
-    if os.environ.get('OLIVOS_ENV') != "debug":
+    if os.environ.get('OLIVOS_ENV_DEBUG') != "1":
         # Are we running in a PyInstaller bundle
         # https://pyinstaller.org/en/stable/runtime-information.html#run-time-information
         if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
