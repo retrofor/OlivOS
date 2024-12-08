@@ -33,7 +33,7 @@ class CommandHandler:
             "darwin": "OlivOS_mac.spec",
             "debug": "OlivOS_debug.spec"
         }
-        _spec_or_python_file = platform_commands.get((_args[0] if _args else sys.platform), _args[0] if _args else "OlivOS.spec")
+        _spec_or_python_file = platform_commands.get(_args[0] if _args else sys.platform, _args[0] if _args else "OlivOS.spec")
         # https://pyinstaller.org/en/stable/usage.html#running-pyinstaller-from-python-code
         PyInstaller.__main__.run(
             [
