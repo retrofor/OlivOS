@@ -411,6 +411,8 @@ jobs:
       run: |
         # cp ./OlivOS/hook.py ./OlivOS/hook_bak.py
         # cp ./OlivOS/hook_pack_debug.py ./OlivOS/hook.py
+        uv v
+        uv sync --all-groups --extra
         source .venv/bin/activate
         uv run scripts.py build
       env:
