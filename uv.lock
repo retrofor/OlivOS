@@ -20,13 +20,13 @@ name = "aiohttp"
 version = "3.10.11"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "aiohappyeyeballs", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "aiosignal", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "async-timeout", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
-    { name = "attrs", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "frozenlist", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "multidict", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "yarl", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "aiohappyeyeballs" },
+    { name = "aiosignal" },
+    { name = "async-timeout", marker = "python_full_version < '3.11'" },
+    { name = "attrs" },
+    { name = "frozenlist" },
+    { name = "multidict" },
+    { name = "yarl" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/25/a8/8e2ba36c6e3278d62e0c88aa42bb92ddbef092ac363b390dab4421da5cf5/aiohttp-3.10.11.tar.gz", hash = "sha256:9dc2b8f3dcab2e39e0fa309c8da50c3b55e6f34ab25f1a71d3288f24924d33a7", size = 7551886 }
 wheels = [
@@ -127,7 +127,7 @@ name = "aiosignal"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "frozenlist", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "frozenlist" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ae/67/0952ed97a9793b4958e5736f6d2b346b414a2cd63e82d05940032f45b32f/aiosignal-1.3.1.tar.gz", hash = "sha256:54cd96e15e1649b75d6c87526a6ff0b6c1b0dd3459f43d9ca11d48c339b68cfc", size = 19422 }
 wheels = [
@@ -148,14 +148,27 @@ name = "anyio"
 version = "4.5.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "exceptiongroup", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
-    { name = "idna", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "sniffio", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
+    { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
+    { name = "idna" },
+    { name = "sniffio" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4d/f9/9a7ce600ebe7804daf90d4d48b1c0510a4561ddce43a596be46676f82343/anyio-4.5.2.tar.gz", hash = "sha256:23009af4ed04ce05991845451e11ef02fc7c5ed29179ac9a420e5ad0ac7ddc5b", size = 171293 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1b/b4/f7e396030e3b11394436358ca258a81d6010106582422f23443c16ca1873/anyio-4.5.2-py3-none-any.whl", hash = "sha256:c011ee36bc1e8ba40e5a81cb9df91925c218fe9b778554e0b56a21e1b5d4716f", size = 89766 },
+]
+
+[[package]]
+name = "apscheduler"
+version = "3.11.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "backports-zoneinfo", marker = "python_full_version < '3.9'" },
+    { name = "tzlocal" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4e/00/6d6814ddc19be2df62c8c898c4df6b5b1914f3bd024b780028caa392d186/apscheduler-3.11.0.tar.gz", hash = "sha256:4c622d250b0955a65d5d0eb91c33e6d43fd879834bf541e0a18661ae60460133", size = 107347 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d0/ae/9a053dd9229c0fde6b1f1f33f609ccff1ee79ddda364c756a924c6d8563b/APScheduler-3.11.0-py3-none-any.whl", hash = "sha256:fc134ca32e50f5eadcc4938e3a4545ab19131435e851abb40b34d63d5141c6da", size = 64004 },
 ]
 
 [[package]]
@@ -203,13 +216,13 @@ name = "black"
 version = "24.8.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "mypy-extensions", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "packaging", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pathspec", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "platformdirs", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "tomli", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
+    { name = "click" },
+    { name = "mypy-extensions" },
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "platformdirs" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/04/b0/46fb0d4e00372f4a86a6f8efa3cb193c9f64863615e39010b1477e010578/black-24.8.0.tar.gz", hash = "sha256:2500945420b6784c38b9ee885af039f5e7471ef284ab03fa35ecdde4688cd83f", size = 644810 }
 wheels = [
@@ -361,7 +374,7 @@ name = "cffi"
 version = "1.17.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "pycparser" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fc/97/c783634659c2920c3fc70419e3af40972dbaf758daa229a7d6ea6135c90d/cffi-1.17.1.tar.gz", hash = "sha256:1c39c6016c32bc48dd54561950ebd6836e1670f2ae46128f67cf49e789c52824", size = 516621 }
 wheels = [
@@ -483,7 +496,7 @@ name = "click"
 version = "8.1.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "(python_full_version >= '3.8' and platform_system == 'Windows') or (platform_python_implementation == 'CPython' and platform_system == 'Windows')" },
+    { name = "colorama", marker = "platform_system == 'Windows'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de", size = 336121 }
 wheels = [
@@ -495,7 +508,7 @@ name = "clr-loader"
 version = "0.2.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "cffi" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e1/e6/745f553e29969e7c944bdeed073b93241f84b9471d1ad34d78ab12b49fab/clr_loader-0.2.6.tar.gz", hash = "sha256:019348ae6b6a83c7a406d14537c277cecf7a3a53b263ec342c81ded5845a67ee", size = 44757 }
 wheels = [
@@ -516,7 +529,7 @@ name = "colorlog"
 version = "6.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "(python_full_version >= '3.8' and sys_platform == 'win32') or (platform_python_implementation == 'CPython' and sys_platform == 'win32')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d3/7a/359f4d5df2353f26172b3cc39ea32daa39af8de522205f512f458923e677/colorlog-6.9.0.tar.gz", hash = "sha256:bfba54a1b93b94f54e1f4fe48395725a3d92fd2a4af702f6bd70946bdc0c6ac2", size = 16624 }
 wheels = [
@@ -573,11 +586,11 @@ name = "flask"
 version = "2.2.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "importlib-metadata", marker = "(python_full_version < '3.10' and python_full_version >= '3.8') or (python_full_version < '3.10' and platform_python_implementation == 'CPython')" },
-    { name = "itsdangerous", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "jinja2", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "werkzeug", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "click" },
+    { name = "importlib-metadata", marker = "python_full_version < '3.10'" },
+    { name = "itsdangerous" },
+    { name = "jinja2" },
+    { name = "werkzeug" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5f/76/a4d2c4436dda4b0a12c71e075c508ea7988a1066b06a575f6afe4fecc023/Flask-2.2.5.tar.gz", hash = "sha256:edee9b0a7ff26621bd5a8c10ff484ae28737a2410d99b0bb9a6850c7fb977aa0", size = 697814 }
 wheels = [
@@ -690,8 +703,8 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cffi", marker = "platform_python_implementation == 'CPython' and sys_platform == 'win32'" },
     { name = "greenlet", marker = "platform_python_implementation == 'CPython'" },
-    { name = "zope-event", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "zope-interface", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "zope-event" },
+    { name = "zope-interface" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/27/24/a3a7b713acfcf1177207f49ec25c665123f8972f42bee641bcc9f32961f4/gevent-24.2.1.tar.gz", hash = "sha256:432fc76f680acf7cf188c2ee0f5d3ab73b63c1f03114c7cd8a34cebbe5aa2056", size = 6147507 }
 wheels = [
@@ -875,9 +888,9 @@ name = "grpcio-tools"
 version = "1.68.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "grpcio", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "protobuf", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "setuptools", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "grpcio" },
+    { name = "protobuf" },
+    { name = "setuptools" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2a/2f/d2fc30b79d892050a3c40ef8d17d602f4c6eced066d584621c7bbf195b0e/grpcio_tools-1.68.1.tar.gz", hash = "sha256:2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba", size = 5275384 }
 wheels = [
@@ -951,8 +964,8 @@ name = "httpcore"
 version = "1.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "h11", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "certifi" },
+    { name = "h11" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6a/41/d7d0a89eb493922c37d343b607bc1b5da7f5be7e383740b4753ad8943e90/httpcore-1.0.7.tar.gz", hash = "sha256:8551cb62a169ec7162ac7be8d4817d561f60e08eaa485234898414bb5a8a0b4c", size = 85196 }
 wheels = [
@@ -964,10 +977,10 @@ name = "httpx"
 version = "0.28.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "certifi", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "httpcore", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "idna", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "anyio" },
+    { name = "certifi" },
+    { name = "httpcore" },
+    { name = "idna" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b1/df/48c586a5fe32a0f01324ee087459e112ebb7224f646c0b5023f5e79e9956/httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc", size = 141406 }
 wheels = [
@@ -988,7 +1001,7 @@ name = "importlib-metadata"
 version = "8.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp", marker = "(python_full_version < '3.11' and platform_python_implementation == 'CPython') or (platform_python_implementation != 'CPython' and python_full_version >= '3.8')" },
+    { name = "zipp", marker = "python_full_version < '3.11' or platform_python_implementation != 'CPython'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cd/12/33e59336dca5be0c398a7482335911a33aa0e20776128f038019f1a95f1b/importlib_metadata-8.5.0.tar.gz", hash = "sha256:71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7", size = 55304 }
 wheels = [
@@ -1009,7 +1022,7 @@ name = "jinja2"
 version = "3.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "markupsafe" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/55/39036716d19cab0747a5020fc7e907f362fbf48c984b14e62127f7e68e5d/jinja2-3.1.4.tar.gz", hash = "sha256:4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369", size = 240245 }
 wheels = [
@@ -1021,9 +1034,9 @@ name = "js2py"
 version = "0.74"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyjsparser", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "six", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "tzlocal", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "pyjsparser" },
+    { name = "six" },
+    { name = "tzlocal" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cb/a5/3d8b3e4511cc21479f78f359b1b21f1fb7c640988765ffd09e55c6605e3b/Js2Py-0.74.tar.gz", hash = "sha256:39f3a6aa8469180efba3c8677271df27c31332fd1b471df1af2af58b87b8972f", size = 2504984 }
 wheels = [
@@ -1156,7 +1169,7 @@ name = "macholib"
 version = "1.16.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "altgraph", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "altgraph" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/95/ee/af1a3842bdd5902ce133bd246eb7ffd4375c38642aeb5dc0ae3a0329dfa2/macholib-1.16.3.tar.gz", hash = "sha256:07ae9e15e8e4cd9a788013d81f5908b3609aa76f9b1421bae9c4d7606ec86a30", size = 59309 }
 wheels = [
@@ -1168,7 +1181,7 @@ name = "markdown-it-py"
 version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "mdurl", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "mdurl" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/38/71/3b932df36c1a044d397a1f92d1cf91ee0a503d91e470cbd670aa66b07ed0/markdown-it-py-3.0.0.tar.gz", hash = "sha256:e3f60a94fa066dc52ec76661e37c851cb232d92f9886b15cb560aaada2df8feb", size = 74596 }
 wheels = [
@@ -1247,7 +1260,7 @@ name = "multidict"
 version = "6.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d6/be/504b89a5e9ca731cd47487e91c469064f8ae5af93b7259758dcfc2b9c848/multidict-6.1.0.tar.gz", hash = "sha256:22ae2ebf9b0c69d206c003e2f6a914ea33f0a932d4aa16f236afc049d9958f4a", size = 64002 }
 wheels = [
@@ -1358,11 +1371,11 @@ name = "nox"
 version = "2024.10.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "argcomplete", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "colorlog", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "packaging", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "tomli", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
-    { name = "virtualenv", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "argcomplete" },
+    { name = "colorlog" },
+    { name = "packaging" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "virtualenv" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/08/93/4df547afcd56e0b2bbaa99bc2637deb218a01802ed62d80f763189be802c/nox-2024.10.9.tar.gz", hash = "sha256:7aa9dc8d1c27e9f45ab046ffd1c3b2c4f7c91755304769df231308849ebded95", size = 4003197 }
 wheels = [
@@ -1374,81 +1387,83 @@ name = "olivos"
 version = "0.11.48"
 source = { editable = "." }
 dependencies = [
-    { name = "aiohttp", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "brotli", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "certifi", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "filetype", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "flask", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "gevent", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "grpcio", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "grpcio-tools", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "httpx", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "js2py", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "lxml", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "openpyxl", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pillow", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "prompt-toolkit", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "protobuf", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "psutil", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pybase64", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyinstaller", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyjson5", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pypiwin32", marker = "(python_full_version >= '3.8' and sys_platform == 'win32') or (platform_python_implementation == 'CPython' and sys_platform == 'win32')" },
-    { name = "pystray", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pywebview", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "qrcode", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "regex", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "requests", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "requests-toolbelt", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "rich", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "rsa", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "websocket-client", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "websockets", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "werkzeug", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "aiohttp" },
+    { name = "apscheduler" },
+    { name = "brotli" },
+    { name = "certifi" },
+    { name = "filetype" },
+    { name = "flask" },
+    { name = "gevent" },
+    { name = "grpcio" },
+    { name = "grpcio-tools" },
+    { name = "httpx" },
+    { name = "js2py" },
+    { name = "lxml" },
+    { name = "openpyxl" },
+    { name = "pillow" },
+    { name = "prompt-toolkit" },
+    { name = "protobuf" },
+    { name = "psutil" },
+    { name = "pybase64" },
+    { name = "pyinstaller" },
+    { name = "pyjson5" },
+    { name = "pypiwin32", marker = "sys_platform == 'win32'" },
+    { name = "pystray" },
+    { name = "pywebview", marker = "sys_platform == 'win32'" },
+    { name = "pyyaml" },
+    { name = "qrcode" },
+    { name = "regex" },
+    { name = "requests" },
+    { name = "requests-toolbelt" },
+    { name = "rich" },
+    { name = "rsa" },
+    { name = "websocket-client" },
+    { name = "websockets" },
+    { name = "werkzeug" },
 ]
 
 [package.dev-dependencies]
 dev = [
-    { name = "black", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "nox", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "ruff", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "black" },
+    { name = "nox" },
+    { name = "ruff" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "aiohttp", specifier = ">=3.10.11" },
-    { name = "brotli", specifier = ">=1.1.0" },
-    { name = "certifi", specifier = ">=2024.8.30" },
-    { name = "filetype", specifier = ">=1.2.0" },
-    { name = "flask", specifier = ">=2.2.5" },
-    { name = "gevent", specifier = ">=24.2.1" },
-    { name = "grpcio", specifier = ">=1.68.1" },
-    { name = "grpcio-tools", specifier = ">=1.68.1" },
-    { name = "httpx", specifier = ">=0.28.1" },
-    { name = "js2py", specifier = ">=0.74" },
-    { name = "lxml", specifier = ">=5.3.0" },
-    { name = "openpyxl", specifier = ">=3.1.5" },
-    { name = "pillow", specifier = "==9.3.0" },
-    { name = "prompt-toolkit", specifier = ">=3.0.48" },
-    { name = "protobuf", specifier = ">=5.29.1" },
-    { name = "psutil", specifier = ">=6.1.0" },
-    { name = "pybase64", specifier = ">=1.4.0" },
-    { name = "pyinstaller", specifier = ">=6.11.1" },
-    { name = "pyjson5", specifier = ">=1.6.7" },
+    { name = "aiohttp" },
+    { name = "apscheduler" },
+    { name = "brotli" },
+    { name = "certifi" },
+    { name = "filetype" },
+    { name = "flask" },
+    { name = "gevent" },
+    { name = "grpcio" },
+    { name = "grpcio-tools" },
+    { name = "httpx" },
+    { name = "js2py" },
+    { name = "lxml" },
+    { name = "openpyxl" },
+    { name = "pillow" },
+    { name = "prompt-toolkit" },
+    { name = "protobuf" },
+    { name = "psutil" },
+    { name = "pybase64" },
+    { name = "pyinstaller", specifier = "==6.9.0" },
+    { name = "pyjson5" },
     { name = "pypiwin32", marker = "sys_platform == 'win32'" },
-    { name = "pystray", specifier = ">=0.19.5" },
-    { name = "pywebview", specifier = ">=5.3.2" },
-    { name = "pyyaml", specifier = ">=6.0.2" },
-    { name = "qrcode", specifier = ">=7.4.2" },
-    { name = "regex", specifier = ">=2024.11.6" },
-    { name = "requests", specifier = ">=2.32.3" },
-    { name = "requests-toolbelt", specifier = ">=1.0.0" },
-    { name = "rich", specifier = ">=13.9.4" },
-    { name = "rsa", specifier = ">=4.9" },
-    { name = "websocket-client", specifier = ">=1.8.0" },
-    { name = "websockets", specifier = ">=13.1" },
-    { name = "werkzeug", specifier = "==2.2.2" },
+    { name = "pystray" },
+    { name = "pywebview", marker = "sys_platform == 'win32'" },
+    { name = "pyyaml" },
+    { name = "qrcode" },
+    { name = "regex" },
+    { name = "requests" },
+    { name = "requests-toolbelt" },
+    { name = "rich" },
+    { name = "rsa" },
+    { name = "websocket-client" },
+    { name = "websockets" },
+    { name = "werkzeug" },
 ]
 
 [package.metadata.requires-dev]
@@ -1463,7 +1478,7 @@ name = "openpyxl"
 version = "3.1.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "et-xmlfile", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "et-xmlfile" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3d/f9/88d94a75de065ea32619465d2f77b29a0469500e99012523b91cc4141cd1/openpyxl-3.1.5.tar.gz", hash = "sha256:cf0e3cf56142039133628b5acffe8ef0c12bc902d2aadd3e0fe5878dc08d1050", size = 186464 }
 wheels = [
@@ -1564,7 +1579,7 @@ name = "prompt-toolkit"
 version = "3.0.48"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "wcwidth", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "wcwidth" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2d/4f/feb5e137aff82f7c7f3248267b97451da3644f6cdc218edfe549fb354127/prompt_toolkit-3.0.48.tar.gz", hash = "sha256:d6623ab0477a80df74e646bdbc93621143f5caf104206aa29294d53de1a03d90", size = 424684 }
 wheels = [
@@ -1874,31 +1889,31 @@ wheels = [
 
 [[package]]
 name = "pyinstaller"
-version = "6.11.1"
+version = "6.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "altgraph", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "importlib-metadata", marker = "(python_full_version < '3.10' and python_full_version >= '3.8') or (python_full_version < '3.10' and platform_python_implementation == 'CPython')" },
-    { name = "macholib", marker = "(python_full_version >= '3.8' and sys_platform == 'darwin') or (platform_python_implementation == 'CPython' and sys_platform == 'darwin')" },
-    { name = "packaging", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pefile", marker = "(python_full_version >= '3.8' and sys_platform == 'win32') or (platform_python_implementation == 'CPython' and sys_platform == 'win32')" },
-    { name = "pyinstaller-hooks-contrib", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pywin32-ctypes", marker = "(python_full_version >= '3.8' and sys_platform == 'win32') or (platform_python_implementation == 'CPython' and sys_platform == 'win32')" },
-    { name = "setuptools", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "altgraph" },
+    { name = "importlib-metadata", marker = "python_full_version < '3.10'" },
+    { name = "macholib", marker = "sys_platform == 'darwin'" },
+    { name = "packaging" },
+    { name = "pefile", marker = "sys_platform == 'win32'" },
+    { name = "pyinstaller-hooks-contrib" },
+    { name = "pywin32-ctypes", marker = "sys_platform == 'win32'" },
+    { name = "setuptools" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/55/d4/54f5f5c73b803e6256ea97ffc6ba8a305d9a5f57f85f9b00b282512bf18a/pyinstaller-6.11.1.tar.gz", hash = "sha256:491dfb4d9d5d1d9650d9507daec1ff6829527a254d8e396badd60a0affcb72ef", size = 4249772 }
+sdist = { url = "https://files.pythonhosted.org/packages/66/29/4bb2eb120b859b5691db5487777a9f1ed63a4b62d6df68284268074f7b73/pyinstaller-6.9.0.tar.gz", hash = "sha256:f4a75c552facc2e2a370f1e422b971b5e5cdb4058ff38cea0235aa21fc0b378f", size = 4178225 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/15/b0f1c0985ee32fcd2f6ad9a486ef94e4db3fef9af025a3655e76cb708009/pyinstaller-6.11.1-py3-none-macosx_10_13_universal2.whl", hash = "sha256:44e36172de326af6d4e7663b12f71dbd34e2e3e02233e181e457394423daaf03", size = 991780 },
-    { url = "https://files.pythonhosted.org/packages/fd/0f/9f54cb18abe2b1d89051bc9214c0cb40d7b5f4049c151c315dacc067f4a2/pyinstaller-6.11.1-py3-none-manylinux2014_aarch64.whl", hash = "sha256:6d12c45a29add78039066a53fb05967afaa09a672426072b13816fe7676abfc4", size = 711739 },
-    { url = "https://files.pythonhosted.org/packages/32/f7/79d10830780eff8339bfa793eece1df4b2459e35a712fc81983e8536cc29/pyinstaller-6.11.1-py3-none-manylinux2014_i686.whl", hash = "sha256:ddc0fddd75f07f7e423da1f0822e389a42af011f9589e0269b87e0d89aa48c1f", size = 714053 },
-    { url = "https://files.pythonhosted.org/packages/25/f7/9961ef02cdbd2dbb1b1a215292656bd0ea72a83aafd8fb6373513849711e/pyinstaller-6.11.1-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:0d6475559c4939f0735122989611d7f739ed3bf02f666ce31022928f7a7e4fda", size = 719133 },
-    { url = "https://files.pythonhosted.org/packages/6f/4d/7f854842a1ce798de762a0b0bc5d5a4fc26ad06164a98575dc3c54abed1f/pyinstaller-6.11.1-py3-none-manylinux2014_s390x.whl", hash = "sha256:e21c7806e34f40181e7606926a14579f848bfb1dc52cbca7eea66eccccbfe977", size = 709591 },
-    { url = "https://files.pythonhosted.org/packages/7f/e0/00d29fc90c3ba50620c61554e26ebb4d764569507be7cd1c8794aa696f9a/pyinstaller-6.11.1-py3-none-manylinux2014_x86_64.whl", hash = "sha256:32c742a24fe65d0702958fadf4040f76de85859c26bec0008766e5dbabc5b68f", size = 710068 },
-    { url = "https://files.pythonhosted.org/packages/3e/57/d14b44a69f068d2caaee49d15e45f9fa0f37c6a2d2ad778c953c1722a1ca/pyinstaller-6.11.1-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:208c0ef6dab0837a0a273ea32d1a3619a208e3d1fe3fec3785eea71a77fd00ce", size = 714439 },
-    { url = "https://files.pythonhosted.org/packages/88/01/256824bb57ca208099c86c2fb289f888ca7732580e91ced48fa14e5903b2/pyinstaller-6.11.1-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:ad84abf465bcda363c1d54eafa76745d77b6a8a713778348377dc98d12a452f7", size = 710457 },
-    { url = "https://files.pythonhosted.org/packages/7c/f0/98c9138f5f0ff17462f1ad6d712dcfa643b9a283d6238d464d8145bc139d/pyinstaller-6.11.1-py3-none-win32.whl", hash = "sha256:2e8365276c5131c9bef98e358fbc305e4022db8bedc9df479629d6414021956a", size = 1280261 },
-    { url = "https://files.pythonhosted.org/packages/7d/08/f43080614b3e8bce481d4dfd580e579497c7dcdaf87656d9d2ad912e5796/pyinstaller-6.11.1-py3-none-win_amd64.whl", hash = "sha256:7ac83c0dc0e04357dab98c487e74ad2adb30e7eb186b58157a8faf46f1fa796f", size = 1340482 },
-    { url = "https://files.pythonhosted.org/packages/ed/56/953c6594cb66e249563854c9cc04ac5a055c6c99d1614298feeaeaa9b87e/pyinstaller-6.11.1-py3-none-win_arm64.whl", hash = "sha256:35e6b8077d240600bb309ed68bb0b1453fd2b7ab740b66d000db7abae6244423", size = 1267519 },
+    { url = "https://files.pythonhosted.org/packages/ac/42/91dc2ad2da972032ff10a54d2f9701ecd3ee8b398990849f1a75d030d4f7/pyinstaller-6.9.0-py3-none-macosx_10_13_universal2.whl", hash = "sha256:5ced2e83acf222b936ea94abc5a5cc96588705654b39138af8fb321d9cf2b954", size = 959801 },
+    { url = "https://files.pythonhosted.org/packages/e0/fa/8126cd3ce7fad90f4391b36a3f84370c0d13e6ffb295b74694cebc1c5f27/pyinstaller-6.9.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:f18a3d551834ef8fb7830d48d4cc1527004d0e6b51ded7181e78374ad6111846", size = 686119 },
+    { url = "https://files.pythonhosted.org/packages/e1/1a/d238dffa9ad2505f567547fd131bdb8668c7103aa554c666cdf43ced0295/pyinstaller-6.9.0-py3-none-manylinux2014_i686.whl", hash = "sha256:f2fc568de3d6d2a176716a3fc9f20da06d351e8bea5ddd10ecb5659fce3a05b0", size = 688417 },
+    { url = "https://files.pythonhosted.org/packages/c1/bb/7a6ef52fd65dd26e2708409ab20f02c5979064383583f811c40c5995675a/pyinstaller-6.9.0-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:a0f378f64ad0655d11ade9fde7877e7573fd3d5066231608ce7dfa9040faecdd", size = 692710 },
+    { url = "https://files.pythonhosted.org/packages/ce/80/56b32fe83af2c4882093bba381601f1c5cbd12203da259bb93ede03dae42/pyinstaller-6.9.0-py3-none-manylinux2014_s390x.whl", hash = "sha256:7bf0c13c5a8560c89540746ae742f4f4b82290e95a6b478374d9f34959fe25d6", size = 683741 },
+    { url = "https://files.pythonhosted.org/packages/d8/6f/70aed930ec50eda9f6f7c68aaadd6f9e652a22271a1dde24cf53b0bb0978/pyinstaller-6.9.0-py3-none-manylinux2014_x86_64.whl", hash = "sha256:da994aba14c5686db88796684de265a8665733b4df09b939f7ebdf097d18df72", size = 684960 },
+    { url = "https://files.pythonhosted.org/packages/bf/89/9eb7121d7f1b6a8a8b3fc8a3b9d7901ee276065bea5282dda5dfe6bc293a/pyinstaller-6.9.0-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:4e3e50743c091a06e6d01c59bdd6d03967b453ee5384a9e790759be4129db4a4", size = 688440 },
+    { url = "https://files.pythonhosted.org/packages/09/8b/fdcef6526d1a90654f98f6f4091b32322bfd125c886bafca98fba7dd608d/pyinstaller-6.9.0-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:b041be2fe78da47a269604d62c940d68c62f9a3913bdf64af4123f7689d47099", size = 685654 },
+    { url = "https://files.pythonhosted.org/packages/de/31/c611f3921b62270e2cec9130f5c963eeda3d948316819248a682b89c416d/pyinstaller-6.9.0-py3-none-win32.whl", hash = "sha256:2bf4de17a1c63c0b797b38e13bfb4d03b5ee7c0a68e28b915a7eaacf6b76087f", size = 1244820 },
+    { url = "https://files.pythonhosted.org/packages/0e/9c/cadf2950d3d23eec3a378ae6eaa564c2a781218657f18f42caeff3732b75/pyinstaller-6.9.0-py3-none-win_amd64.whl", hash = "sha256:43709c70b1da8441a730327a8ed362bfcfdc3d42c1bf89f3e2b0a163cc4e7d33", size = 1304050 },
+    { url = "https://files.pythonhosted.org/packages/ca/6f/677eeaa64c979d3832ed4bc6ee27821d9f74e02cd31cc164af7b9a0e1714/pyinstaller-6.9.0-py3-none-win_arm64.whl", hash = "sha256:f15c1ef11ed5ceb32447dfbdab687017d6adbef7fc32aa359d584369bfe56eda", size = 1233800 },
 ]
 
 [[package]]
@@ -1906,9 +1921,9 @@ name = "pyinstaller-hooks-contrib"
 version = "2024.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "importlib-metadata", marker = "(python_full_version < '3.10' and python_full_version >= '3.8') or (python_full_version < '3.10' and platform_python_implementation == 'CPython')" },
-    { name = "packaging", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "setuptools", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "importlib-metadata", marker = "python_full_version < '3.10'" },
+    { name = "packaging" },
+    { name = "setuptools" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/73/6a/9d0057e312b85fbd17a79e1c1955d115fd9bbc78b85bab757777c8ef2307/pyinstaller_hooks_contrib-2024.10.tar.gz", hash = "sha256:8a46655e5c5b0186b5e527399118a9b342f10513eb1425c483fa4f6d02e8800c", size = 140592 }
 wheels = [
@@ -2051,7 +2066,7 @@ name = "pyobjc-framework-cocoa"
 version = "10.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyobjc-core", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "pyobjc-core" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/39/41/4f09a5e9a6769b4dafb293ea597ed693cc0def0e07867ad0a42664f530b6/pyobjc_framework_cocoa-10.3.2.tar.gz", hash = "sha256:673968e5435845bef969bfe374f31a1a6dc660c98608d2b84d5cae6eafa5c39d", size = 4942530 }
 wheels = [
@@ -2070,8 +2085,8 @@ name = "pyobjc-framework-quartz"
 version = "10.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyobjc-core", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyobjc-framework-cocoa", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "pyobjc-core" },
+    { name = "pyobjc-framework-cocoa" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/bd/d78c845a6f0640975e837d1d0f04d6bbd95bb88b77dcee22482144ac5ad0/pyobjc_framework_quartz-10.3.2.tar.gz", hash = "sha256:193e7752c93e2d1304f914e3a8c069f4b66de237376c5285ba7c72e9ee0e3b15", size = 3776754 }
 wheels = [
@@ -2086,48 +2101,11 @@ wheels = [
 ]
 
 [[package]]
-name = "pyobjc-framework-security"
-version = "10.3.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pyobjc-core", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyobjc-framework-cocoa", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/fc/08/bbbfa295aef75986d7204ba3d856b26779d9eb2d0efbdcce2ddcb468d9b9/pyobjc_framework_security-10.3.2.tar.gz", hash = "sha256:8e018ad36a5ba4ebf1da45cc3ca2a658906ed1e3f9ffdde8f743c813a233d735", size = 252834 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f1/50/0ef93de0d43df54a564c0b521407dab206cb12ab3bb858f4a4663a379bfd/pyobjc_framework_Security-10.3.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:56b57d59364d1944a6526277826f649073164fdb23519163c65e371116171ec1", size = 40783 },
-    { url = "https://files.pythonhosted.org/packages/d6/ee/ee20b313ee18094424e4f3064eac99f234e4440da0c8198dd49335facd13/pyobjc_framework_Security-10.3.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:9b4505472e21d18f1cebfc773c2148efc6446d62389304330fd7f7f5b30eea97", size = 40779 },
-    { url = "https://files.pythonhosted.org/packages/af/b2/99d5e08eafd89750d81d36201dd8faeb3c5880dd1241b070084675486ef9/pyobjc_framework_Security-10.3.2-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:2fae458eaa4263c3daf8a12ad62a92bc14be32ed251dcaa95d2caca324520036", size = 40832 },
-    { url = "https://files.pythonhosted.org/packages/1a/7c/6a0bb0d5a6bc1ae06d90e6e4b002968ff10febe3b6dec721360efd2e9919/pyobjc_framework_Security-10.3.2-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:84a93d28871feb7a40491401f4175cc4d83906cacbc41369ceafe67ad40f1a2c", size = 40823 },
-    { url = "https://files.pythonhosted.org/packages/e3/7b/f755b71bc6154e5b063b6a3399a6858e50b6ddf126086a40f43341ab3cc0/pyobjc_framework_Security-10.3.2-cp313-cp313t-macosx_10_13_universal2.whl", hash = "sha256:763ab5be948d5dc8c71f5dfba8c159223613aef4357b692ed5db8ff72f2d6040", size = 41288 },
-    { url = "https://files.pythonhosted.org/packages/2c/60/2a9f092696f5c23e3b418acf8b1275a3228ce46824fab6d511001eb266a4/pyobjc_framework_Security-10.3.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:8f545dcf77c7c513cdf9c0d9a3e59eeb6a4cefbd485cc3cbcc607a65dcafdb2e", size = 33049 },
-    { url = "https://files.pythonhosted.org/packages/cc/89/a9dcf96701ded5c362c2a24859119e21d2f5ee95097a746f0c5e072a07d1/pyobjc_framework_Security-10.3.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:c79e14ac84469b5ea093efc02219e1b4ca575c6bad3eb609ec1ad9421d997393", size = 40764 },
-    { url = "https://files.pythonhosted.org/packages/71/df/da4b41fd3cc533bdd59c6a08c168891f878dd47c0d71bbcdf9f794c8f89f/pyobjc_framework_Security-10.3.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:92a3d1f956b740666036d8629479e87e27e000deed3d4fdc2ee6c67b3cd8c0ec", size = 40773 },
-]
-
-[[package]]
-name = "pyobjc-framework-webkit"
-version = "10.3.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pyobjc-core", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyobjc-framework-cocoa", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ef/98/89187c121e130e11ce6c7ed86a2de10cb6d6c8994eb77ab2b81a060d1916/pyobjc_framework_webkit-10.3.2.tar.gz", hash = "sha256:b60d097a87867c252286855158cc35d991e2273f162f40f8e38e95153894bbbf", size = 611469 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/49/7a/40f6026cfe2d3fdf7ff783634ebe86ed93f925f997c1e723c943d914925d/pyobjc_framework_WebKit-10.3.2-cp313-cp313t-macosx_10_13_universal2.whl", hash = "sha256:e1efde488083222a0a5fd4c813727f142e698014fe433f283533d06363163872", size = 45451 },
-    { url = "https://files.pythonhosted.org/packages/86/83/a4526fb64176b7e0d19ee20a8760548ef144227784aea5f0e1bf634c3ae2/pyobjc_framework_WebKit-10.3.2-cp36-abi3-macosx_10_13_universal2.whl", hash = "sha256:c72c1b0c5b72fd5203cd4b445e96494eab2518ef688629d2ea75dced95c236e9", size = 44898 },
-    { url = "https://files.pythonhosted.org/packages/f1/85/e8d439d84bed84a15bd22bb0c2a4c7ab9371a37d3038fbde478d1be4ee2a/pyobjc_framework_WebKit-10.3.2-cp36-abi3-macosx_10_9_universal2.whl", hash = "sha256:3ef315a185289c051f43f1d2aebf94a2cdd4408731d1d712972e2e130a17e632", size = 44879 },
-    { url = "https://files.pythonhosted.org/packages/3c/a4/df27ea5a5256e0a031ccdfc875636641dd807f1f882b95f8a61bb189b871/pyobjc_framework_WebKit-10.3.2-cp36-abi3-macosx_10_9_x86_64.whl", hash = "sha256:f8e89d51511b0bf2d6ec8d8a0cf8e74b3451987fb10a3adf5d6181cc77c1260a", size = 32797 },
-    { url = "https://files.pythonhosted.org/packages/68/1a/06e6f8de19505c3807db47962308390e2d15e5729342c8382750a538762c/pyobjc_framework_WebKit-10.3.2-cp36-abi3-macosx_11_0_universal2.whl", hash = "sha256:efce711d3cbe5ef34620002ae2189b802420e6e2923973ed4c59989443b5499f", size = 44847 },
-]
-
-[[package]]
 name = "pypiwin32"
 version = "223"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pywin32", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "pywin32" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/13/e8/4f38eb30c4dae36634a53c5b2cd73b517ea3607e10d00f61f2494449cec0/pypiwin32-223.tar.gz", hash = "sha256:71be40c1fbd28594214ecaecb58e7aa8b708eabfa0125c8a109ebd51edbd776a", size = 622 }
 wheels = [
@@ -2148,10 +2126,10 @@ name = "pystray"
 version = "0.19.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pillow", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyobjc-framework-quartz", marker = "(python_full_version >= '3.8' and sys_platform == 'darwin') or (platform_python_implementation == 'CPython' and sys_platform == 'darwin')" },
-    { name = "python-xlib", marker = "(python_full_version >= '3.8' and sys_platform == 'linux') or (platform_python_implementation == 'CPython' and sys_platform == 'linux')" },
-    { name = "six", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "pillow" },
+    { name = "pyobjc-framework-quartz", marker = "sys_platform == 'darwin'" },
+    { name = "python-xlib", marker = "sys_platform == 'linux'" },
+    { name = "six" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5c/64/927a4b9024196a4799eba0180e0ca31568426f258a4a5c90f87a97f51d28/pystray-0.19.5-py2.py3-none-any.whl", hash = "sha256:a0c2229d02cf87207297c22d86ffc57c86c227517b038c0d3c59df79295ac617", size = 49068 },
@@ -2162,7 +2140,7 @@ name = "python-xlib"
 version = "0.33"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "six", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "six" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/86/f5/8c0653e5bb54e0cbdfe27bf32d41f27bc4e12faa8742778c17f2a71be2c0/python-xlib-0.33.tar.gz", hash = "sha256:55af7906a2c75ce6cb280a584776080602444f75815a7aff4d287bb2d7018b32", size = 269068 }
 wheels = [
@@ -2174,7 +2152,7 @@ name = "pythonnet"
 version = "3.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "clr-loader", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "clr-loader" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/67/2e/106522a6cf5c9f14e464193c777f471342ed39fe516b5b51397e1751f625/pythonnet-3.0.4.tar.gz", hash = "sha256:c92fbcfddd16575f7e75a643302271658b606d8557df7f0132ac240e03cc3a8f", size = 238644 }
 wheels = [
@@ -2186,16 +2164,13 @@ name = "pywebview"
 version = "5.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "bottle", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "proxy-tools", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pyobjc-core", marker = "(python_full_version >= '3.8' and sys_platform == 'darwin') or (platform_python_implementation == 'CPython' and sys_platform == 'darwin')" },
-    { name = "pyobjc-framework-cocoa", marker = "(python_full_version >= '3.8' and sys_platform == 'darwin') or (platform_python_implementation == 'CPython' and sys_platform == 'darwin')" },
-    { name = "pyobjc-framework-quartz", marker = "(python_full_version >= '3.8' and sys_platform == 'darwin') or (platform_python_implementation == 'CPython' and sys_platform == 'darwin')" },
-    { name = "pyobjc-framework-security", marker = "(python_full_version >= '3.8' and sys_platform == 'darwin') or (platform_python_implementation == 'CPython' and sys_platform == 'darwin')" },
-    { name = "pyobjc-framework-webkit", marker = "(python_full_version >= '3.8' and sys_platform == 'darwin') or (platform_python_implementation == 'CPython' and sys_platform == 'darwin')" },
-    { name = "pythonnet", marker = "(python_full_version >= '3.8' and sys_platform == 'win32') or (platform_python_implementation == 'CPython' and sys_platform == 'win32')" },
-    { name = "qtpy", marker = "(python_full_version >= '3.8' and sys_platform == 'openbsd6') or (platform_python_implementation == 'CPython' and sys_platform == 'openbsd6')" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "bottle" },
+    { name = "proxy-tools" },
+    { name = "pyobjc-core", marker = "sys_platform == 'darwin'" },
+    { name = "pyobjc-framework-cocoa", marker = "sys_platform == 'darwin'" },
+    { name = "pyobjc-framework-quartz", marker = "sys_platform == 'darwin'" },
+    { name = "pythonnet", marker = "sys_platform == 'win32'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/46/fa/c7c8163879bdc6984783ee0bf5e06984dc5713bb527a2927187dd7edf392/pywebview-5.3.2.tar.gz", hash = "sha256:77b88a63e65e12913d269205e9c6d357666d4864826749c738bf432bd3ad23d9", size = 443072 }
 wheels = [
@@ -2299,25 +2274,13 @@ name = "qrcode"
 version = "7.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "(python_full_version >= '3.8' and platform_system == 'Windows') or (platform_python_implementation == 'CPython' and platform_system == 'Windows')" },
-    { name = "pypng", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "colorama", marker = "platform_system == 'Windows'" },
+    { name = "pypng" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/30/35/ad6d4c5a547fe9a5baf85a9edbafff93fc6394b014fab30595877305fa59/qrcode-7.4.2.tar.gz", hash = "sha256:9dd969454827e127dbd93696b20747239e6d540e082937c90f14ac95b30f5845", size = 535974 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/24/79/aaf0c1c7214f2632badb2771d770b1500d3d7cbdf2590ae62e721ec50584/qrcode-7.4.2-py3-none-any.whl", hash = "sha256:581dca7a029bcb2deef5d01068e39093e80ef00b4a61098a2182eac59d01643a", size = 46197 },
-]
-
-[[package]]
-name = "qtpy"
-version = "2.4.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "packaging", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/e5/10/51e0e50dd1e4a160c54ac0717b8ff11b2063d441e721c2037f61931cf38d/qtpy-2.4.2.tar.gz", hash = "sha256:9d6ec91a587cc1495eaebd23130f7619afa5cdd34a277acb87735b4ad7c65156", size = 66849 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/0a/0c/58a1e48209b0b1220ca2368435573f39ff1fa3577b7eef913f8960c5d429/QtPy-2.4.2-py3-none-any.whl", hash = "sha256:5a696b1dd7a354cb330657da1d17c20c2190c72d4888ba923f8461da67aa1a1c", size = 95155 },
 ]
 
 [[package]]
@@ -2426,10 +2389,10 @@ name = "requests"
 version = "2.32.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "charset-normalizer", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "idna", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "urllib3", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "certifi" },
+    { name = "charset-normalizer" },
+    { name = "idna" },
+    { name = "urllib3" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz", hash = "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760", size = 131218 }
 wheels = [
@@ -2441,7 +2404,7 @@ name = "requests-toolbelt"
 version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "requests", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "requests" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f3/61/d7545dafb7ac2230c70d38d31cbfe4cc64f7144dc41f6e4e4b78ecd9f5bb/requests-toolbelt-1.0.0.tar.gz", hash = "sha256:7681a0a3d047012b5bdc0ee37d7f8f07ebe76ab08caeccfc3921ce23c88d5bc6", size = 206888 }
 wheels = [
@@ -2453,9 +2416,9 @@ name = "rich"
 version = "13.9.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markdown-it-py", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "pygments", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "typing-extensions", marker = "(python_full_version < '3.11' and python_full_version >= '3.8') or (python_full_version < '3.11' and platform_python_implementation == 'CPython')" },
+    { name = "markdown-it-py" },
+    { name = "pygments" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ab/3a/0316b28d0761c6734d6bc14e770d85506c986c85ffb239e688eeaab2c2bc/rich-13.9.4.tar.gz", hash = "sha256:439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098", size = 223149 }
 wheels = [
@@ -2467,7 +2430,7 @@ name = "rsa"
 version = "4.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyasn1", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "pyasn1" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/aa/65/7d973b89c4d2351d7fb232c2e452547ddfa243e93131e7cfa766da627b52/rsa-4.9.tar.gz", hash = "sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21", size = 29711 }
 wheels = [
@@ -2588,8 +2551,8 @@ name = "tzlocal"
 version = "5.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "backports-zoneinfo", marker = "(python_full_version < '3.9' and python_full_version >= '3.8') or (python_full_version < '3.9' and platform_python_implementation == 'CPython')" },
-    { name = "tzdata", marker = "(python_full_version >= '3.8' and platform_system == 'Windows') or (platform_python_implementation == 'CPython' and platform_system == 'Windows')" },
+    { name = "backports-zoneinfo", marker = "python_full_version < '3.9'" },
+    { name = "tzdata", marker = "platform_system == 'Windows'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/04/d3/c19d65ae67636fe63953b20c2e4a8ced4497ea232c43ff8d01db16de8dc0/tzlocal-5.2.tar.gz", hash = "sha256:8d399205578f1a9342816409cc1e46a93ebd5755e39ea2d85334bea911bf0e6e", size = 30201 }
 wheels = [
@@ -2610,9 +2573,9 @@ name = "virtualenv"
 version = "20.28.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "distlib", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "filelock", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "platformdirs", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "distlib" },
+    { name = "filelock" },
+    { name = "platformdirs" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bf/75/53316a5a8050069228a2f6d11f32046cfa94fbb6cc3f08703f59b873de2e/virtualenv-20.28.0.tar.gz", hash = "sha256:2c9c3262bb8e7b87ea801d715fae4495e6032450c71d2309be9550e7364049aa", size = 7650368 }
 wheels = [
@@ -2735,7 +2698,7 @@ name = "werkzeug"
 version = "2.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "markupsafe" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f8/c1/1c8e539f040acd80f844c69a5ef8e2fccdf8b442dabb969e497b55d544e1/Werkzeug-2.2.2.tar.gz", hash = "sha256:7ea2d48322cc7c0f8b3a215ed73eabd7b5d75d0b50e31ab006286ccff9e00b8f", size = 844378 }
 wheels = [
@@ -2747,9 +2710,9 @@ name = "yarl"
 version = "1.15.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "idna", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "multidict", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
-    { name = "propcache", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "idna" },
+    { name = "multidict" },
+    { name = "propcache" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/06/e1/d5427a061819c9f885f58bb0467d02a523f1aec19f9e5f9c82ce950d90d3/yarl-1.15.2.tar.gz", hash = "sha256:a39c36f4218a5bb668b4f06874d676d35a035ee668e6e7e3538835c703634b84", size = 169318 }
 wheels = [
@@ -2866,7 +2829,7 @@ name = "zope-event"
 version = "5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "setuptools", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "setuptools" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/46/c2/427f1867bb96555d1d34342f1dd97f8c420966ab564d58d18469a1db8736/zope.event-5.0.tar.gz", hash = "sha256:bac440d8d9891b4068e2b5a2c5e2c9765a9df762944bda6955f96bb9b91e67cd", size = 17350 }
 wheels = [
@@ -2878,7 +2841,7 @@ name = "zope-interface"
 version = "7.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "setuptools", marker = "python_full_version >= '3.8' or platform_python_implementation == 'CPython'" },
+    { name = "setuptools" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/30/93/9210e7606be57a2dfc6277ac97dcc864fd8d39f142ca194fdc186d596fda/zope.interface-7.2.tar.gz", hash = "sha256:8b49f1a3d1ee4cdaf5b32d2e738362c7f5e40ac8b46dd7d1a65e82a4872728fe", size = 252960 }
 wheels = [

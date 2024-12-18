@@ -11,6 +11,11 @@ jobs:
     - name: Setup Python
       uses: ./.github/actions/setup-python
 
+    - name: Set UTF-8 Encoding
+      run: |
+        [Environment]::SetEnvironmentVariable("PYTHONIOENCODING", "utf-8", "Process")
+        chcp 65001
+    
     - name: Run packing
       run: |
         # cp ./OlivOS/hook.py ./OlivOS/hook_bak.py
