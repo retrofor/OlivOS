@@ -18,7 +18,7 @@ jobs:
         uv v
         uv sync --all-extras --dev --all-groups
         uv build
-        source .venv/bin/activate
+        .venv\Scripts\Activate
         uv run scripts.py build
       env:
         OLIVOS_ENV_PACK: "1"
