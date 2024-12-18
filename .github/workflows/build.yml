@@ -15,7 +15,6 @@ jobs:
       run: |
         # cp ./OlivOS/hook.py ./OlivOS/hook_bak.py
         # cp ./OlivOS/hook_pack.py ./OlivOS/hook.py
-        .venv\Scripts\activate
         uv run scripts.py build
       env:
         OLIVOS_ENV_PACK: "1"
@@ -55,7 +54,6 @@ jobs:
       run: |
         # cp ./OlivOS/hook.py ./OlivOS/hook_bak.py
         # cp ./OlivOS/hook_pack_debug.py ./OlivOS/hook.py
-        source .venv/bin/activate
         uv run scripts.py build
       env:
         OLIVOS_ENV_DEBUG: "1"
@@ -84,7 +82,6 @@ jobs:
       run: |
         # cp ./OlivOS/hook.py ./OlivOS/hook_bak.py
         # cp ./OlivOS/hook_pack_debug.py ./OlivOS/hook.py
-        source .venv/bin/activate
         uv run scripts.py build
       env:
         OLIVOS_ENV_DEBUG: "1"
