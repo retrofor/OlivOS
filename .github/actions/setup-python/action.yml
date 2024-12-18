@@ -4,7 +4,7 @@ description: Setup Python
 inputs:
   python-version:
     description: Python version
-    default: '3.8'
+    default: '3.11.0'
 
 runs:
   using: composite
@@ -19,6 +19,8 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ inputs.python-version }}
+        cache: pip
+        architecture: x64
 
     - name: Install the project
       run: |
